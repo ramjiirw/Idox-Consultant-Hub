@@ -1,0 +1,17 @@
+{
+  "evaluations": {
+    "bakedAt": "2026-09-04T16:37:04.862Z",
+    "evals": 2852,
+    "courses": 1503,
+    "ratings": {
+      "Excellent": 1789,
+      "Good": 969,
+      "Average": 68,
+      "Poor": 10,
+      "Not given": 16
+    },
+    "pct": 97,
+    "evals12": 389,
+    "pct12": 98
+  }
+}
