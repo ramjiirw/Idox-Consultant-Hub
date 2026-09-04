@@ -1,6 +1,6 @@
 {
   "evaluations": {
-    "bakedAt": "2026-09-04T18:19:36.190Z",
+    "bakedAt": "2026-09-04T21:46:58.155Z",
     "evals": 2852,
     "courses": 1503,
     "ratings": {
@@ -15,7 +15,7 @@
     "pct12": 98
   },
   "schedule": {
-    "bakedAt": "2026-09-04T18:19:52.951Z",
+    "bakedAt": "2026-09-04T21:45:52.766Z",
     "courses": 44,
     "confirmed": 166,
     "provisional": 7,
