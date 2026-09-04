@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.1";</script>
+<script>window.BUILD = "1.2";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -209,8 +209,8 @@ function renderEvals(e){
 /* ---------- freshness strip ---------- */
 function renderFresh(hub){
   var items=[
-    {k:'Scheduled Training', d:hub&&hub.schedule&&hub.schedule.bakedAt, cy:'baked several times a day', warn:2},
-    {k:'Course Evaluations', d:hub&&hub.evaluations&&hub.evaluations.bakedAt, cy:'baked every few days', warn:7}
+    {k:'Scheduled Training', d:hub&&hub.schedule&&hub.schedule.bakedAt, cy:'updated several times a day', warn:2},
+    {k:'Course Evaluations', d:hub&&hub.evaluations&&hub.evaluations.bakedAt, cy:'updated every few days', warn:7}
   ];
   var h='';
   items.forEach(function(it){
@@ -220,7 +220,6 @@ function renderFresh(hub){
        '<span class="v">'+(it.d?esc(fmtWhen(it.d)):'not yet published')+'</span>'+
        '<span class="cy">'+it.cy+'</span></span>';
   });
-  h+='<span class="note">Figures update when each page is baked and pushed.</span>';
   $('fresh').innerHTML=h;
 }
 
