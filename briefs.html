@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.7";</script>
+<script>window.BUILD = "1.8";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -249,10 +249,18 @@
      itself, so the horizontal scrollbar on the wide table is always within
      reach instead of a mile down the page. Heights are measured in
      setPanes(), the same way setStick() measures the header. */
-  .dbox{background:var(--surface);border:1px solid var(--edge);border-radius:var(--radius);display:flex;flex-direction:column;min-height:0;margin-bottom:16px}
-  .dbox.top{height:var(--h2a,430px)}
-  .dbox.bot{height:var(--h2b,220px)}
+  .dbox{background:var(--surface);border:1px solid var(--edge);border-radius:var(--radius);display:flex;flex-direction:column;min-height:0;margin-bottom:16px;height:var(--h2,460px)}
+  .dbox.off{display:none}
   .dbox .tblhead{flex:0 0 auto}
+
+  /* One table at a time, chosen here. Sits at the right-hand end of the
+     filter bar rather than on a row of its own, because vertical space is
+     the thing in short supply on this tab. */
+  .seg{display:flex;border:1px solid var(--edge);border-radius:8px;overflow:hidden;background:#fff}
+  .seg button{border:none;background:#fff;font-family:inherit;font-size:12.5px;font-weight:500;color:var(--slate);padding:9px 14px;white-space:nowrap}
+  .seg button+button{border-left:1px solid var(--edge)}
+  .seg button:hover{background:var(--petrol-soft);color:var(--petrol)}
+  .seg button.on{background:var(--petrol);color:#fff;font-weight:600}
   .dscroll{flex:1 1 auto;min-height:0;overflow:auto;border-top:1px solid var(--edge);border-radius:0 0 var(--radius) var(--radius);scrollbar-width:thin}
   .dscroll::-webkit-scrollbar{width:10px;height:10px}
   .dscroll::-webkit-scrollbar-thumb{background:#C6D0DA;border-radius:5px}
@@ -437,9 +445,13 @@
       <div class="f ddwrap"><label>Idox Consultant</label><button class="ddbtn w-con" id="p2ConBtn"><span class="cv" id="p2ConCv">All consultants</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="p2ConPop"></div></div>
       <div class="f ddwrap"><label>Local Authority</label><button class="ddbtn w-auth" id="p2AuthBtn"><span class="cv" id="p2AuthCv">All authorities</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="p2AuthPop"></div></div>
       <button class="clearbtn" id="p2Clear">Clear</button>
+      <div class="f" style="margin-left:auto"><label>&nbsp;</label><div class="seg">
+        <button id="segDel" class="on">Deliverables</button>
+        <button id="segAct">Comments &amp; actions</button>
+      </div></div>
     </div>
 
-    <div class="dbox top">
+    <div class="dbox" id="boxDel">
       <div class="tblhead"><h3>Service Deliverables</h3><span class="meta" id="delMeta"></span></div>
       <div class="dscroll">
         <table class="dtab" id="tblDel">
@@ -464,7 +476,7 @@
       </div>
     </div>
 
-    <div class="dbox bot">
+    <div class="dbox off" id="boxAct">
       <div class="tblhead"><h3>Consultant Comments &amp; Agreed Post Delivery Actions</h3><span class="meta" id="actMeta"></span></div>
       <div class="dscroll">
         <table class="dtab" id="tblAct">
@@ -1433,10 +1445,18 @@ function renderAct(list){
     if(ar)ar.innerHTML=(s===UI2.sA&&UI2.dA)?'&#9660;':'&#9650;';
   });
 }
+var VIEW2='del';
 function render2(){
   var list=rows2();
-  renderDel(list);
-  renderAct(list);
+  if(VIEW2==='del')renderDel(list); else renderAct(list);
+}
+function setView2(v){
+  VIEW2=v;
+  $('boxDel').classList.toggle('off',v!=='del');
+  $('boxAct').classList.toggle('off',v!=='act');
+  $('segDel').classList.toggle('on',v==='del');
+  $('segAct').classList.toggle('on',v==='act');
+  setPanes();render2();
 }
 
 /* Two thirds and one third of what the screen leaves, so both tables are on
@@ -1445,12 +1465,9 @@ function render2(){
 function setPanes(){
   var hdr=document.querySelector('.appheader').getBoundingClientRect().height;
   var fb=$('filt2').getBoundingClientRect().height;
-  var avail=window.innerHeight-hdr-fb-84;
-  var a=Math.round(avail*2/3),b=avail-a-16;
-  if(a<250)a=250;
-  if(b<165)b=165;
-  document.documentElement.style.setProperty('--h2a',a+'px');
-  document.documentElement.style.setProperty('--h2b',b+'px');
+  var h=window.innerHeight-hdr-fb-78;
+  if(h<300)h=300;
+  document.documentElement.style.setProperty('--h2',h+'px');
 }
 
 [['p2PerBtn','p2PerPop',168],['p2ConBtn','p2ConPop',0]].forEach(function(p){
@@ -1464,6 +1481,8 @@ $('p2AuthBtn').addEventListener('click',function(e){
 });
 $('p2From').addEventListener('change',function(){UI2.from=this.value;render2();});
 $('p2To').addEventListener('change',function(){UI2.to=this.value;render2();});
+$('segDel').addEventListener('click',function(){setView2('del');});
+$('segAct').addEventListener('click',function(){setView2('act');});
 $('p2Clear').addEventListener('click',function(){
   UI2={period:'',from:'',to:'',con:'',auth:[],sD:1,dD:true,sA:0,dA:true,open:{}};
   auth2Q='';$('p2From').value='';$('p2To').value='';
