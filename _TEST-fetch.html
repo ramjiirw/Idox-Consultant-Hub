@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEST — can this site read the Google Sheet?</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#18212F;--slate:#5B6675;--faint:#7d8794;--paper:#F4F6F8;--surface:#FFFFFF;
+    --hairline:#DCE2E9;--edge:#AEB9C6;--petrol:#0E6E6E;--petrol-soft:#E2F0EF;
+    --amber:#C8741A;--amber-soft:#FBEFE2;--rose:#B4304B;--rose-soft:#F8E6EA;
+    --exc:#14603A;--exc-soft:#D3E7DC;--radius:10px;
+  }
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;font-weight:600;letter-spacing:-.01em}
+  .hero{background:linear-gradient(135deg,#0E6E6E,#0A5250);color:#fff;padding:26px 24px}
+  .hero .in{max-width:940px;margin:0 auto}
+  .hero h1{font-size:22px;color:#fff}
+  .hero p{margin:7px 0 0;font-size:13.5px;color:rgba(255,255,255,.85)}
+  .wrap{max-width:940px;margin:0 auto;padding:22px 24px 60px}
+  .warn{background:var(--amber-soft);border:1px solid rgba(200,116,26,.45);border-left:4px solid var(--amber);border-radius:var(--radius);padding:13px 16px;font-size:13px;margin-bottom:18px}
+  .warn b{color:#8A4F12}
+  .runbtn{font-family:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--petrol);border:none;border-radius:9px;padding:12px 22px;cursor:pointer}
+  .runbtn:hover{background:#0A5654}
+  .runbtn:disabled{background:#9FB4B4;cursor:default}
+  .env{background:var(--surface);border:1px solid var(--edge);border-radius:var(--radius);padding:13px 16px;margin:18px 0;font-size:12.5px}
+  .env div{display:flex;gap:10px;padding:3px 0}
+  .env .k{font-weight:600;min-width:150px;color:var(--slate)}
+  .env .v{font-variant-numeric:tabular-nums;word-break:break-all}
+  .test{background:var(--surface);border:1px solid var(--edge);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+  .test h3{font-size:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--hairline)}
+  .test .body{padding:13px 16px;font-size:13px}
+  .st{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-radius:5px;padding:3px 9px}
+  .st.wait{background:var(--paper);color:var(--faint);border:1px solid var(--hairline)}
+  .st.run{background:var(--petrol-soft);color:var(--petrol);border:1px solid rgba(14,110,110,.35)}
+  .st.ok{background:var(--exc-soft);color:var(--exc);border:1px solid rgba(20,96,58,.35)}
+  .st.bad{background:var(--rose-soft);color:var(--rose);border:1px solid rgba(180,48,75,.35)}
+  .st .sp{flex:1}
+  .kv{display:flex;gap:10px;padding:3px 0;font-size:13px}
+  .kv .k{font-weight:600;min-width:170px;color:var(--slate)}
+  .kv .v{font-variant-numeric:tabular-nums}
+  .url{font-size:11.5px;color:var(--faint);word-break:break-all;margin-bottom:9px}
+  .big{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  pre{background:var(--paper);border:1px solid var(--hairline);border-radius:7px;padding:10px 12px;font-size:11.5px;overflow-x:auto;margin:9px 0 0;white-space:pre-wrap;word-break:break-word;max-height:190px}
+  .verdict{border-radius:var(--radius);padding:16px 18px;margin-top:20px;display:none}
+  .verdict.on{display:block}
+  .verdict.good{background:var(--exc-soft);border:1px solid rgba(20,96,58,.4)}
+  .verdict.bad{background:var(--rose-soft);border:1px solid rgba(180,48,75,.4)}
+  .verdict h2{font-size:16px;margin-bottom:6px}
+  .verdict p{margin:6px 0 0;font-size:13.5px}
+</style>
+</head>
+<body>
+
+<div class="hero"><div class="in">
+  <h1>Fetch test — throwaway</h1>
+  <p>Checks whether a page on this site can read the published Google Sheet. Delete this file when we are done with it.</p>
+</div></div>
+
+<div class="wrap">
+
+  <div class="warn">
+    <b>This must be opened from the live site</b>, not from your computer. Opening it from a folder
+    proves nothing, because browsers treat local files differently. The address at the top should
+    start with <b>https://ramjiirw.github.io/</b> — if it starts with <b>file:///</b>, the result is meaningless.
+  </div>
+
+  <button class="runbtn" id="run">Run the test</button>
+
+  <div class="env" id="env"></div>
+
+  <div class="test" id="t1">
+    <h3><span>1 · Published CSV — the whole sheet</span><span class="sp"></span><span class="st wait" id="s1">Waiting</span></h3>
+    <div class="body" id="b1">This is the route the real page would use. Reads every row, then counts them here in the browser.</div>
+  </div>
+
+  <div class="test" id="t2">
+    <h3><span>2 · Query endpoint — the whole sheet</span><span class="sp"></span><span class="st wait" id="s2">Waiting</span></h3>
+    <div class="body" id="b2">A different way in. Often blocked unless the sheet is also shared by link, so a failure here is not a problem.</div>
+  </div>
+
+  <div class="test" id="t3">
+    <h3><span>3 · Query endpoint — counts only</span><span class="sp"></span><span class="st wait" id="s3">Waiting</span></h3>
+    <div class="body" id="b3">Asks Google to do the counting and send back five numbers instead of the whole sheet. If this works, the hub front page can show figures without downloading everything.</div>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+
+var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6aVHYD_aNx7GRWQOV-vQG9FrHeMnrauSrou03sB7ctRmBheOfjAUXbHMHXHueH3mn13I2BkpXGWVz/pub?gid=536192829&single=true&output=csv";
+var SHEET_ID = "1fkGpJJUXsZ1BAyRuESXYu7jHL-iH0NlCm7Seun5uZsA";
+var GID = "536192829";
+var GVIZ = "https://docs.google.com/spreadsheets/d/"+SHEET_ID+"/gviz/tq?gid="+GID;
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function setState(n,cls,txt){var e=$('s'+n);e.className='st '+cls;e.textContent=txt;}
+function ms(t){return Math.round(t)+' ms';}
+
+/* A CSV parser that copes with quoted fields containing commas and newlines,
+   which the comments certainly do. */
+function parseCSV(text){
+  var rows=[],row=[],cur='',q=false,i=0,c,n;
+  for(i=0;i<text.length;i++){
+    c=text[i];
+    if(q){
+      if(c==='"'){ n=text[i+1]; if(n==='"'){cur+='"';i++;} else {q=false;} }
+      else cur+=c;
+    } else {
+      if(c==='"')q=true;
+      else if(c===','){row.push(cur);cur='';}
+      else if(c==='\n'){row.push(cur);cur='';rows.push(row);row=[];}
+      else if(c==='\r'){/* skip */}
+      else cur+=c;
+    }
+  }
+  if(cur!==''||row.length){row.push(cur);rows.push(row);}
+  return rows;
+}
+
+function envInfo(){
+  var loc=location.href, isFile=location.protocol==='file:';
+  $('env').innerHTML=
+    '<div><span class="k">Opened from</span><span class="v">'+esc(loc)+'</span></div>'+
+    '<div><span class="k">Protocol</span><span class="v">'+esc(location.protocol)+
+      (isFile?'  —  <b style="color:#B4304B">this is a local file, the result will not be meaningful</b>':'')+'</span></div>'+
+    '<div><span class="k">Browser</span><span class="v">'+esc(navigator.userAgent)+'</span></div>'+
+    '<div><span class="k">Run at</span><span class="v">'+new Date().toLocaleString('en-GB')+'</span></div>';
+}
+
+function fail(n,url,err,t){
+  setState(n,'bad','Failed');
+  $('b'+n).innerHTML=
+    '<div class="url">'+esc(url)+'</div>'+
+    '<div class="kv"><span class="k">Time before failing</span><span class="v">'+ms(t)+'</span></div>'+
+    '<div class="kv"><span class="k">What went wrong</span><span class="v">'+esc(err)+'</span></div>'+
+    '<pre>'+esc(String(err&&err.stack||err))+'</pre>';
+}
+
+/* ---- test 1: published CSV ---- */
+function test1(){
+  setState(1,'run','Running');
+  var t0=performance.now();
+  return fetch(CSV_URL,{cache:'no-store'})
+    .then(function(r){
+      if(!r.ok) throw new Error('Server replied '+r.status+' '+r.statusText);
+      return r.text();
+    })
+    .then(function(txt){
+      var tFetch=performance.now()-t0;
+      var p0=performance.now();
+      var rows=parseCSV(txt);
+      var tParse=performance.now()-p0;
+      var hdr=rows.length?rows[0]:[];
+      var data=rows.slice(1).filter(function(r){return r.join('').trim()!=='';});
+      setState(1,'ok','Worked');
+      $('b1').innerHTML=
+        '<div class="url">'+esc(CSV_URL)+'</div>'+
+        '<div class="big" style="color:var(--exc)">'+data.length+' rows in '+Math.round(tFetch)+' ms</div>'+
+        '<div class="kv"><span class="k">Downloaded</span><span class="v">'+(txt.length/1024).toFixed(1)+' KB</span></div>'+
+        '<div class="kv"><span class="k">Time to fetch</span><span class="v">'+ms(tFetch)+'</span></div>'+
+        '<div class="kv"><span class="k">Time to read it</span><span class="v">'+ms(tParse)+'</span></div>'+
+        '<div class="kv"><span class="k">Total</span><span class="v">'+ms(tFetch+tParse)+'</span></div>'+
+        '<div class="kv"><span class="k">Columns found</span><span class="v">'+hdr.length+'</span></div>'+
+        '<pre>Headings: '+esc(hdr.join(' | '))+'\n\nFirst row: '+esc((data[0]||[]).slice(0,10).join(' | '))+'</pre>';
+      window.__CSV_OK__=true;
+    })
+    .catch(function(e){ fail(1,CSV_URL,e,performance.now()-t0); window.__CSV_OK__=false; });
+}
+
+/* ---- test 2: gviz, whole sheet ---- */
+function test2(){
+  setState(2,'run','Running');
+  var url=GVIZ+'&tqx=out:json';
+  var t0=performance.now();
+  return fetch(url,{cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw new Error('Server replied '+r.status+' '+r.statusText); return r.text(); })
+    .then(function(txt){
+      var t=performance.now()-t0;
+      var m=txt.match(/setResponse\(([\s\S]*)\)/);
+      if(!m) throw new Error('Reply was not in the expected shape');
+      var j=JSON.parse(m[1]);
+      var n=(j.table&&j.table.rows)?j.table.rows.length:0;
+      setState(2,'ok','Worked');
+      $('b2').innerHTML=
+        '<div class="url">'+esc(url)+'</div>'+
+        '<div class="big" style="color:var(--exc)">'+n+' rows in '+Math.round(t)+' ms</div>'+
+        '<div class="kv"><span class="k">Downloaded</span><span class="v">'+(txt.length/1024).toFixed(1)+' KB</span></div>';
+    })
+    .catch(function(e){ fail(2,url,e,performance.now()-t0); });
+}
+
+/* ---- test 3: gviz aggregate ---- */
+function test3(){
+  setState(3,'run','Running');
+  var q=encodeURIComponent("select V, count(V) group by V");
+  var url=GVIZ+'&tqx=out:json&tq='+q;
+  var t0=performance.now();
+  return fetch(url,{cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw new Error('Server replied '+r.status+' '+r.statusText); return r.text(); })
+    .then(function(txt){
+      var t=performance.now()-t0;
+      var m=txt.match(/setResponse\(([\s\S]*)\)/);
+      if(!m) throw new Error('Reply was not in the expected shape');
+      var j=JSON.parse(m[1]);
+      if(j.status==='error') throw new Error((j.errors&&j.errors[0]&&(j.errors[0].message||j.errors[0].detailed_message))||'Query refused');
+      var out=(j.table.rows||[]).map(function(r){
+        return (r.c[0]&&r.c[0].v!=null?r.c[0].v:'(blank)')+' — '+(r.c[1]?r.c[1].v:0);
+      });
+      setState(3,'ok','Worked');
+      $('b3').innerHTML=
+        '<div class="url">'+esc(url)+'</div>'+
+        '<div class="big" style="color:var(--exc)">'+Math.round(t)+' ms</div>'+
+        '<div class="kv"><span class="k">Downloaded</span><span class="v">'+(txt.length/1024).toFixed(1)+' KB</span></div>'+
+        '<pre>'+esc(out.join('\n'))+'</pre>';
+    })
+    .catch(function(e){ fail(3,url,e,performance.now()-t0); });
+}
+
+function verdict(){
+  var v=$('verdict');
+  if(window.__CSV_OK__){
+    v.className='verdict on good';
+    v.innerHTML='<h2>The live page will work.</h2>'+
+      '<p>This site can read the published sheet. Test 1 is the one that matters — if tests 2 or 3 failed, '+
+      'that only rules out asking Google to do the counting, which is a convenience rather than a requirement.</p>'+
+      '<p><b>You can unpublish the sheet now.</b> Note that Google may keep serving the published copy for a few minutes afterwards.</p>';
+  } else {
+    v.className='verdict on bad';
+    v.innerHTML='<h2>It could not read the sheet.</h2>'+
+      '<p>Send me the whole of test 1 above, including the grey box. The reason matters — a blocked request, '+
+      'a wrong address and an unpublished sheet all look similar from here but need different answers.</p>'+
+      '<p><b>Unpublish the sheet.</b> Nothing is lost; we take the baked route instead, the same as your other two pages.</p>';
+  }
+}
+
+$('run').addEventListener('click',function(){
+  this.disabled=true; this.textContent='Running…';
+  envInfo();
+  test1().then(test2).then(test3).then(function(){
+    verdict();
+    $('run').disabled=false; $('run').textContent='Run it again';
+  });
+});
+
+envInfo();
+</script>
+</body>
+</html>
