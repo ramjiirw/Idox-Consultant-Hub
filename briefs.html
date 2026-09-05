@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.8";</script>
+<script>window.BUILD = "1.9";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -261,24 +261,32 @@
   .seg button+button{border-left:1px solid var(--edge)}
   .seg button:hover{background:var(--petrol-soft);color:var(--petrol)}
   .seg button.on{background:var(--petrol);color:#fff;font-weight:600}
-  .dscroll{flex:1 1 auto;min-height:0;overflow:auto;border-top:1px solid var(--edge);border-radius:0 0 var(--radius) var(--radius);scrollbar-width:thin}
-  .dscroll::-webkit-scrollbar{width:10px;height:10px}
-  .dscroll::-webkit-scrollbar-thumb{background:#C6D0DA;border-radius:5px}
+  .dscroll{flex:1 1 auto;min-height:0;overflow:auto;background:var(--paper);border-top:1px solid var(--edge);border-radius:0 0 var(--radius) var(--radius);padding:0 10px 6px}
+  /* 14px, not 10 — the old bars were too fine to take hold of. */
+  .dscroll::-webkit-scrollbar{width:14px;height:14px}
+  .dscroll::-webkit-scrollbar-thumb{background:var(--edge);border-radius:7px;border:3px solid var(--paper);background-clip:padding-box}
+  .dscroll::-webkit-scrollbar-thumb:hover{background:#8D9BAA;background-clip:padding-box;border:3px solid var(--paper)}
   .dscroll::-webkit-scrollbar-track{background:var(--paper)}
+  .dscroll::-webkit-scrollbar-corner{background:var(--paper)}
 
   /* border-collapse must be separate, or sticky cells lose their borders */
-  .dtab{width:100%;border-collapse:separate;border-spacing:0}
-  .dtab thead th{position:sticky;top:0;z-index:12;text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;padding:9px 12px;background:#E7F0EF;color:#2C6462;border-bottom:1px solid var(--edge);white-space:nowrap;vertical-align:bottom;line-height:1.3;user-select:none;cursor:pointer}
+  /* Rows read as separate bands rather than lines in a grid: a channel of
+     paper between them, a real edge-grey border round each, and a hover you
+     can actually see. No banding — neither page has ever used it on screen. */
+  .dtab{width:100%;border-collapse:separate;border-spacing:0 5px}
+  .dtab thead th{position:sticky;top:0;z-index:12;border-radius:0;text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;padding:9px 12px;background:#E7F0EF;color:#2C6462;border-bottom:1px solid var(--edge);white-space:nowrap;vertical-align:bottom;line-height:1.3;user-select:none;cursor:pointer}
   .dtab thead th:hover{color:var(--petrol)}
   .dtab thead th .ar{opacity:0;font-size:8px;margin-left:5px;vertical-align:middle}
   .dtab thead th.s .ar{opacity:1}
-  .dtab td{padding:10px 12px;border-bottom:1px solid var(--hairline);font-size:13px;vertical-align:top;background:var(--surface)}
-  .dtab tr.r:hover td{background:#FAFBFC}
+  .dtab td{padding:10px 12px;font-size:13px;vertical-align:top;background:var(--surface);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge)}
+  .dtab tbody tr td:first-child{border-left:1px solid var(--edge);border-radius:7px 0 0 7px}
+  .dtab tbody tr td:last-child{border-right:1px solid var(--edge);border-radius:0 7px 7px 0}
+  .dtab tr.r:hover td{background:#F0F6F6;border-color:var(--petrol)}
   .dtab tr.r.hascm{cursor:pointer}
   .dnone{padding:38px 16px;text-align:center;color:var(--slate);font-size:13.5px}
 
   /* the wide table: fourteen columns, so it scrolls sideways */
-  #tblDel{min-width:2142px}
+  #tblDel{min-width:2468px}
   #tblDel .w-dl{width:88px;white-space:nowrap;font-variant-numeric:tabular-nums}
   #tblDel .w-rt{width:88px;white-space:nowrap;font-variant-numeric:tabular-nums}
   #tblDel .w-au{width:150px;color:var(--slate)}
@@ -291,25 +299,22 @@
   #tblDel thead th.w-au{color:#2C6462}
   #tblDel thead th.w-da{text-align:center}
 
-  /* Delivery, Return and Local Authority hold against the left edge. This is
-     why the Power BI table repeated those columns on the far right — with
-     them frozen, the duplicates are not needed. */
-  #tblDel thead th:nth-child(1),#tblDel tbody td:nth-child(1){position:sticky;left:0;z-index:8}
-  #tblDel thead th:nth-child(2),#tblDel tbody td:nth-child(2){position:sticky;left:88px;z-index:8}
-  #tblDel thead th:nth-child(3),#tblDel tbody td:nth-child(3){position:sticky;left:176px;z-index:8;box-shadow:9px 0 10px -9px rgba(24,33,47,.3)}
-  #tblDel thead th:nth-child(1),#tblDel thead th:nth-child(2){z-index:18}
-  #tblDel thead th:nth-child(3){z-index:18;box-shadow:9px 0 10px -9px rgba(24,33,47,.3)}
+  /* Nothing is frozen. Sticky cells stop the browser sliding the table as a
+     ready-made image, and with 432 rows that repaint was making it judder.
+     Delivery, Return and Local Authority repeat at the far right instead —
+     which is what the Power BI table did, for the same reason. */
+  #tblDel .rpt{color:var(--faint)}
+  #tblDel thead th.rpt{color:#6E8B8A}
 
   /* the actions table underneath */
-  #tblAct .a-cx{width:46px;padding-left:14px;padding-right:0}
-  #tblAct .a-dt{width:104px;white-space:nowrap;font-variant-numeric:tabular-nums}
-  #tblAct .a-au{width:300px;color:var(--slate)}
-  #tblAct .a-ae{width:auto}
-  #tblAct tr.cmt td{background:#F7F9FA;padding:2px 16px 14px 56px}
-  .ablk{margin-top:11px}
-  .ablk .ak{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);margin-bottom:4px}
-  .ablk .av{font-size:13px;line-height:1.6;border-left:3px solid var(--petrol);padding-left:12px}
-  .ablk.act .av{border-left-color:var(--amber)}
+  /* Five columns, following the Power BI widths. Half the comments are 41
+     characters and half the actions 51, so they belong in the row; the few
+     long ones simply make their own row taller. */
+  #tblAct .a-dt{width:94px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  #tblAct .a-au{width:158px;color:var(--slate)}
+  #tblAct .a-cc{width:295px;line-height:1.55}
+  #tblAct .a-pa{width:339px;line-height:1.55}
+  #tblAct .a-ae{width:115px}
   .aname{display:inline-block;font-size:12px;font-weight:600;color:var(--slate);background:var(--paper);border:1px solid var(--hairline);border-radius:20px;padding:2px 9px;white-space:nowrap}
 
   .soon{background:var(--surface);border:1px dashed var(--edge);border-radius:var(--radius);padding:52px 24px;text-align:center;color:var(--slate)}
@@ -470,8 +475,11 @@
             <th class="w-dv" data-d="15">Deliverable 4<span class="ar">&#9650;</span></th>
             <th class="w-dv" data-d="16">Deliverable 5<span class="ar">&#9650;</span></th>
             <th class="w-dv" data-d="17">Deliverable 6<span class="ar">&#9650;</span></th>
+            <th class="w-dl rpt" data-d="0">Delivery<span class="ar">&#9650;</span></th>
+            <th class="w-rt rpt" data-d="1">Return<span class="ar">&#9650;</span></th>
+            <th class="w-au rpt" data-d="3">Local Authority<span class="ar">&#9650;</span></th>
           </tr></thead>
-          <tbody id="tbDel"><tr><td colspan="14"><div class="dnone">Reading the latest service briefs&hellip;</div></td></tr></tbody>
+          <tbody id="tbDel"><tr><td colspan="17"><div class="dnone">Reading the latest service briefs&hellip;</div></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -481,12 +489,13 @@
       <div class="dscroll">
         <table class="dtab" id="tblAct">
           <thead><tr>
-            <th class="a-cx"></th>
             <th class="a-dt s" data-a="0">Delivery Date<span class="ar">&#9660;</span></th>
             <th class="a-au" data-a="3">Local Authority<span class="ar">&#9650;</span></th>
+            <th class="a-cc" data-a="18">Idox Consultant Comments<span class="ar">&#9650;</span></th>
+            <th class="a-pa" data-a="19">Post Delivery Actions<span class="ar">&#9650;</span></th>
             <th class="a-ae" data-a="20">Post Delivery Actionee<span class="ar">&#9650;</span></th>
           </tr></thead>
-          <tbody id="tbAct"><tr><td colspan="4"><div class="dnone">Reading the latest service briefs&hellip;</div></td></tr></tbody>
+          <tbody id="tbAct"><tr><td colspan="5"><div class="dnone">Reading the latest service briefs&hellip;</div></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1222,7 +1231,7 @@ function closeReport(){ closeWith($('repOverlay'),200); }
    11 days · 12-17 deliverable 1 to 6 · 18 consultant comment
    19 post delivery actions · 20 post delivery actionee                     */
 
-var UI2={period:'',from:'',to:'',con:'',auth:[],sD:1,dD:true,sA:0,dA:true,open:{}};
+var UI2={period:'',from:'',to:'',con:'',auth:[],sD:1,dD:true,sA:0,dA:true};
 var auth2Q='';
 
 function rng2(){
@@ -1368,7 +1377,7 @@ function daysTxt(v){
 function renderDel(list){
   $('delMeta').textContent=nf(list.length)+' brief'+(list.length===1?'':'s');
   if(!list.length){
-    $('tbDel').innerHTML='<tr><td colspan="14"><div class="dnone">Nothing matches those filters.</div></td></tr>';
+    $('tbDel').innerHTML='<tr><td colspan="17"><div class="dnone">Nothing matches those filters.</div></td></tr>';
     return;
   }
   var h='';
@@ -1387,7 +1396,10 @@ function renderDel(list){
        '<td class="w-dv">'+esc(r[14])+'</td>'+
        '<td class="w-dv">'+esc(r[15])+'</td>'+
        '<td class="w-dv">'+esc(r[16])+'</td>'+
-       '<td class="w-dv">'+esc(r[17])+'</td></tr>';
+       '<td class="w-dv">'+esc(r[17])+'</td>'+
+       '<td class="w-dl rpt">'+esc(dmy(r[0]))+'</td>'+
+       '<td class="w-rt rpt">'+esc(dmy(r[1]))+'</td>'+
+       '<td class="w-au rpt">'+esc(r[3])+'</td></tr>';
   });
   $('tbDel').innerHTML=h;
   document.querySelectorAll('#tblDel thead th[data-d]').forEach(function(th){
@@ -1398,46 +1410,25 @@ function renderDel(list){
   });
 }
 
-/* The consultant's comment and the agreed action sit beneath the row, open
-   by default, exactly as the customer comment does on tab 1. */
 function renderAct(list){
   var withA=0;
   list.forEach(function(r){if(r[18]||r[19])withA++;});
   $('actMeta').textContent=nf(list.length)+' brief'+(list.length===1?'':'s')+
     ' \u00b7 '+nf(withA)+' with comments or actions';
   if(!list.length){
-    $('tbAct').innerHTML='<tr><td colspan="4"><div class="dnone">Nothing matches those filters.</div></td></tr>';
+    $('tbAct').innerHTML='<tr><td colspan="5"><div class="dnone">Nothing matches those filters.</div></td></tr>';
     return;
   }
   var h='';
-  var sorted=sort2(list,UI2.sA,UI2.dA);
-  sorted.forEach(function(r){
-    var key=rowKey(r);
-    var has=!!(r[18]||r[19]);
-    var open=has&&(UI2.open[key]===undefined?true:UI2.open[key]);
-    h+='<tr class="r'+(has?' hascm':'')+(open?' open':'')+'" data-k="'+esc(key)+'">'+
-       '<td class="a-cx">'+(has?'<span class="cmark">'+BUBBLE+'</span>':'')+'</td>'+
+  sort2(list,UI2.sA,UI2.dA).forEach(function(r){
+    h+='<tr class="r">'+
        '<td class="a-dt">'+esc(dmy(r[0]))+'</td>'+
        '<td class="a-au">'+esc(r[3])+'</td>'+
+       '<td class="a-cc">'+esc(r[18]).replace(/\n/g,'<br>')+'</td>'+
+       '<td class="a-pa">'+esc(r[19]).replace(/\n/g,'<br>')+'</td>'+
        '<td class="a-ae">'+(r[20]?'<span class="aname">'+esc(r[20])+'</span>':'')+'</td></tr>';
-    if(open){
-      var b='';
-      if(r[18])b+='<div class="ablk"><div class="ak">Idox consultant comments</div>'+
-                  '<div class="av">'+esc(r[18]).replace(/\n/g,'<br>')+'</div></div>';
-      if(r[19])b+='<div class="ablk act"><div class="ak">Post delivery actions</div>'+
-                  '<div class="av">'+esc(r[19]).replace(/\n/g,'<br>')+'</div></div>';
-      h+='<tr class="cmt"><td colspan="4">'+b+'</td></tr>';
-    }
   });
   $('tbAct').innerHTML=h;
-  $('tbAct').querySelectorAll('tr.r.hascm').forEach(function(tr){
-    tr.addEventListener('click',function(){
-      var k=tr.getAttribute('data-k');
-      var cur=(UI2.open[k]===undefined)?true:UI2.open[k];
-      UI2.open[k]=!cur;
-      render2();
-    });
-  });
   document.querySelectorAll('#tblAct thead th[data-a]').forEach(function(th){
     var s=+th.getAttribute('data-a');
     th.classList.toggle('s',s===UI2.sA);
@@ -1484,7 +1475,7 @@ $('p2To').addEventListener('change',function(){UI2.to=this.value;render2();});
 $('segDel').addEventListener('click',function(){setView2('del');});
 $('segAct').addEventListener('click',function(){setView2('act');});
 $('p2Clear').addEventListener('click',function(){
-  UI2={period:'',from:'',to:'',con:'',auth:[],sD:1,dD:true,sA:0,dA:true,open:{}};
+  UI2={period:'',from:'',to:'',con:'',auth:[],sD:1,dD:true,sA:0,dA:true};
   auth2Q='';$('p2From').value='';$('p2To').value='';
   buildFilt2();render2();
 });
