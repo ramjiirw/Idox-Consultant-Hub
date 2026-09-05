@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.6";</script>
+<script>window.BUILD = "1.7";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -243,6 +243,67 @@
     .rprint.show,.rprint.show .rprint-page,.rprint.closing,.rprint.closing .rprint-page{animation:none !important}
   }
 
+  /* ---------- tab 2: service deliverables ----------
+     Two boxes of fixed height, two thirds and one third of whatever the
+     screen leaves after the header and the filter bar. Each box scrolls
+     itself, so the horizontal scrollbar on the wide table is always within
+     reach instead of a mile down the page. Heights are measured in
+     setPanes(), the same way setStick() measures the header. */
+  .dbox{background:var(--surface);border:1px solid var(--edge);border-radius:var(--radius);display:flex;flex-direction:column;min-height:0;margin-bottom:16px}
+  .dbox.top{height:var(--h2a,430px)}
+  .dbox.bot{height:var(--h2b,220px)}
+  .dbox .tblhead{flex:0 0 auto}
+  .dscroll{flex:1 1 auto;min-height:0;overflow:auto;border-top:1px solid var(--edge);border-radius:0 0 var(--radius) var(--radius);scrollbar-width:thin}
+  .dscroll::-webkit-scrollbar{width:10px;height:10px}
+  .dscroll::-webkit-scrollbar-thumb{background:#C6D0DA;border-radius:5px}
+  .dscroll::-webkit-scrollbar-track{background:var(--paper)}
+
+  /* border-collapse must be separate, or sticky cells lose their borders */
+  .dtab{width:100%;border-collapse:separate;border-spacing:0}
+  .dtab thead th{position:sticky;top:0;z-index:12;text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;padding:9px 12px;background:#E7F0EF;color:#2C6462;border-bottom:1px solid var(--edge);white-space:nowrap;vertical-align:bottom;line-height:1.3;user-select:none;cursor:pointer}
+  .dtab thead th:hover{color:var(--petrol)}
+  .dtab thead th .ar{opacity:0;font-size:8px;margin-left:5px;vertical-align:middle}
+  .dtab thead th.s .ar{opacity:1}
+  .dtab td{padding:10px 12px;border-bottom:1px solid var(--hairline);font-size:13px;vertical-align:top;background:var(--surface)}
+  .dtab tr.r:hover td{background:#FAFBFC}
+  .dtab tr.r.hascm{cursor:pointer}
+  .dnone{padding:38px 16px;text-align:center;color:var(--slate);font-size:13.5px}
+
+  /* the wide table: fourteen columns, so it scrolls sideways */
+  #tblDel{min-width:2142px}
+  #tblDel .w-dl{width:88px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  #tblDel .w-rt{width:88px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  #tblDel .w-au{width:150px;color:var(--slate)}
+  #tblDel .w-ra{width:112px;white-space:nowrap}
+  #tblDel .w-co{width:130px}
+  #tblDel .w-de{width:190px}
+  #tblDel .w-da{width:84px;text-align:center;font-variant-numeric:tabular-nums}
+  #tblDel .w-ty{width:100px}
+  #tblDel .w-dv{width:200px}
+  #tblDel thead th.w-au{color:#2C6462}
+  #tblDel thead th.w-da{text-align:center}
+
+  /* Delivery, Return and Local Authority hold against the left edge. This is
+     why the Power BI table repeated those columns on the far right — with
+     them frozen, the duplicates are not needed. */
+  #tblDel thead th:nth-child(1),#tblDel tbody td:nth-child(1){position:sticky;left:0;z-index:8}
+  #tblDel thead th:nth-child(2),#tblDel tbody td:nth-child(2){position:sticky;left:88px;z-index:8}
+  #tblDel thead th:nth-child(3),#tblDel tbody td:nth-child(3){position:sticky;left:176px;z-index:8;box-shadow:9px 0 10px -9px rgba(24,33,47,.3)}
+  #tblDel thead th:nth-child(1),#tblDel thead th:nth-child(2){z-index:18}
+  #tblDel thead th:nth-child(3){z-index:18;box-shadow:9px 0 10px -9px rgba(24,33,47,.3)}
+
+  /* the actions table underneath */
+  #tblAct .a-cx{width:46px;padding-left:14px;padding-right:0}
+  #tblAct .a-dt{width:104px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  #tblAct .a-au{width:300px;color:var(--slate)}
+  #tblAct .a-ae{width:auto}
+  #tblAct tr.cmt td{background:#F7F9FA;padding:2px 16px 14px 56px}
+  .ablk{margin-top:11px}
+  .ablk .ak{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);margin-bottom:4px}
+  .ablk .av{font-size:13px;line-height:1.6;border-left:3px solid var(--petrol);padding-left:12px}
+  .ablk.act .av{border-left-color:var(--amber)}
+  .aname{display:inline-block;font-size:12px;font-weight:600;color:var(--slate);background:var(--paper);border:1px solid var(--hairline);border-radius:20px;padding:2px 9px;white-space:nowrap}
+
   .soon{background:var(--surface);border:1px dashed var(--edge);border-radius:var(--radius);padding:52px 24px;text-align:center;color:var(--slate)}
   .soon h3{font-size:16px;margin-bottom:7px}
   .soon p{margin:0;font-size:13px;color:var(--faint)}
@@ -369,7 +430,55 @@
 
   <!-- ============ TAB 2 ============ -->
   <div class="pane" id="p2">
-    <div class="soon"><h3>Service Deliverables</h3><p>Not built yet. This will hold the wide deliverables table and the consultant comments with post-delivery actions.</p></div>
+
+    <div class="filt" id="filt2">
+      <div class="f ddwrap"><label>Period</label><button class="ddbtn" id="p2PerBtn" style="width:168px"><span class="cv" id="p2PerCv">All years</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="p2PerPop"></div></div>
+      <div class="f repcustom" id="p2Custom" style="align-items:end"><span style="display:flex;align-items:center;gap:6px"><input class="inp" type="date" id="p2From"><span class="fl" style="font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--slate)">to</span><input class="inp" type="date" id="p2To"></span></div>
+      <div class="f ddwrap"><label>Idox Consultant</label><button class="ddbtn w-con" id="p2ConBtn"><span class="cv" id="p2ConCv">All consultants</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="p2ConPop"></div></div>
+      <div class="f ddwrap"><label>Local Authority</label><button class="ddbtn w-auth" id="p2AuthBtn"><span class="cv" id="p2AuthCv">All authorities</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="p2AuthPop"></div></div>
+      <button class="clearbtn" id="p2Clear">Clear</button>
+    </div>
+
+    <div class="dbox top">
+      <div class="tblhead"><h3>Service Deliverables</h3><span class="meta" id="delMeta"></span></div>
+      <div class="dscroll">
+        <table class="dtab" id="tblDel">
+          <thead><tr>
+            <th class="w-dl" data-d="0">Delivery<span class="ar">&#9650;</span></th>
+            <th class="w-rt s" data-d="1">Return<span class="ar">&#9660;</span></th>
+            <th class="w-au" data-d="3">Local Authority<span class="ar">&#9650;</span></th>
+            <th class="w-ra" data-d="8">Delivery Rating<span class="ar">&#9650;</span></th>
+            <th class="w-co" data-d="7">Idox Consultant<span class="ar">&#9650;</span></th>
+            <th class="w-de" data-d="5">Delivery Description<span class="ar">&#9650;</span></th>
+            <th class="w-da" data-d="11">Delivery Days<span class="ar">&#9650;</span></th>
+            <th class="w-ty" data-d="6">Delivery Type<span class="ar">&#9650;</span></th>
+            <th class="w-dv" data-d="12">Deliverable 1<span class="ar">&#9650;</span></th>
+            <th class="w-dv" data-d="13">Deliverable 2<span class="ar">&#9650;</span></th>
+            <th class="w-dv" data-d="14">Deliverable 3<span class="ar">&#9650;</span></th>
+            <th class="w-dv" data-d="15">Deliverable 4<span class="ar">&#9650;</span></th>
+            <th class="w-dv" data-d="16">Deliverable 5<span class="ar">&#9650;</span></th>
+            <th class="w-dv" data-d="17">Deliverable 6<span class="ar">&#9650;</span></th>
+          </tr></thead>
+          <tbody id="tbDel"><tr><td colspan="14"><div class="dnone">Reading the latest service briefs&hellip;</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="dbox bot">
+      <div class="tblhead"><h3>Consultant Comments &amp; Agreed Post Delivery Actions</h3><span class="meta" id="actMeta"></span></div>
+      <div class="dscroll">
+        <table class="dtab" id="tblAct">
+          <thead><tr>
+            <th class="a-cx"></th>
+            <th class="a-dt s" data-a="0">Delivery Date<span class="ar">&#9660;</span></th>
+            <th class="a-au" data-a="3">Local Authority<span class="ar">&#9650;</span></th>
+            <th class="a-ae" data-a="20">Post Delivery Actionee<span class="ar">&#9650;</span></th>
+          </tr></thead>
+          <tbody id="tbAct"><tr><td colspan="4"><div class="dnone">Reading the latest service briefs&hellip;</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <!-- ============ TAB 3 ============ -->
@@ -898,6 +1007,7 @@ document.querySelectorAll('.tab').forEach(function(t){
     document.querySelectorAll('.pane').forEach(function(x){x.classList.remove('on');});
     t.classList.add('on');
     $(t.getAttribute('data-pane')).classList.add('on');
+    if(t.getAttribute('data-pane')==='p2')setPanes();
   });
 });
 
@@ -1091,6 +1201,289 @@ function openReport(){
 }
 function closeReport(){ closeWith($('repOverlay'),200); }
 
+/* ---------- tab 2: service deliverables ------------------------------------
+   Its own filters, independent of tab 1 — this tab is evidence of what was
+   delivered, not a second view of the same enquiry. Period filters on the
+   return date, matching tab 1's Year, so a brief sits in the same year
+   whichever tab you are on.
+   Row positions 11 to 20 arrive from feed 1.5:
+   11 days · 12-17 deliverable 1 to 6 · 18 consultant comment
+   19 post delivery actions · 20 post delivery actionee                     */
+
+var UI2={period:'',from:'',to:'',con:'',auth:[],sD:1,dD:true,sA:0,dA:true,open:{}};
+var auth2Q='';
+
+function rng2(){
+  if(!UI2.period)return null;
+  if(UI2.period==='custom')return {from:UI2.from||'0000-01-01',to:UI2.to||'9999-12-31'};
+  return {from:UI2.period+'-01-01',to:UI2.period+'-12-31'};
+}
+function pass2(r,skip){
+  var rg=rng2();
+  if(skip!=='period'&&rg){ if(!r[1]||r[1]<rg.from||r[1]>rg.to)return false; }
+  if(skip!=='con'  &&UI2.con&&r[7]!==UI2.con)return false;
+  if(skip!=='auth' &&UI2.auth.length&&UI2.auth.indexOf(r[3])<0)return false;
+  return true;
+}
+function rows2(skip){return ROWS.filter(function(r){return pass2(r,skip);});}
+
+function periodLabel2(){
+  if(!UI2.period)return 'All years';
+  if(UI2.period==='custom')return 'Custom dates';
+  return UI2.period;
+}
+function buildPer2(){
+  var items=[['','All years']];
+  repYears().forEach(function(y){items.push([y,y]);});
+  items.push(['custom','Custom dates\u2026']);
+  $('p2PerPop').innerHTML=items.map(function(it){
+    return '<button class="dditem'+(it[0]===UI2.period?' on':'')+'" data-p2y="'+it[0]+'">'+esc(it[1])+'</button>';
+  }).join('');
+  $('p2PerPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      UI2.period=b.getAttribute('data-p2y');
+      if(UI2.period==='custom'&&!UI2.from){
+        var a=new Date(todayISO());a.setFullYear(a.getFullYear()-1);
+        UI2.from=a.toISOString().slice(0,10);UI2.to=todayISO();
+        $('p2From').value=UI2.from;$('p2To').value=UI2.to;
+      }
+      $('p2PerPop').classList.remove('on');
+      buildFilt2();render2();
+    });
+  });
+  $('p2PerCv').textContent=periodLabel2();
+  $('p2Custom').classList.toggle('on',UI2.period==='custom');
+}
+function buildCon2(){
+  var base=rows2('con');
+  var cc=countBy(base,function(r){return r[7];});
+  var cons=cc.keys.slice().sort(function(a,b){return norm(a)<norm(b)?-1:1;});
+  if(UI2.con&&cons.indexOf(UI2.con)<0)UI2.con='';
+  var cut=twelveMonthsAgo(),act=[],dorm=[];
+  cons.forEach(function(c){ (LASTSEEN[c]&&LASTSEEN[c]>=cut?act:dorm).push(c); });
+  var h='<div class="pophead">Briefs</div>'+popItem('','All consultants',base.length,!UI2.con,'data-p2c');
+  if(act.length){
+    h+='<div class="ddhead">Currently delivering</div>';
+    act.forEach(function(c){h+=popItem(c,c,cc.m[c],UI2.con===c,'data-p2c');});
+  }
+  if(dorm.length){
+    h+='<div class="ddhead later">Not in the last 12 months ('+dorm.length+')</div>';
+    dorm.forEach(function(c){h+=popItem(c,c,cc.m[c],UI2.con===c,'data-p2c');});
+  }
+  $('p2ConPop').innerHTML=h;
+  $('p2ConPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      UI2.con=b.getAttribute('data-p2c');
+      $('p2ConPop').classList.remove('on');buildFilt2();render2();
+    });
+  });
+  $('p2ConCv').textContent=UI2.con||'All consultants';
+}
+function buildAuth2(){
+  var base=rows2('auth');
+  var c=countBy(base,function(r){return r[3];});
+  var keys=c.keys.slice().sort(function(a,b){return norm(a)<norm(b)?-1:1;});
+  var q=norm(auth2Q);
+  var shown=keys.filter(function(k){return !q||norm(k).indexOf(q)>=0;});
+
+  var h='<div class="popsearch"><input id="p2AuthQ" placeholder="Type to narrow the list" value="'+esc(auth2Q)+'"></div>';
+  h+='<div class="pophead">Briefs</div>';
+  if(q&&shown.length){
+    var n=0;shown.forEach(function(k){n+=c.m[k];});
+    h+='<button class="selall" id="p2AuthAll"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'+
+       'Select all '+shown.length+' showing<span class="ct">'+nf(n)+'</span></button>';
+  }
+  h+=popItem('','All authorities',base.length,!UI2.auth.length,'data-p2a');
+  shown.forEach(function(k){h+=popItem(k,k,c.m[k],UI2.auth.indexOf(k)>=0,'data-p2a');});
+  if(!shown.length)h+='<div class="popnone">No authority matches that.</div>';
+  $('p2AuthPop').innerHTML=h;
+
+  var qi=$('p2AuthQ');
+  qi.addEventListener('click',function(e){e.stopPropagation();});
+  qi.addEventListener('input',function(e){
+    auth2Q=e.target.value;buildAuth2();
+    var f=$('p2AuthQ');f.focus();f.setSelectionRange(f.value.length,f.value.length);
+  });
+  var sa=$('p2AuthAll');
+  if(sa)sa.addEventListener('click',function(e){
+    e.stopPropagation();
+    UI2.auth=shown.slice();
+    $('p2AuthPop').classList.remove('on');buildFilt2();render2();
+  });
+  $('p2AuthPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      var v=b.getAttribute('data-p2a');
+      UI2.auth=v?[v]:[];
+      $('p2AuthPop').classList.remove('on');buildFilt2();render2();
+    });
+  });
+  $('p2AuthCv').textContent=
+    UI2.auth.length===0?'All authorities':
+    UI2.auth.length===1?UI2.auth[0]:
+    UI2.auth.length+' authorities';
+}
+function buildFilt2(){
+  buildPer2();
+  buildCon2();
+  UI2.auth=UI2.auth.filter(function(a){
+    return rows2('auth').some(function(r){return r[3]===a;});
+  });
+  buildAuth2();
+}
+
+/* Both boxes share one sort helper. Days is numeric, rating has its own
+   order, everything else compares as text. */
+function sort2(list,s,desc){
+  var d=desc?-1:1;
+  return list.slice().sort(function(a,b){
+    var x=a[s],y=b[s];
+    if(s===11){x=x===''?-1:+x;y=y===''?-1:+y;}
+    else if(s===8){
+      var o={Excellent:1,Good:2,Average:3,Poor:4,Unreturned:5,'':6};
+      x=o[a[8]];y=o[b[8]];
+    }else{x=norm(x);y=norm(y);}
+    if(x<y)return -1*d;
+    if(x>y)return 1*d;
+    return 0;
+  });
+}
+function daysTxt(v){
+  if(v===''||v===null||v===undefined)return '';
+  var n=Number(v);
+  return isNaN(n)?'':n.toFixed(2);
+}
+
+function renderDel(list){
+  $('delMeta').textContent=nf(list.length)+' brief'+(list.length===1?'':'s');
+  if(!list.length){
+    $('tbDel').innerHTML='<tr><td colspan="14"><div class="dnone">Nothing matches those filters.</div></td></tr>';
+    return;
+  }
+  var h='';
+  sort2(list,UI2.sD,UI2.dD).forEach(function(r){
+    h+='<tr class="r">'+
+       '<td class="w-dl">'+esc(dmy(r[0]))+'</td>'+
+       '<td class="w-rt">'+esc(dmy(r[1]))+'</td>'+
+       '<td class="w-au">'+esc(r[3])+'</td>'+
+       '<td class="w-ra">'+pillFor(r[8])+'</td>'+
+       '<td class="w-co">'+esc(r[7])+'</td>'+
+       '<td class="w-de">'+esc(r[5])+'</td>'+
+       '<td class="w-da">'+esc(daysTxt(r[11]))+'</td>'+
+       '<td class="w-ty">'+esc(r[6])+'</td>'+
+       '<td class="w-dv">'+esc(r[12])+'</td>'+
+       '<td class="w-dv">'+esc(r[13])+'</td>'+
+       '<td class="w-dv">'+esc(r[14])+'</td>'+
+       '<td class="w-dv">'+esc(r[15])+'</td>'+
+       '<td class="w-dv">'+esc(r[16])+'</td>'+
+       '<td class="w-dv">'+esc(r[17])+'</td></tr>';
+  });
+  $('tbDel').innerHTML=h;
+  document.querySelectorAll('#tblDel thead th[data-d]').forEach(function(th){
+    var s=+th.getAttribute('data-d');
+    th.classList.toggle('s',s===UI2.sD);
+    var ar=th.querySelector('.ar');
+    if(ar)ar.innerHTML=(s===UI2.sD&&UI2.dD)?'&#9660;':'&#9650;';
+  });
+}
+
+/* The consultant's comment and the agreed action sit beneath the row, open
+   by default, exactly as the customer comment does on tab 1. */
+function renderAct(list){
+  var withA=0;
+  list.forEach(function(r){if(r[18]||r[19])withA++;});
+  $('actMeta').textContent=nf(list.length)+' brief'+(list.length===1?'':'s')+
+    ' \u00b7 '+nf(withA)+' with comments or actions';
+  if(!list.length){
+    $('tbAct').innerHTML='<tr><td colspan="4"><div class="dnone">Nothing matches those filters.</div></td></tr>';
+    return;
+  }
+  var h='';
+  var sorted=sort2(list,UI2.sA,UI2.dA);
+  sorted.forEach(function(r){
+    var key=rowKey(r);
+    var has=!!(r[18]||r[19]);
+    var open=has&&(UI2.open[key]===undefined?true:UI2.open[key]);
+    h+='<tr class="r'+(has?' hascm':'')+(open?' open':'')+'" data-k="'+esc(key)+'">'+
+       '<td class="a-cx">'+(has?'<span class="cmark">'+BUBBLE+'</span>':'')+'</td>'+
+       '<td class="a-dt">'+esc(dmy(r[0]))+'</td>'+
+       '<td class="a-au">'+esc(r[3])+'</td>'+
+       '<td class="a-ae">'+(r[20]?'<span class="aname">'+esc(r[20])+'</span>':'')+'</td></tr>';
+    if(open){
+      var b='';
+      if(r[18])b+='<div class="ablk"><div class="ak">Idox consultant comments</div>'+
+                  '<div class="av">'+esc(r[18]).replace(/\n/g,'<br>')+'</div></div>';
+      if(r[19])b+='<div class="ablk act"><div class="ak">Post delivery actions</div>'+
+                  '<div class="av">'+esc(r[19]).replace(/\n/g,'<br>')+'</div></div>';
+      h+='<tr class="cmt"><td colspan="4">'+b+'</td></tr>';
+    }
+  });
+  $('tbAct').innerHTML=h;
+  $('tbAct').querySelectorAll('tr.r.hascm').forEach(function(tr){
+    tr.addEventListener('click',function(){
+      var k=tr.getAttribute('data-k');
+      var cur=(UI2.open[k]===undefined)?true:UI2.open[k];
+      UI2.open[k]=!cur;
+      render2();
+    });
+  });
+  document.querySelectorAll('#tblAct thead th[data-a]').forEach(function(th){
+    var s=+th.getAttribute('data-a');
+    th.classList.toggle('s',s===UI2.sA);
+    var ar=th.querySelector('.ar');
+    if(ar)ar.innerHTML=(s===UI2.sA&&UI2.dA)?'&#9660;':'&#9650;';
+  });
+}
+function render2(){
+  var list=rows2();
+  renderDel(list);
+  renderAct(list);
+}
+
+/* Two thirds and one third of what the screen leaves, so both tables are on
+   screen at once and the page itself barely moves. Floors stop them becoming
+   useless on a short laptop screen — below that the page scrolls instead. */
+function setPanes(){
+  var hdr=document.querySelector('.appheader').getBoundingClientRect().height;
+  var fb=$('filt2').getBoundingClientRect().height;
+  var avail=window.innerHeight-hdr-fb-84;
+  var a=Math.round(avail*2/3),b=avail-a-16;
+  if(a<250)a=250;
+  if(b<165)b=165;
+  document.documentElement.style.setProperty('--h2a',a+'px');
+  document.documentElement.style.setProperty('--h2b',b+'px');
+}
+
+[['p2PerBtn','p2PerPop',168],['p2ConBtn','p2ConPop',0]].forEach(function(p){
+  $(p[0]).addEventListener('click',function(e){e.stopPropagation();openPop($(p[0]),$(p[1]),p[2]);});
+});
+$('p2AuthBtn').addEventListener('click',function(e){
+  e.stopPropagation();
+  auth2Q='';buildAuth2();
+  openPop($('p2AuthBtn'),$('p2AuthPop'),320);
+  var q=$('p2AuthQ');if(q)q.focus();
+});
+$('p2From').addEventListener('change',function(){UI2.from=this.value;render2();});
+$('p2To').addEventListener('change',function(){UI2.to=this.value;render2();});
+$('p2Clear').addEventListener('click',function(){
+  UI2={period:'',from:'',to:'',con:'',auth:[],sD:1,dD:true,sA:0,dA:true,open:{}};
+  auth2Q='';$('p2From').value='';$('p2To').value='';
+  buildFilt2();render2();
+});
+document.querySelectorAll('#tblDel thead th[data-d]').forEach(function(th){
+  th.addEventListener('click',function(){
+    var s=+th.getAttribute('data-d');
+    if(UI2.sD===s)UI2.dD=!UI2.dD; else {UI2.sD=s;UI2.dD=(s===0||s===1||s===11);}
+    render2();
+  });
+});
+document.querySelectorAll('#tblAct thead th[data-a]').forEach(function(th){
+  th.addEventListener('click',function(){
+    var s=+th.getAttribute('data-a');
+    if(UI2.sA===s)UI2.dA=!UI2.dA; else {UI2.sA=s;UI2.dA=(s===0);}
+    render2();
+  });
+});
+
 /* ---------- the live source ----------
    A read-only Apps Script sitting on the Service Brief sheet. It runs as the
    sheet's owner, so the sheet itself stays private and unpublished, and it
@@ -1130,12 +1523,15 @@ function boot(data,latest){
   buildPeople();
   rebuildFilters();
   render();
+  buildFilt2();
+  render2();
 }
 function setStick(){
   var hh=document.querySelector('.appheader').getBoundingClientRect().height;
   document.documentElement.style.setProperty('--stick',Math.round(hh)+'px');
 }
 setStick();window.addEventListener('resize',setStick);
+window.addEventListener('resize',setPanes);
 
 $('toTop').addEventListener('click',backToTop);
 window.addEventListener('scroll',function(){
