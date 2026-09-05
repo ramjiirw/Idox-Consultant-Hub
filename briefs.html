@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.5";</script>
+<script>window.BUILD = "1.6";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -388,6 +388,7 @@
     <span class="repcustom" id="repCustom"><input class="inp" type="date" id="repFrom"><span class="fl" style="margin:0 2px">to</span><input class="inp" type="date" id="repTo"></span>
     <span class="fl">Consultant</span><span class="ddwrap"><button class="ddbtn" id="repConBtn"><span class="cv" id="repConCv">All consultants</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="repConPop"></div></span>
     <label class="toggle" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="repCmt" checked>Include comments</label>
+    <label class="toggle" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="repNoUn">Exclude unreturned</label>
     <div class="sp"></div>
     <button class="printbtn" id="repGo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M6 17H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>Save PDF</button>
     <button class="clearbtn" id="repClose">Close</button>
@@ -906,7 +907,7 @@ document.querySelectorAll('.tab').forEach(function(t){
    changing it in the report changes the page behind. Period is not shared.
    The range is always bounded — an unbounded report with comments would run
    to 432 briefs and 240 comments. */
-var REP={period:'',from:'',to:'',cmt:true};
+var REP={period:'',from:'',to:'',cmt:true,noUn:false};
 
 function todayISO(){
   var d=new Date(),p=function(n){n=String(n);return n.length<2?'0'+n:n;};
@@ -948,6 +949,7 @@ function repRows(){
   var rg=repRange();
   return ROWS.filter(function(r){
     if(!r[1]||r[1]<rg.from||r[1]>rg.to)return false;
+    if(REP.noUn && r[8]==='Unreturned')return false;
     if(UI.con && r[7]!==UI.con)return false;
     if(UI.auth.length && UI.auth.indexOf(r[3])<0)return false;
     if(UI.typ && r[6]!==UI.typ)return false;
@@ -969,6 +971,7 @@ function repScope(){
   if(UI.typ)bits.push(UI.typ);
   if(UI.rat)bits.push('Rated '+UI.rat);
   if(UI.q)bits.push('Search: "'+UI.q+'"');
+  if(REP.noUn)bits.push('Unreturned excluded');
   return bits.join('   \u00b7   ');
 }
 /* Print drops CSS variables, so these colours are written out in full. */
@@ -1063,6 +1066,7 @@ function buildRepPops(){
   var rg=repRange(),cons={},order=[];
   ROWS.forEach(function(r){
     if(!r[1]||r[1]<rg.from||r[1]>rg.to)return;
+    if(REP.noUn && r[8]==='Unreturned')return;
     var c=r[7];if(c&&!cons[c]){cons[c]=1;order.push(c);}
   });
   order.sort(function(a,b){return norm(a)<norm(b)?-1:1;});
@@ -1081,6 +1085,7 @@ function buildRepPops(){
 function openReport(){
   if(!REP.period)REP.period=UI.year||repYears()[0]||'';
   REP.cmt=$('repCmt').checked;
+  REP.noUn=$('repNoUn').checked;
   buildRepPops();renderReport();
   $('repOverlay').classList.add('show');
 }
@@ -1142,6 +1147,11 @@ $('repBtn').addEventListener('click',openReport);
 $('repClose').addEventListener('click',closeReport);
 $('repGo').addEventListener('click',function(){window.print();});
 $('repCmt').addEventListener('change',function(){REP.cmt=this.checked;renderReport();});
+$('repNoUn').addEventListener('change',function(){
+  REP.noUn=this.checked;
+  /* the consultant list can shrink, and a chosen consultant may vanish */
+  buildRepPops();renderReport();
+});
 $('repFrom').addEventListener('change',function(){REP.from=this.value;renderReport();});
 $('repTo').addEventListener('change',function(){REP.to=this.value;renderReport();});
 [['repYrBtn','repYrPop',168],['repConBtn','repConPop',0]].forEach(function(p){
