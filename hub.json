@@ -1,17 +1,17 @@
 {
   "evaluations": {
-    "bakedAt": "2026-09-04T22:18:25.432Z",
-    "evals": 2852,
-    "courses": 1503,
+    "bakedAt": "2026-09-05T08:12:03.968Z",
+    "evals": 2855,
+    "courses": 1505,
     "ratings": {
-      "Excellent": 1789,
-      "Good": 969,
+      "Excellent": 1791,
+      "Good": 970,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 389,
+    "evals12": 391,
     "pct12": 98
   },
   "schedule": {
