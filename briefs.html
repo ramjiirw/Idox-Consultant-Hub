@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.4";</script>
+<script>window.BUILD = "1.5";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -178,6 +178,71 @@
   .pager button:disabled{opacity:.4;cursor:default}
   .pager .pi{font-size:12.5px;color:var(--slate);font-variant-numeric:tabular-nums}
 
+  /* ---------- report ---------- */
+  .repbtn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--petrol);background:var(--surface);color:var(--petrol);border-radius:9px;padding:7px 13px;font-size:12.5px;font-weight:600}
+  .repbtn:hover{background:var(--petrol-soft)}
+  .repbtn svg{width:14px;height:14px}
+  .printbtn{display:inline-flex;align-items:center;gap:7px;border:none;background:var(--petrol);color:#fff;border-radius:9px;padding:8px 15px;font-size:12.5px;font-weight:600}
+  .printbtn:hover{background:#0b5a5a}
+  .printbtn svg{width:15px;height:15px}
+  .rprint{position:fixed;inset:0;z-index:60;background:rgba(24,33,47,.55);display:none;flex-direction:column}
+  .rprint.show{display:flex;animation:overlayFade .2s ease}
+  .rprint.show .rprint-page{animation:popRise2 .32s cubic-bezier(.22,.61,.36,1)}
+  .rprint.closing{animation:overlayOut .2s ease forwards}
+  .rprint.closing .rprint-page{animation:popSink2 .2s ease forwards}
+  @keyframes overlayFade{from{opacity:0}to{opacity:1}}
+  @keyframes popRise2{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+  @keyframes popSink2{from{opacity:1;transform:none}to{opacity:0;transform:translateY(10px) scale(.99)}}
+  .rprint-bar{display:flex;align-items:center;gap:12px;padding:11px 18px;background:var(--surface);border-bottom:1px solid var(--edge);flex-wrap:wrap}
+  .rprint-bar .sp{flex:1}
+  .ipb-label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);font-weight:600}
+  .rprint-bar .fl{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--slate);margin-right:6px}
+  .repcustom{display:none;align-items:center;gap:6px}
+  .repcustom.on{display:flex}
+  .repcustom .inp{font-size:12.5px;padding:7px 9px}
+  .pwarn{background:var(--amber-soft);border:1px solid rgba(200,116,26,.45);border-radius:8px;padding:9px 13px;font-size:12.5px;color:#7a4a12;margin-bottom:12px}
+  .rprint-page{flex:1;overflow:auto;background:#fff;margin:18px auto;width:96%;max-width:1180px;padding:26px 30px;box-shadow:0 10px 40px rgba(0,0,0,.3);border-radius:6px}
+  .phead{display:flex;align-items:flex-start;gap:16px;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:14px}
+  .ptitle{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px}
+  .pyear{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;line-height:1.1;letter-spacing:-.02em;color:var(--petrol);margin-left:16px;padding-left:16px;border-left:2px solid var(--hairline);align-self:center;white-space:nowrap}
+  .psub{color:var(--slate);font-size:14px;margin-top:4px}
+  .pwhen{margin-left:auto;color:var(--slate);font-size:12.5px;white-space:nowrap;text-align:right;line-height:1.45}
+  .pwhen .pb{font-size:11px;color:var(--faint)}
+  .pstats{display:flex;gap:10px;margin-bottom:16px}
+  .pstat{flex:1;border:1px solid var(--edge);border-left:5px solid var(--petrol);border-radius:7px;padding:9px 14px;background:#F7FAFA}
+  .pstat .n{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:23px;line-height:1.1;color:var(--petrol)}
+  .pstat .l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);margin-top:2px}
+  .pstat.good{border-left-color:var(--exc);background:#F4FAF6}
+  .pstat.good .n{color:var(--exc)}
+  /* The table stays compact because it is reference material; the comments are
+     at full reading size because they are the part you actually read. Only the
+     dates are held on one line — forcing the rest not to wrap is what made the
+     evaluations table too wide for the page. */
+  .ptab{width:100%;border-collapse:collapse;font-size:11.5px}
+  .ptab th{text-align:left;font-weight:700;color:#fff;background:var(--ink);padding:5px 7px;border:1px solid var(--ink);vertical-align:bottom;position:static;z-index:auto;box-shadow:none;text-transform:none;letter-spacing:0;cursor:default}
+  .ptab td{padding:5px 7px;border:1px solid var(--hairline);vertical-align:top}
+  .ptab tbody tr.d:nth-of-type(even){background:#F7F8FA}
+  .ptab td.nw{white-space:nowrap}
+  .ptab .rp{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:700}
+  .ptab tr.pc td{background:#F2F7F7;padding:6px 7px 9px 20px;border-top:none}
+  .ptab tr.pc .pck{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);margin-top:6px}
+  .ptab tr.pc .pcv{font-size:13px;line-height:1.5;border-left:2px solid var(--petrol);padding-left:9px;margin-top:2px}
+  .pempty{color:var(--slate);padding:30px;text-align:center}
+  .pnote{font-size:13px;color:var(--slate);margin-top:14px}
+  @media print{
+    @page{size:A4 landscape;margin:10mm}
+    body:has(.rprint.show) > *{display:none !important}
+    body:has(.rprint.show) > #repOverlay{display:block !important}
+    #repOverlay.show{position:absolute;left:0;top:0;width:100%;height:auto !important;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    #repOverlay.show .noprint{display:none !important}
+    .rprint-page{flex:none !important;height:auto !important;box-shadow:none !important;margin:0 !important;max-width:none !important;width:auto !important;padding:0 !important;overflow:visible !important;border-radius:0 !important}
+    .ptab tbody tr{page-break-inside:avoid}
+    .ptab thead{display:table-header-group}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .rprint.show,.rprint.show .rprint-page,.rprint.closing,.rprint.closing .rprint-page{animation:none !important}
+  }
+
   .soon{background:var(--surface);border:1px dashed var(--edge);border-radius:var(--radius);padding:52px 24px;text-align:center;color:var(--slate)}
   .soon h3{font-size:16px;margin-bottom:7px}
   .soon p{margin:0;font-size:13px;color:var(--faint)}
@@ -281,6 +346,7 @@
       <div class="tblhead">
         <h3>Service Delivery &amp; Ratings</h3>
         <span class="meta" id="tblMeta"></span>
+        <button class="repbtn" id="repBtn" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M6 17H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>Report</button>
       </div>
       <table>
         <thead><tr>
@@ -315,6 +381,20 @@
 
 <button class="totop" id="toTop" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
 <div class="buildft" id="buildFoot"></div>
+<div class="rprint" id="repOverlay">
+  <div class="rprint-bar noprint">
+    <span class="ipb-label">Report &mdash; landscape</span>
+    <span class="fl">Period</span><span class="ddwrap"><button class="ddbtn" id="repYrBtn" style="width:168px"><span class="cv" id="repYrCv">&mdash;</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="repYrPop"></div></span>
+    <span class="repcustom" id="repCustom"><input class="inp" type="date" id="repFrom"><span class="fl" style="margin:0 2px">to</span><input class="inp" type="date" id="repTo"></span>
+    <span class="fl">Consultant</span><span class="ddwrap"><button class="ddbtn" id="repConBtn"><span class="cv" id="repConCv">All consultants</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="repConPop"></div></span>
+    <label class="toggle" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="repCmt" checked>Include comments</label>
+    <div class="sp"></div>
+    <button class="printbtn" id="repGo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M6 17H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>Save PDF</button>
+    <button class="clearbtn" id="repClose">Close</button>
+  </div>
+  <div class="rprint-page" id="repBody"></div>
+</div>
+
 <div class="backdrop" id="bd"></div>
 <div class="modal" id="modal"></div>
 
@@ -746,11 +826,11 @@ function showModal(html){
 }
 var modalClosing=false;
 function closeWith(el,ms,after){
-  if(REDUCED||!el.classList.contains('on')){
-    el.classList.remove('on','closing');if(after)after();return;
+  if(REDUCED||!(el.classList.contains('on')||el.classList.contains('show'))){
+    el.classList.remove('on','show','closing');if(after)after();return;
   }
   el.classList.add('closing');
-  setTimeout(function(){el.classList.remove('on','closing');if(after)after();},ms);
+  setTimeout(function(){el.classList.remove('on','show','closing');if(after)after();},ms);
 }
 function closeModal(){
   if(modalClosing)return;
@@ -820,6 +900,192 @@ document.querySelectorAll('.tab').forEach(function(t){
   });
 });
 
+/* ---------- report ----------------------------------------------------------
+   The period replaces the page's Year and Month; every other filter on the
+   page still applies, and the Consultant control here is the same one, so
+   changing it in the report changes the page behind. Period is not shared.
+   The range is always bounded — an unbounded report with comments would run
+   to 432 briefs and 240 comments. */
+var REP={period:'',from:'',to:'',cmt:true};
+
+function todayISO(){
+  var d=new Date(),p=function(n){n=String(n);return n.length<2?'0'+n:n;};
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+}
+function repRange(){
+  var TODAY=todayISO(), from, to=TODAY;
+  function iso(d){return d.toISOString().slice(0,10);}
+  if(REP.period==='y12'){var a=new Date(TODAY);a.setFullYear(a.getFullYear()-1);from=iso(a);}
+  else if(REP.period==='y6'){var b=new Date(TODAY);b.setMonth(b.getMonth()-6);from=iso(b);}
+  else if(REP.period==='custom'){from=REP.from||'0000-01-01';to=REP.to||TODAY;}
+  else{
+    from=REP.period+'-01-01';
+    to=REP.period+'-12-31';
+    /* a report about work already done should not run into the future */
+    if(to>TODAY)to=TODAY;
+  }
+  return {from:from,to:to};
+}
+function fmtLong(iso){
+  if(!iso)return '';
+  var p=iso.split('-');
+  return String(+p[2])+' '+MONTHS[+p[1]-1].slice(0,3)+' '+p[0];
+}
+function repPeriodLabel(){
+  /* Always the real dates. The preset names live in the dropdown, where they
+     help you choose; the report itself has to say what it actually covers. */
+  var r=repRange();
+  return fmtLong(r.from)+' \u2013 '+fmtLong(r.to);
+}
+function repPeriodShort(){
+  if(REP.period==='y12')return 'Last 12 months';
+  if(REP.period==='y6') return 'Last 6 months';
+  if(REP.period==='custom')return 'Custom dates';
+  return REP.period;
+}
+/* The period stands in for Year and Month; everything else still applies. */
+function repRows(){
+  var rg=repRange();
+  return ROWS.filter(function(r){
+    if(!r[1]||r[1]<rg.from||r[1]>rg.to)return false;
+    if(UI.con && r[7]!==UI.con)return false;
+    if(UI.auth.length && UI.auth.indexOf(r[3])<0)return false;
+    if(UI.typ && r[6]!==UI.typ)return false;
+    if(UI.rat){
+      if(UI.rat==='Not rated'){ if(r[8]!=='')return false; }
+      else if(r[8]!==UI.rat)return false;
+    }
+    if(UI.q){
+      var hay=norm(r.join(' ')+' '+dmy(r[0])+' '+dmy(r[1]));
+      if(hay.indexOf(norm(UI.q))<0)return false;
+    }
+    return true;
+  }).sort(function(a,b){return a[1]<b[1]?1:(a[1]>b[1]?-1:0);});
+}
+function repScope(){
+  var bits=[];   /* the period is set large beside the title, not here */
+  if(UI.con)bits.push('Consultant: '+UI.con);
+  if(UI.auth.length)bits.push(UI.auth.length===1?'Authority: '+UI.auth[0]:UI.auth.length+' authorities');
+  if(UI.typ)bits.push(UI.typ);
+  if(UI.rat)bits.push('Rated '+UI.rat);
+  if(UI.q)bits.push('Search: "'+UI.q+'"');
+  return bits.join('   \u00b7   ');
+}
+/* Print drops CSS variables, so these colours are written out in full. */
+function repPill(v){
+  var bg=v==='Excellent'?'#14603A':v==='Good'?'#E7F5E3':v==='Average'?'#FBEFE2':v==='Poor'?'#F8E6EA':v==='Unreturned'?'#F3EDDC':'#F4F6F8';
+  var fg=v==='Excellent'?'#fff':v==='Good'?'#2E7A34':v==='Average'?'#C8741A':v==='Poor'?'#B4304B':v==='Unreturned'?'#7A6520':'#7d8794';
+  return '<span class="rp" style="background:'+bg+';color:'+fg+'">'+esc(v||'Not rated')+'</span>';
+}
+function renderReport(){
+  var list=repRows();
+  var briefs=list.length;
+  var returned=0,comments=0,c={Excellent:0,Good:0,Average:0,Poor:0};
+  list.forEach(function(r){
+    if(r[8]!=='Unreturned')returned++;
+    if(r[9])comments++;
+    if(c[r[8]]!==undefined)c[r[8]]++;
+  });
+  var rated=c.Excellent+c.Good+c.Average+c.Poor;
+  var pct=rated?Math.round((c.Excellent+c.Good)/rated*100):0;
+  var nd=new Date();
+  var when=nd.getDate()+' '+MONTHS[nd.getMonth()].slice(0,3)+' '+nd.getFullYear()+', '+
+    ('0'+nd.getHours()).slice(-2)+':'+('0'+nd.getMinutes()).slice(-2);
+
+  var qual=repScope();
+  var h='<div class="phead"><div><div class="ptitle">Idox Service Briefs</div>'+
+    '<div class="psub">'+(qual?esc(qual):'All consultants and authorities')+'</div></div>'+
+    '<div class="pyear">'+esc(repPeriodLabel())+'</div>'+
+    '<div class="pwhen">Generated '+when+'<br><span class="pb">Build '+(window.BUILD||'?')+'</span></div></div>';
+
+  h+='<div class="pstats">'+
+    '<div class="pstat"><div class="n">'+nf(briefs)+'</div><div class="l">Briefs</div></div>'+
+    '<div class="pstat"><div class="n">'+nf(returned)+'</div><div class="l">Returned</div></div>'+
+    '<div class="pstat"><div class="n">'+nf(comments)+'</div><div class="l">Comments</div></div>'+
+    '<div class="pstat good"><div class="n">'+pct+'%</div><div class="l">Excellent or Good</div></div>'+
+    '</div>';
+
+  if(!briefs){
+    h+='<div class="pempty">No service briefs match this scope.</div>';
+    $('repBody').innerHTML=h;return;
+  }
+  if(briefs>500){
+    h+='<div class="pwarn"><b>That is a long report.</b> '+nf(briefs)+
+       ' briefs'+(REP.cmt?' with comments':'')+' will run to a great many pages. '+
+       'Narrowing the period, or switching comments off, will cut it down.</div>';
+  }
+
+  h+='<table class="ptab"><thead><tr>'+
+    '<th>Delivery</th><th>Return</th><th>PR</th><th>Local Authority</th><th>Contact</th>'+
+    '<th>Delivery Description</th><th>DeliveryType</th><th>Idox Consultant</th><th>Delivery Rating</th>'+
+    '</tr></thead><tbody>';
+  list.forEach(function(r){
+    h+='<tr class="d"><td class="nw">'+esc(dmy(r[0]))+'</td><td class="nw">'+esc(dmy(r[1]))+'</td>'+
+       '<td class="nw">'+esc(r[2])+'</td><td>'+esc(r[3])+'</td><td>'+esc(r[4])+'</td>'+
+       '<td>'+esc(r[5])+'</td><td>'+esc(r[6])+'</td><td>'+esc(r[7])+'</td>'+
+       '<td>'+repPill(r[8])+'</td></tr>';
+    if(REP.cmt&&r[9]){
+      h+='<tr class="pc"><td colspan="9"><div class="pck">Customer comment</div>'+
+         '<div class="pcv">'+esc(r[9]).replace(/\n/g,'<br>')+'</div></td></tr>';
+    }
+  });
+  h+='</tbody></table>';
+  h+='<div class="pnote">'+nf(briefs)+' brief'+(briefs===1?'':'s')+
+     (REP.cmt?' \u00b7 comments included':' \u00b7 comments omitted')+'.</div>';
+  $('repBody').innerHTML=h;
+}
+function repYears(){
+  var seen={},out=[];
+  ROWS.forEach(function(r){var y=r[1]?r[1].slice(0,4):'';if(y&&!seen[y]){seen[y]=1;out.push(y);}});
+  return out.sort().reverse();
+}
+function buildRepPops(){
+  var items=[['y12','Last 12 months'],['y6','Last 6 months']];
+  repYears().forEach(function(y){items.push([y,y]);});
+  items.push(['custom','Custom dates\u2026']);
+  $('repYrPop').innerHTML=items.map(function(it){
+    return '<button class="dditem'+(it[0]===REP.period?' on':'')+'" data-ry="'+it[0]+'">'+it[1]+'</button>';}).join('');
+  $('repYrPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      REP.period=b.getAttribute('data-ry');
+      if(REP.period==='custom'&&!REP.from){
+        var a=new Date(todayISO());a.setFullYear(a.getFullYear()-1);
+        REP.from=a.toISOString().slice(0,10);REP.to=todayISO();
+        $('repFrom').value=REP.from;$('repTo').value=REP.to;
+      }
+      $('repCustom').classList.toggle('on',REP.period==='custom');
+      $('repYrPop').classList.remove('on');buildRepPops();renderReport();
+    });
+  });
+  $('repYrCv').textContent=repPeriodShort()||'\u2014';
+  $('repCustom').classList.toggle('on',REP.period==='custom');
+
+  var rg=repRange(),cons={},order=[];
+  ROWS.forEach(function(r){
+    if(!r[1]||r[1]<rg.from||r[1]>rg.to)return;
+    var c=r[7];if(c&&!cons[c]){cons[c]=1;order.push(c);}
+  });
+  order.sort(function(a,b){return norm(a)<norm(b)?-1:1;});
+  var h='<button class="dditem'+(UI.con?'':' on')+'" data-rc="">All consultants</button>';
+  order.forEach(function(c){h+='<button class="dditem'+(UI.con===c?' on':'')+'" data-rc="'+esc(c)+'">'+esc(c)+'</button>';});
+  $('repConPop').innerHTML=h;
+  $('repConPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      UI.con=b.getAttribute('data-rc');    /* shared with the page behind */
+      $('repConPop').classList.remove('on');
+      buildRepPops();renderReport();rebuildFilters();render();
+    });
+  });
+  $('repConCv').textContent=UI.con||'All consultants';
+}
+function openReport(){
+  if(!REP.period)REP.period=UI.year||repYears()[0]||'';
+  REP.cmt=$('repCmt').checked;
+  buildRepPops();renderReport();
+  $('repOverlay').classList.add('show');
+}
+function closeReport(){ closeWith($('repOverlay'),200); }
+
 /* ---------- the live source ----------
    A read-only Apps Script sitting on the Service Brief sheet. It runs as the
    sheet's owner, so the sheet itself stays private and unpublished, and it
@@ -871,9 +1137,20 @@ window.addEventListener('scroll',function(){
   $('toTop').classList.toggle('on',window.pageYOffset>window.innerHeight*0.8);
 });
 $('bd').addEventListener('click',closeModal);
+
+$('repBtn').addEventListener('click',openReport);
+$('repClose').addEventListener('click',closeReport);
+$('repGo').addEventListener('click',function(){window.print();});
+$('repCmt').addEventListener('change',function(){REP.cmt=this.checked;renderReport();});
+$('repFrom').addEventListener('change',function(){REP.from=this.value;renderReport();});
+$('repTo').addEventListener('change',function(){REP.to=this.value;renderReport();});
+[['repYrBtn','repYrPop',168],['repConBtn','repConPop',0]].forEach(function(p){
+  $(p[0]).addEventListener('click',function(e){e.stopPropagation();openPop($(p[0]),$(p[1]),p[2]);});
+});
+
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){
-    closeModal();
+    closeModal();closeReport();
     document.querySelectorAll('.ddpop').forEach(function(p){p.classList.remove('on');});
   }
 });
