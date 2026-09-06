@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.2";</script>
+<script>window.BUILD = "2.3";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -146,17 +146,20 @@
   .tblwrap thead th.s .ar{opacity:1}
   /* A brief and its customer comment are one thing, so they share one band:
      the border wraps both rows and the channel falls only between briefs. */
-  .tblwrap table{border-collapse:separate;border-spacing:0 6px}
+  /* border-spacing cannot vary per row, so the 6px between cards was also
+     6px between a brief and its own comment, breaking the card's sides.
+     Spacing is zero now; the channel between cards is a spacer row. */
+  .tblwrap table{border-collapse:separate;border-spacing:0}
   .tblwrap tbody{background:var(--paper)}
   tbody td{padding:11px 12px;font-size:13px;vertical-align:top;background:var(--surface);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);transition:border-color .12s ease,background .12s ease}
   /* Lift rather than weight — the popup and the KPI panels already read this
      way, so a heavier rule would have been the odd one out. */
-  tbody tr.r td:first-child{box-shadow:-2px 2px 4px -2px rgba(24,33,47,.16)}
-  tbody tr.r td:last-child{box-shadow:2px 2px 4px -2px rgba(24,33,47,.16)}
-  tbody tr.r:not(.open) td{box-shadow:0 2px 4px -2px rgba(24,33,47,.16)}
-  tbody tr.cmt td{box-shadow:0 3px 5px -3px rgba(24,33,47,.16)}
-  tbody tr.cmt td:first-child{box-shadow:-2px 3px 5px -3px rgba(24,33,47,.16)}
-  tbody tr.cmt td:last-child{box-shadow:2px 3px 5px -3px rgba(24,33,47,.16)}
+  .tblwrap tbody tr.r td:first-child{box-shadow:-2px 2px 4px -2px rgba(24,33,47,.16)}
+  .tblwrap tbody tr.r td:last-child{box-shadow:2px 2px 4px -2px rgba(24,33,47,.16)}
+  .tblwrap tbody tr.r:not(.open) td{box-shadow:0 2px 4px -2px rgba(24,33,47,.16)}
+  .tblwrap tbody tr.cmt td{box-shadow:0 3px 5px -3px rgba(24,33,47,.16)}
+  .tblwrap tbody tr.cmt td:first-child{box-shadow:-2px 3px 5px -3px rgba(24,33,47,.16)}
+  .tblwrap tbody tr.cmt td:last-child{box-shadow:2px 3px 5px -3px rgba(24,33,47,.16)}
   tbody tr td:first-child{border-left:1px solid var(--edge)}
   tbody tr td:last-child{border-right:1px solid var(--edge)}
   tbody tr.r:not(.open) td:first-child{border-radius:7px 0 0 7px}
@@ -165,6 +168,7 @@
   tbody tr.r.open td:last-child{border-radius:0 7px 0 0}
   tbody tr.r.open td{border-bottom:none}
   tbody tr.cmt td{border-top:none;border-radius:0 0 7px 7px}
+  tbody tr.gap td{height:7px;padding:0;background:var(--paper);border:none;box-shadow:none}
   tbody tr.r.hascm{cursor:pointer}
   /* A card is the brief row plus its comment row, so the hover has to reach
      both — and hovering the comment lights the brief above it too. */
@@ -317,7 +321,10 @@
   .dtab thead th:hover{color:var(--petrol)}
   .dtab thead th .ar{opacity:0;font-size:8px;margin-left:5px;vertical-align:middle}
   .dtab thead th.s .ar{opacity:1}
-  .dtab td{padding:10px 12px;font-size:13px;vertical-align:top;background:var(--surface);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);box-shadow:0 2px 4px -2px rgba(24,33,47,.16);transition:border-color .12s ease,background .12s ease}
+  /* No drop shadow here. Shadows are costly to paint and this table redraws
+     in full on every sideways scroll; the border and the channel carry the
+     separation. Tab 1 keeps its shadow — 600 cells, not 7,344. */
+  .dtab td{padding:10px 12px;font-size:13px;vertical-align:top;background:var(--surface);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);transition:border-color .12s ease,background .12s ease}
   .dtab tbody tr td:first-child{border-left:1px solid var(--edge);border-radius:7px 0 0 7px}
   .dtab tbody tr td:last-child{border-right:1px solid var(--edge);border-radius:0 7px 7px 0}
   .dtab tr.r:hover td{background:#F0F6F6;border-color:var(--petrol)}
@@ -522,6 +529,7 @@
           <tbody id="tbDel"><tr><td colspan="17"><div class="dnone">Reading the latest service briefs&hellip;</div></td></tr></tbody>
         </table>
       </div>
+      <div class="pager" id="delPager"></div>
     </div>
 
     <div class="dbox off" id="boxAct">
@@ -897,6 +905,7 @@ function render(){
          '<div class="ck">Customer comment</div>'+
          '<div class="cv">'+esc(r[9]).replace(/\n/g,'<br>')+'</div></div></td></tr>';
     }
+    h+='<tr class="gap"><td colspan="10"></td></tr>';
   });
   $('tb').innerHTML=h;
 
@@ -1271,7 +1280,7 @@ function closeReport(){ closeWith($('repOverlay'),200); }
    11 days · 12-17 deliverable 1 to 6 · 18 consultant comment
    19 post delivery actions · 20 post delivery actionee                     */
 
-var UI2={period:'',from:'',to:'',con:'',auth:[],q:'',sD:1,dD:true,sA:0,dA:true};
+var UI2={period:'',from:'',to:'',con:'',auth:[],q:'',sD:1,dD:true,sA:0,dA:true,pageD:1};
 var auth2Q='';
 
 function rng2(){
@@ -1312,7 +1321,7 @@ function buildPer2(){
         UI2.from=a.toISOString().slice(0,10);UI2.to=todayISO();
         $('p2From').value=UI2.from;$('p2To').value=UI2.to;
       }
-      $('p2PerPop').classList.remove('on');
+      UI2.pageD=1;$('p2PerPop').classList.remove('on');
       buildFilt2();render2();
     });
   });
@@ -1339,7 +1348,7 @@ function buildCon2(){
   $('p2ConPop').querySelectorAll('.dditem').forEach(function(b){
     b.addEventListener('click',function(){
       UI2.con=b.getAttribute('data-p2c');
-      $('p2ConPop').classList.remove('on');buildFilt2();render2();
+      UI2.pageD=1;$('p2ConPop').classList.remove('on');buildFilt2();render2();
     });
   });
   $('p2ConCv').textContent=UI2.con||'All consultants';
@@ -1373,13 +1382,13 @@ function buildAuth2(){
   if(sa)sa.addEventListener('click',function(e){
     e.stopPropagation();
     UI2.auth=shown.slice();
-    $('p2AuthPop').classList.remove('on');buildFilt2();render2();
+    UI2.pageD=1;$('p2AuthPop').classList.remove('on');buildFilt2();render2();
   });
   $('p2AuthPop').querySelectorAll('.dditem').forEach(function(b){
     b.addEventListener('click',function(){
       var v=b.getAttribute('data-p2a');
       UI2.auth=v?[v]:[];
-      $('p2AuthPop').classList.remove('on');buildFilt2();render2();
+      UI2.pageD=1;$('p2AuthPop').classList.remove('on');buildFilt2();render2();
     });
   });
   $('p2AuthCv').textContent=
@@ -1419,13 +1428,32 @@ function daysTxt(v){
 }
 
 function renderDel(list){
+  /* 60 a page, as tab 1 does. Without it all 432 briefs sat in the table at
+     once — 7,344 cells across 2,600px, redrawn in full on every sideways
+     scroll, which is what made this tab judder. */
+  var sorted=sort2(list,UI2.sD,UI2.dD);
+  var pages=Math.max(1,Math.ceil(sorted.length/PER));
+  if(UI2.pageD>pages)UI2.pageD=pages;
+  if(UI2.pageD<1)UI2.pageD=1;
+  var slice=sorted.slice((UI2.pageD-1)*PER,UI2.pageD*PER);
   $('delMeta').textContent=nf(list.length)+' brief'+(list.length===1?'':'s');
+  $('delPager').innerHTML=pages>1
+    ? '<button id="dPrev"'+(UI2.pageD<=1?' disabled':'')+'>Previous</button>'+
+      '<span class="pi">Page '+UI2.pageD+' of '+pages+'</span>'+
+      '<button id="dNext"'+(UI2.pageD>=pages?' disabled':'')+'>Next</button>'
+    : '';
+  if(pages>1){
+    $('dPrev').addEventListener('click',function(){
+      if(UI2.pageD>1){UI2.pageD--;render2();$('boxDel').querySelector('.dscroll').scrollTop=0;}});
+    $('dNext').addEventListener('click',function(){
+      if(UI2.pageD<pages){UI2.pageD++;render2();$('boxDel').querySelector('.dscroll').scrollTop=0;}});
+  }
   if(!list.length){
     $('tbDel').innerHTML='<tr><td colspan="17"><div class="dnone">Nothing matches those filters.</div></td></tr>';
     return;
   }
   var h='';
-  sort2(list,UI2.sD,UI2.dD).forEach(function(r){
+  slice.forEach(function(r){
     h+='<tr class="r">'+
        '<td class="w-dl">'+esc(dmy(r[0]))+'</td>'+
        '<td class="w-rt">'+esc(dmy(r[1]))+'</td>'+
@@ -1541,11 +1569,11 @@ $('p2AuthBtn').addEventListener('click',function(e){
 });
 $('p2From').addEventListener('change',function(){UI2.from=this.value;render2();});
 $('p2To').addEventListener('change',function(){UI2.to=this.value;render2();});
-$('p2Search').addEventListener('input',function(e){UI2.q=e.target.value;buildFilt2();render2();});
+$('p2Search').addEventListener('input',function(e){UI2.q=e.target.value;UI2.pageD=1;buildFilt2();render2();});
 $('segDel').addEventListener('click',function(){setView2('del');});
 $('segAct').addEventListener('click',function(){setView2('act');});
 $('p2Clear').addEventListener('click',function(){
-  UI2={period:'',from:'',to:'',con:'',auth:[],q:'',sD:1,dD:true,sA:0,dA:true};
+  UI2={period:'',from:'',to:'',con:'',auth:[],q:'',sD:1,dD:true,sA:0,dA:true,pageD:1};
   auth2Q='';$('p2From').value='';$('p2To').value='';$('p2Search').value='';
   buildFilt2();render2();
 });
@@ -1553,6 +1581,7 @@ document.querySelectorAll('#tblDel thead th[data-d]').forEach(function(th){
   th.addEventListener('click',function(){
     var s=+th.getAttribute('data-d');
     if(UI2.sD===s)UI2.dD=!UI2.dD; else {UI2.sD=s;UI2.dD=(s===0||s===1||s===11);}
+    UI2.pageD=1;
     render2();
   });
 });
