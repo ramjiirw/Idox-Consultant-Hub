@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.15";</script>
+<script>window.BUILD = "1.16";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -90,11 +90,25 @@
   .sk-bar{height:22px;border-radius:11px}
   .sk-leg{height:11px;margin-top:12px;width:78%}
   .sk-line{height:12px;margin-top:23px;width:88%}
-  .sk-date{height:11px;margin-top:22px;width:46%}
+  .sk-date{height:11px;margin-top:12px;width:46%}
   .sk-b1{height:11px;margin-top:11px;width:78%}
   .sk-b2{height:11px;margin-top:18px;width:60%}
-  .sk-b3{height:11px;margin-top:13px;width:44%}
+  .sk-b3{height:11px;margin-top:0;width:44%}
   .figfail{font-size:12.5px;color:var(--faint);margin-top:16px}
+  /* All three detail blocks start on the same line, whatever sits above them.
+     The schedule card's three count boxes are shorter than the ratings block
+     on the other two, so without this its block sat 57px higher. The figures
+     above are pushed to a common height rather than the blocks being given
+     one - block heights change with the data, so fixing those would not
+     stay fixed. */
+  /* All three detail blocks start on the same line. The three cards carry
+     different things above them - three count boxes on one, a ratings block
+     and a summary line on the other two, and the evaluations legend wraps to
+     more rows than the briefs one - so the areas above are given matching
+     minimum heights. 155 = 112 + the summary line and its margin. */
+  .counts{min-height:155px;align-items:flex-start}
+  .rateblock{min-height:112px;align-items:flex-start}
+
   /* The detail beneath the figures - which brief, or which course. Petrol bar
      and a soft tint, so it reads as a block rather than more small print. */
   .lbrief{font-size:11.5px;color:var(--slate);line-height:1.45;
