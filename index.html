@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.11";</script>
+<script>window.BUILD = "1.12";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -215,6 +215,17 @@ function renderSchedule(s){
       '<div class="countbox c"><div class="v">'+nf(s.confirmed)+'</div><div class="l">Confirmed</div></div>'+
       '<div class="countbox p"><div class="v">'+nf(s.provisional)+'</div><div class="l">Provisional</div></div>'+
     '</div>'+
+    (s.nextCourse
+      ? '<div class="asat">Next <b>'+esc(fmtDay(s.nextCourse))+'</b></div>'+
+        '<div class="lbrief">'+
+          esc(s.nextTitle||'')+
+          (s.nextTrainer
+            ? '<br><span class="c">Trainer</span> &middot; <b>'+esc(s.nextTrainer)+'</b>'
+            : '')+
+          '<br>'+nf(s.nextBooked)+' booked &middot; '+nf(s.nextConfirmed)+
+          ' confirmed &middot; '+nf(s.nextProvisional)+' provisional'+
+        '</div>'
+      : '')+
     '<div class="asat">Upcoming courses &middot; updated '+esc(fmtWhen(s.bakedAt))+'</div>';
 }
 function renderEvals(e){

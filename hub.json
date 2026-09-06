@@ -15,11 +15,16 @@
     "pct12": 98
   },
   "schedule": {
-    "bakedAt": "2026-09-06T21:15:08.942Z",
+    "bakedAt": "2026-09-06T21:42:54.583Z",
     "courses": 44,
     "confirmed": 166,
     "provisional": 7,
     "booked": 190,
-    "nextCourse": "2026-09-07"
+    "nextCourse": "2026-09-07",
+    "nextTitle": "Uniform Enterprise Administrator",
+    "nextTrainer": "Ian Woodland",
+    "nextBooked": 6,
+    "nextConfirmed": 6,
+    "nextProvisional": 0
   }
 }
