@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.8";</script>
+<script>window.BUILD = "1.9";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -80,9 +80,11 @@
   /* Briefs is fetched live, so its figures arrive a moment after the page.
      The skeleton holds exactly the shape they will take — big number, bar,
      legend, summary line — so nothing jumps when they land. */
-  .sk{background:linear-gradient(90deg,#EDF0F3 25%,#F6F8FA 37%,#EDF0F3 63%);
-      background-size:400% 100%;border-radius:6px;animation:skw 1.4s ease-in-out infinite}
-  @keyframes skw{0%{background-position:100% 50%}100%{background-position:0 50%}}
+  .sk{background:#CFD7E0;border-radius:6px;position:relative;overflow:hidden}
+  .sk::after{content:'';position:absolute;inset:0;
+      background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.6) 50%,transparent 100%);
+      transform:translateX(-100%);animation:skw 1.15s ease-in-out infinite}
+  @keyframes skw{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
   .sk-big{width:96px;height:38px}
   .sk-lbl{width:84px;height:10px;margin-top:8px}
   .sk-bar{height:22px;border-radius:11px}
@@ -90,7 +92,7 @@
   .sk-line{height:12px;margin-top:23px;width:88%}
   .sk-date{height:10px;margin-top:12px;width:46%}
   .figfail{font-size:12.5px;color:var(--faint);margin-top:16px}
-  @media (prefers-reduced-motion: reduce){.sk{animation:none}}
+  @media (prefers-reduced-motion: reduce){.sk::after{animation:none;display:none}}
   .y12 b{color:var(--ink);font-variant-numeric:tabular-nums}
 
   /* coming soon */
