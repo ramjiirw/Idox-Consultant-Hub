@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.10";</script>
+<script>window.BUILD = "1.11";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -98,6 +98,8 @@
   /* which brief the date belongs to */
   .lbrief{font-size:11.5px;color:var(--slate);margin-top:5px;line-height:1.45}
   .lbrief .c{color:var(--faint)}
+  .lbrief b{font-weight:600;color:var(--ink)}
+  .asat b{font-weight:600;color:var(--ink)}
   @media (prefers-reduced-motion: reduce){.sk::after{animation:none;display:none}}
   .y12 b{color:var(--ink);font-variant-numeric:tabular-nums}
 
@@ -268,12 +270,12 @@ function renderBriefs(b){
       '<div class="raterest"><div class="distro">'+bars+'</div><div class="dlegend">'+leg+'</div></div>'+
     '</div>'+
     '<div class="y12"><b>'+nf(b.returned)+'</b> of <b>'+nf(b.total)+'</b> briefs returned &middot; <b>'+nf(b.unreturned)+'</b> unreturned</div>'+
-    '<div class="asat">Latest brief '+esc(fmtDay(b.latestBrief))+'</div>'+
+    '<div class="asat">Latest brief <b>'+esc(fmtDay(b.latestBrief))+'</b></div>'+
     (b.latestAuthority||b.latestDescription||b.latestConsultant
       ? '<div class="lbrief">'+
           [esc(b.latestAuthority),esc(b.latestDescription)].filter(Boolean).join(' &middot; ')+
           (b.latestConsultant
-            ? '<br><span class="c">Consultant</span> &middot; '+esc(b.latestConsultant)
+            ? '<br><span class="c">Consultant</span> &middot; <b>'+esc(b.latestConsultant)+'</b>'
             : '')+
         '</div>'
       : '');
