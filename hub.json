@@ -1,6 +1,6 @@
 {
   "evaluations": {
-    "bakedAt": "2026-09-06T19:30:08.208Z",
+    "bakedAt": "2026-09-06T22:10:56.887Z",
     "evals": 2852,
     "courses": 1503,
     "ratings": {
@@ -12,7 +12,12 @@
     },
     "pct": 97,
     "evals12": 387,
-    "pct12": 98
+    "pct12": 98,
+    "latestEval": "2026-09-01",
+    "latestAuthority": "COLCHESTER CITY COUNCIL",
+    "latestCourse": "Uniform - Building Control Module Training Course",
+    "latestTrainer": "Tracey Konynenburg",
+    "latestComments": 0
   },
   "schedule": {
     "bakedAt": "2026-09-06T21:42:54.583Z",
