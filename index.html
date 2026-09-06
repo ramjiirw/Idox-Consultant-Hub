@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.14";</script>
+<script>window.BUILD = "1.15";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -102,6 +102,11 @@
           border-radius:0 8px 8px 0;padding:9px 11px;margin-top:9px}
   .lbrief .c{color:var(--faint)}
   .lbrief b{font-weight:600;color:var(--ink)}
+  /* the same bubble the evaluations page uses in its first column */
+  .cbub{display:inline-flex;align-items:center;gap:4px;background:var(--petrol);color:#fff;
+        border-radius:20px;padding:1px 7px 1px 5px;font-size:10.5px;font-weight:600;margin-left:7px;
+        vertical-align:1px}
+  .cbub svg{width:11px;height:11px}
   .asat b{font-weight:600;color:var(--ink)}
   @media (prefers-reduced-motion: reduce){.sk::after{animation:none;display:none}}
   .y12 b{color:var(--ink);font-variant-numeric:tabular-nums}
@@ -231,6 +236,8 @@ function renderSchedule(s){
       : '')+
     '<div class="asat">Upcoming courses &middot; updated '+esc(fmtWhen(s.bakedAt))+'</div>';
 }
+var BUBBLE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" '+
+  'stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-6a8 8 0 0 1 8-8h2a8 8 0 0 1 8 3z"/></svg>';
 function renderEvals(e){
   if(!e){$('evalFigs').innerHTML='';return;}
   var ORD=['Excellent','Good','Average','Poor','Not given'];
@@ -251,6 +258,18 @@ function renderEvals(e){
       '<div class="raterest"><div class="distro">'+bars+'</div><div class="dlegend">'+leg+'</div></div>'+
     '</div>'+
     (e.pct12==null?'':'<div class="y12">Last 12 months <b>'+e.pct12+'%</b> across <b>'+nf(e.evals12)+'</b> evaluations</div>')+
+    (e.latestEval
+      ? '<div class="lbrief">'+
+          '<span class="c">Latest evaluation</span> &middot; <b>'+esc(fmtDay(e.latestEval))+'</b><br>'+
+          [esc(e.latestAuthority),esc(e.latestCourse)].filter(Boolean).join(' &middot; ')+
+          (e.latestTrainer
+            ? '<br><span class="c">Trainer</span> &middot; <b>'+esc(e.latestTrainer)+'</b>'
+            : '')+
+          (e.latestComments
+            ? '<span class="cbub">'+BUBBLE+nf(e.latestComments)+'</span>'
+            : '')+
+        '</div>'
+      : '')+
     '<div class="asat">All time &middot; updated '+esc(fmtWhen(e.bakedAt))+'</div>';
 }
 
