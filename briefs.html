@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.5";</script>
+<script>window.BUILD = "2.6";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -386,6 +386,34 @@
   #tblAct .a-ae{width:115px}
   .aname{display:inline-block;font-size:12px;font-weight:600;color:var(--slate);background:var(--paper);border:1px solid var(--hairline);border-radius:20px;padding:2px 9px;white-space:nowrap}
 
+  /* ---------- tab 3: ratings summary ----------
+     One box, four views, chosen by the switch in the filter bar. Charts are
+     drawn as SVG from the filtered rows, so every view answers the same
+     question the filters ask. */
+  .cbox{background:var(--surface);border:1px solid var(--edge);border-radius:var(--radius);padding:16px 18px 18px;
+        box-shadow:0 1px 2px rgba(24,33,47,.05),0 12px 24px -16px rgba(24,33,47,.6);min-height:var(--h3,460px)}
+  .cbox h3{font-size:14px;margin-bottom:2px}
+  .cbox .cap{font-size:12.5px;color:var(--slate);margin-bottom:14px}
+  .cbox .subctl{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:15px}
+  .cbox svg{display:block;overflow:visible}
+  .cnone{padding:60px 16px;text-align:center;color:var(--slate);font-size:13.5px}
+  .cgl{stroke:var(--hairline);stroke-width:1}
+  .cax{font-size:10.5px;fill:var(--faint)}
+  .cbig{font-size:11px;fill:var(--slate);font-weight:600}
+  .crow{font-size:12.5px;fill:var(--ink)}
+  .csub{font-size:11px;fill:var(--faint)}
+  .clgd{display:flex;gap:15px;flex-wrap:wrap;font-size:11.5px;color:var(--slate);margin-top:14px;align-items:center}
+  .clgd i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .kfig{display:flex;gap:20px;align-items:baseline;margin-bottom:12px}
+  .kfig .b{font-size:42px;font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+  .kfig .s{font-size:12.5px;color:var(--slate);max-width:44ch}
+  .ctip{position:fixed;pointer-events:none;background:#1E2B33;color:#fff;border-radius:8px;padding:8px 11px;font-size:12px;
+        box-shadow:0 10px 24px -8px rgba(0,0,0,.55);opacity:0;transition:opacity .12s;z-index:150;white-space:nowrap;line-height:1.5}
+  .seg.small button{font-size:12px;padding:7px 12px;font-weight:500}
+  /* the in-view switches carry no pill, so they colour the button itself */
+  .seg.sub{position:static}
+  .seg.sub button.on{background:var(--petrol);color:#fff;font-weight:600}
+
   .soon{background:var(--surface);border:1px dashed var(--edge);border-radius:var(--radius);padding:52px 24px;text-align:center;color:var(--slate)}
   .soon h3{font-size:16px;margin-bottom:7px}
   .soon p{margin:0;font-size:13px;color:var(--faint)}
@@ -576,7 +604,25 @@
 
   <!-- ============ TAB 3 ============ -->
   <div class="pane" id="p3">
-    <div class="soon"><h3>Ratings Summary</h3><p>Not built yet. This will hold the ratings breakdown by consultant.</p></div>
+
+    <div class="filt" id="filt3">
+      <div class="f ddwrap"><label>Period</label><button class="ddbtn" id="p3PerBtn" style="width:168px"><span class="cv" id="p3PerCv">All years</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="p3PerPop"></div></div>
+      <div class="f ddwrap"><label>Idox Consultant</label><button class="ddbtn w-con" id="p3ConBtn"><span class="cv" id="p3ConCv">All consultants</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="p3ConPop"></div></div>
+      <div class="f ddwrap"><label>Local Authority</label><button class="ddbtn w-auth" id="p3AuthBtn"><span class="cv" id="p3AuthCv">All authorities</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="p3AuthPop"></div></div>
+      <button class="clearbtn" id="p3Clear">Clear</button>
+      <div class="f" style="margin-left:auto"><label>&nbsp;</label><div class="seg small" id="seg3"><span class="pilld" id="seg3Pill"></span>
+        <button id="v3a" class="on">Over time</button><button id="v3b">By consultant</button>
+        <button id="v3c">The mix</button><button id="v3d">By quarter</button>
+      </div></div>
+    </div>
+
+    <div class="cbox">
+      <h3 id="cTitle"></h3><div class="cap" id="cCap"></div>
+      <div class="subctl" id="cSub"></div>
+      <div id="cPlot"></div>
+      <div class="clgd" id="cLgd"></div>
+    </div>
+
   </div>
 
 </div>
@@ -1184,6 +1230,7 @@ document.querySelectorAll('.tab').forEach(function(t){
     t.classList.add('on');
     $(t.getAttribute('data-pane')).classList.add('on');
     if(t.getAttribute('data-pane')==='p2'){setPanes();segPill();}
+    if(t.getAttribute('data-pane')==='p3'){setPane3();seg3Pill();}
   });
 });
 
@@ -1717,6 +1764,373 @@ document.querySelectorAll('#tblAct thead th[data-a]').forEach(function(th){
   });
 });
 
+/* ---------- tab 3: ratings summary ------------------------------------------
+   Four views over one filtered set. Period filters on the return date, as tabs
+   1 and 2 do. The charts are plain SVG built here — no library.
+   Ratings barely vary: 98% of returned briefs are Excellent or Good. What
+   varies is whether a brief comes back at all, so these views are built round
+   the return rate rather than round the rating.                              */
+
+var UI3={period:'',from:'',to:'',con:'',auth:[],view:'a',
+         c2mode:'pct',c2sort:'vol',c2min:false,c2held:null,c3mode:'ret',c1range:24,c4min:true};
+var auth3Q='';
+var RCOL3={Excellent:'#1F7A45',Good:'#5CB35F',Average:'#C8741A',Poor:'#B0304B',Unreturned:'#D9C88A','Not rated':'#C9D1DA'};
+var RORD3=['Excellent','Good','Average','Poor','Not rated','Unreturned'];
+
+function rateOf(r){ return r[8]||'Not rated'; }
+function rng3(){
+  if(!UI3.period)return null;
+  if(UI3.period==='custom')return {from:UI3.from||'0000-01-01',to:UI3.to||'9999-12-31'};
+  return {from:UI3.period+'-01-01',to:UI3.period+'-12-31'};
+}
+function pass3(r,skip){
+  var rg=rng3();
+  if(skip!=='period'&&rg){ if(!r[1]||r[1]<rg.from||r[1]>rg.to)return false; }
+  if(skip!=='con'&&UI3.con&&r[7]!==UI3.con)return false;
+  if(skip!=='auth'&&UI3.auth.length&&UI3.auth.indexOf(r[3])<0)return false;
+  return true;
+}
+function rows3(skip){return ROWS.filter(function(r){return pass3(r,skip);});}
+
+/* ---- filter bar, built the same way tab 2's is ---- */
+function buildPer3(){
+  var items=[['','All years']];
+  repYears().forEach(function(y){items.push([y,y]);});
+  $('p3PerPop').innerHTML=items.map(function(it){
+    return '<button class="dditem'+(it[0]===UI3.period?' on':'')+'" data-p3y="'+it[0]+'">'+esc(it[1])+'</button>';
+  }).join('');
+  $('p3PerPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      UI3.period=b.getAttribute('data-p3y');
+      $('p3PerPop').classList.remove('on');buildFilt3();render3();
+    });
+  });
+  $('p3PerCv').textContent=UI3.period||'All years';
+}
+function buildCon3(){
+  var base=rows3('con');
+  var cc=countBy(base,function(r){return r[7];});
+  var cons=cc.keys.slice().sort(function(a,b){return norm(a)<norm(b)?-1:1;});
+  if(UI3.con&&cons.indexOf(UI3.con)<0)UI3.con='';
+  var h='<div class="pophead">Briefs</div>'+popItem('','All consultants',base.length,!UI3.con,'data-p3c');
+  cons.forEach(function(c){h+=popItem(c,c,cc.m[c],UI3.con===c,'data-p3c');});
+  $('p3ConPop').innerHTML=h;
+  $('p3ConPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      UI3.con=b.getAttribute('data-p3c');
+      $('p3ConPop').classList.remove('on');buildFilt3();render3();
+    });
+  });
+  $('p3ConCv').textContent=UI3.con||'All consultants';
+}
+function buildAuth3(){
+  var base=rows3('auth');
+  var c=countBy(base,function(r){return r[3];});
+  var keys=c.keys.slice().sort(function(a,b){return norm(a)<norm(b)?-1:1;});
+  var q=norm(auth3Q);
+  var shown=keys.filter(function(k){return !q||norm(k).indexOf(q)>=0;});
+  var h='<div class="popsearch"><input id="p3AuthQ" placeholder="Type to narrow the list" value="'+esc(auth3Q)+'"></div>';
+  h+='<div class="pophead">Briefs</div>';
+  if(q&&shown.length){
+    var n=0;shown.forEach(function(k){n+=c.m[k];});
+    h+='<button class="selall" id="p3AuthAll"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Select all '+shown.length+' showing<span class="ct">'+nf(n)+'</span></button>';
+  }
+  h+=popItem('','All authorities',base.length,!UI3.auth.length,'data-p3a');
+  shown.forEach(function(k){h+=popItem(k,k,c.m[k],UI3.auth.indexOf(k)>=0,'data-p3a');});
+  if(!shown.length)h+='<div class="popnone">No authority matches that.</div>';
+  $('p3AuthPop').innerHTML=h;
+  var qi=$('p3AuthQ');
+  qi.addEventListener('click',function(e){e.stopPropagation();});
+  qi.addEventListener('input',function(e){
+    auth3Q=e.target.value;buildAuth3();
+    var f=$('p3AuthQ');f.focus();f.setSelectionRange(f.value.length,f.value.length);
+  });
+  var sa=$('p3AuthAll');
+  if(sa)sa.addEventListener('click',function(e){
+    e.stopPropagation();UI3.auth=shown.slice();
+    $('p3AuthPop').classList.remove('on');buildFilt3();render3();
+  });
+  $('p3AuthPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      var v=b.getAttribute('data-p3a');UI3.auth=v?[v]:[];
+      $('p3AuthPop').classList.remove('on');buildFilt3();render3();
+    });
+  });
+  $('p3AuthCv').textContent=
+    UI3.auth.length===0?'All authorities':
+    UI3.auth.length===1?UI3.auth[0]:UI3.auth.length+' authorities';
+}
+function buildFilt3(){
+  buildPer3();buildCon3();
+  UI3.auth=UI3.auth.filter(function(a){return rows3('auth').some(function(r){return r[3]===a;});});
+  buildAuth3();
+}
+
+/* ---- shared chart helpers ---- */
+function svgEl(t,a){var n=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in a)n.setAttribute(k,a[k]);return n;}
+function cTip(){var t=$('cTipBox');if(!t){t=document.createElement('div');t.id='cTipBox';t.className='ctip';document.body.appendChild(t);}return t;}
+function tipOn(e,h){var t=cTip();t.innerHTML=h;t.style.opacity=1;tipMove(e);}
+function tipMove(e){var t=cTip();t.style.left=(e.clientX+14)+'px';t.style.top=(e.clientY-10)+'px';}
+function tipOff(){var t=$('cTipBox');if(t)t.style.opacity=0;}
+function monKeys3(list){var s={};list.forEach(function(r){if(r[1])s[r[1].slice(0,7)]=1;});return Object.keys(s).sort();}
+function mLab3(k){var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return m[+k.slice(5,7)-1]+" '"+k.slice(2,4);}
+function segHTML(id,opts,cur){
+  return '<div class="seg small sub" id="'+id+'">'+opts.map(function(o){
+    return '<button data-v="'+o[0]+'"'+(o[0]===cur?' class="on"':'')+'>'+o[1]+'</button>';
+  }).join('')+'</div>';
+}
+function wireSeg(id,fn){
+  var w=$(id); if(!w)return;
+  w.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      w.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});
+      fn(b.getAttribute('data-v'));
+    });
+  });
+}
+function tickHTML(id,label,on){
+  return '<label class="tk" style="font-size:12.5px;color:var(--slate);display:flex;align-items:center;gap:7px;cursor:pointer">'+
+         '<input type="checkbox" id="'+id+'"'+(on?' checked':'')+' style="accent-color:var(--petrol);width:15px;height:15px;cursor:pointer">'+label+'</label>';
+}
+
+/* ---- view A: return rate over time ---- */
+function viewA(list){
+  $('cTitle').textContent='Return rate over time';
+  $('cCap').textContent='Grey bars are how many briefs that month. The line is the share that came back signed.';
+  $('cSub').innerHTML=segHTML('c1r',[['12','Last 12 months'],['24','Last 24'],['99','All']],String(UI3.c1range));
+  wireSeg('c1r',function(v){UI3.c1range=+v;render3();});
+  $('cLgd').innerHTML='';
+  var ms=monKeys3(list);
+  if(UI3.c1range<99)ms=ms.slice(-UI3.c1range);
+  if(ms.length<2){$('cPlot').innerHTML='<div class="cnone">Not enough months in this selection to draw a trend.</div>';return;}
+  var tot={},ret={};
+  ms.forEach(function(m){tot[m]=0;ret[m]=0;});
+  list.forEach(function(r){
+    if(!r[1])return; var k=r[1].slice(0,7);
+    if(tot[k]===undefined)return;
+    tot[k]++; if(rateOf(r)!=='Unreturned')ret[k]++;
+  });
+  var W=1180,H=330,L=44,R=16,T=14,B=44,iw=W-L-R,ih=H-T-B;
+  var mx=Math.max.apply(null,ms.map(function(m){return tot[m];}))||1, bw=iw/ms.length;
+  var s=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H});
+  [0,25,50,75,100].forEach(function(p){
+    var y=T+ih-(p/100)*ih;
+    s.appendChild(svgEl('line',{x1:L,x2:W-R,y1:y,y2:y,class:'cgl'}));
+    var t=svgEl('text',{x:L-8,y:y+4,class:'cax','text-anchor':'end'});t.textContent=p+'%';s.appendChild(t);
+  });
+  var step=Math.ceil(ms.length/12);
+  ms.forEach(function(m,i){
+    var h=(tot[m]/mx)*ih*0.85;
+    var rc=svgEl('rect',{x:L+i*bw+bw*0.2,y:T+ih-h,width:Math.max(bw*0.6,1),height:h,rx:2,fill:'#DDE4EA'});
+    rc.addEventListener('mousemove',function(e){tipOn(e,'<b>'+mLab3(m)+'</b><br>'+tot[m]+' brief'+(tot[m]===1?'':'s')+'<br>'+ret[m]+' returned &middot; <b>'+(tot[m]?Math.round(100*ret[m]/tot[m]):0)+'%</b>');});
+    rc.addEventListener('mouseleave',tipOff);
+    s.appendChild(rc);
+    if(i%step===0){var t=svgEl('text',{x:L+i*bw+bw/2,y:H-18,class:'cax','text-anchor':'middle'});t.textContent=mLab3(m);s.appendChild(t);}
+  });
+  var pts=ms.map(function(m,i){return [L+i*bw+bw/2,T+ih-(tot[m]?ret[m]/tot[m]:0)*ih];});
+  var d='M'+pts[0][0]+' '+pts[0][1];
+  for(var i=0;i<pts.length-1;i++){
+    var p0=pts[i],p1=pts[i+1],cx=(p0[0]+p1[0])/2;
+    d+=' C'+cx+' '+p0[1]+','+cx+' '+p1[1]+','+p1[0]+' '+p1[1];
+  }
+  s.appendChild(svgEl('path',{d:d+' L'+pts[pts.length-1][0]+' '+(T+ih)+' L'+pts[0][0]+' '+(T+ih)+' Z',fill:'#0E6E6E',opacity:.10}));
+  s.appendChild(svgEl('path',{d:d,fill:'none',stroke:'#0E6E6E','stroke-width':2.6,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  pts.forEach(function(p,i){
+    var c=svgEl('circle',{cx:p[0],cy:p[1],r:3.4,fill:'#fff',stroke:'#0E6E6E','stroke-width':2});
+    c.addEventListener('mousemove',function(e){var m=ms[i];tipOn(e,'<b>'+mLab3(m)+'</b><br>'+ret[m]+' of '+tot[m]+' returned<br><b>'+(tot[m]?Math.round(100*ret[m]/tot[m]):0)+'%</b>');});
+    c.addEventListener('mouseleave',tipOff);
+    s.appendChild(c);
+  });
+  $('cPlot').innerHTML='';$('cPlot').appendChild(s);
+}
+
+/* ---- view B: consultant scorecard ---- */
+function viewB(list){
+  $('cTitle').textContent='By consultant';
+  $('cCap').textContent='Every consultant, their briefs and what came back. Click a bar to hold it; click again to release.';
+  $('cSub').innerHTML=segHTML('c2m',[['pct','Share of their own briefs'],['cnt','Counts']],UI3.c2mode)+
+    segHTML('c2s',[['vol','Most briefs'],['rate','Best return rate']],UI3.c2sort)+
+    tickHTML('c2min','Hide under 10 briefs',UI3.c2min);
+  wireSeg('c2m',function(v){UI3.c2mode=v;render3();});
+  wireSeg('c2s',function(v){UI3.c2sort=v;render3();});
+  $('c2min').addEventListener('change',function(){UI3.c2min=this.checked;render3();});
+  $('cLgd').innerHTML=RORD3.map(function(k){return '<span><i style="background:'+RCOL3[k]+'"></i>'+k+'</span>';}).join('');
+  var by={};
+  list.forEach(function(r){
+    var c=r[7]||'Not named';
+    if(!by[c])by[c]={tot:0};
+    by[c].tot++; var k=rateOf(r); by[c][k]=(by[c][k]||0)+1;
+  });
+  var arr=Object.keys(by).map(function(k){
+    var o=by[k],ret=o.tot-(o.Unreturned||0);
+    return {n:k,o:o,tot:o.tot,ret:ret,rate:ret/o.tot};
+  });
+  if(UI3.c2min)arr=arr.filter(function(x){return x.tot>=10;});
+  if(!arr.length){$('cPlot').innerHTML='<div class="cnone">No consultants match that selection.</div>';return;}
+  arr.sort(UI3.c2sort==='vol'?function(a,b){return b.tot-a.tot;}:function(a,b){return b.rate-a.rate;});
+  var rowH=38,W=1180,L=250,H=arr.length*rowH+10,iw=W-L-10;
+  var mxTot=Math.max.apply(null,arr.map(function(x){return x.tot;}))||1;
+  var s=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H});
+  arr.forEach(function(x,i){
+    var y=i*rowH+6;
+    var nm=svgEl('text',{x:0,y:y+14,class:'crow'});nm.textContent=x.n;s.appendChild(nm);
+    var pc=svgEl('text',{x:0,y:y+29,'font-size':12});
+    var a=svgEl('tspan',{'font-weight':600,fill:'#0E6E6E'});
+    a.textContent=Math.round(x.rate*100)+'% returned';
+    var bsp=svgEl('tspan',{fill:'#8792A2'});
+    bsp.textContent='  \u00b7  '+x.tot+' brief'+(x.tot===1?'':'s');
+    pc.appendChild(a);pc.appendChild(bsp);s.appendChild(pc);
+    var full=UI3.c2mode==='pct'?iw:iw*(x.tot/mxTot), acc=0;
+    RORD3.forEach(function(k){
+      var v=x.o[k]||0; if(!v)return;
+      var w=full*(v/x.tot);
+      var dim=(UI3.c2held&&UI3.c2held!==x.n)?.25:1;
+      var rc=svgEl('rect',{x:L+acc,y:y+5,width:Math.max(w,0),height:22,fill:RCOL3[k],opacity:dim});
+      rc.style.cursor='pointer';
+      rc.addEventListener('mousemove',function(e){tipOn(e,'<b>'+x.n+'</b><br>'+k+': <b>'+v+'</b> of '+x.tot+'<br>'+Math.round(100*v/x.tot)+'% of their briefs');});
+      rc.addEventListener('mouseleave',tipOff);
+      rc.addEventListener('click',function(){UI3.c2held=(UI3.c2held===x.n)?null:x.n;render3();});
+      s.appendChild(rc); acc+=w;
+    });
+  });
+  $('cPlot').innerHTML='';$('cPlot').appendChild(s);
+}
+
+/* ---- view C: the mix ---- */
+function viewC(list){
+  $('cTitle').textContent='The mix';
+  $('cCap').textContent='The same briefs, two ways. The switch decides whether briefs that never came back count against the score.';
+  $('cSub').innerHTML=segHTML('c3m',[['ret','Of returned briefs'],['all','Of all briefs']],UI3.c3mode);
+  wireSeg('c3m',function(v){UI3.c3mode=v;render3();});
+  $('cLgd').innerHTML='';
+  var c={};list.forEach(function(r){var k=rateOf(r);c[k]=(c[k]||0)+1;});
+  var keys=UI3.c3mode==='ret'?['Excellent','Good','Average','Poor']:RORD3;
+  var tot=keys.reduce(function(a,k){return a+(c[k]||0);},0);
+  if(!tot){$('cPlot').innerHTML='<div class="cnone">Nothing rated in this selection.</div>';return;}
+  var eg=(c.Excellent||0)+(c.Good||0);
+  var W=1180,H=74,bh=32;
+  var s=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H});
+  var acc=0;
+  keys.forEach(function(k){
+    var v=c[k]||0; if(!v)return;
+    var w=(v/tot)*W;
+    var rc=svgEl('rect',{x:acc,y:0,width:w,height:bh,fill:RCOL3[k]});
+    rc.addEventListener('mousemove',function(e){tipOn(e,'<b>'+k+'</b><br>'+v+' brief'+(v===1?'':'s')+' &middot; '+(v/tot*100).toFixed(1)+'%');});
+    rc.addEventListener('mouseleave',tipOff);
+    s.appendChild(rc);
+    if(w>60){var t=svgEl('text',{x:acc+w/2,y:bh+18,'font-size':11.5,fill:'#18212F','text-anchor':'middle'});t.textContent=k+' '+v;s.appendChild(t);}
+    acc+=w;
+  });
+  $('cPlot').innerHTML='<div class="kfig"><div class="b" style="color:'+(UI3.c3mode==='ret'?'#1F7A45':'#0E6E6E')+'">'+
+    Math.round(eg/tot*100)+'%</div><div class="s">Excellent or Good, out of '+nf(tot)+
+    (UI3.c3mode==='ret'?' returned briefs':' briefs including those never returned')+'</div></div>';
+  $('cPlot').appendChild(s);
+}
+
+/* ---- view D: return rate by period and consultant ----
+   Newest on the left. Quarters while they fit; once there are more than ten
+   it switches to whole years, so the grid never outgrows the page. */
+function viewD(list){
+  $('cTitle').textContent='By consultant and period';
+  $('cCap').textContent='Newest on the left. Darker is a better return rate. Blank means no briefs in that period.';
+  $('cSub').innerHTML=tickHTML('c4min','Only consultants with 10 or more briefs',UI3.c4min);
+  $('c4min').addEventListener('change',function(){UI3.c4min=this.checked;render3();});
+  $('cLgd').innerHTML='<span style="color:var(--faint)">Each cell is the share of that consultant\u2019s briefs returned in that period.</span>';
+  var qs={},cn={};
+  function qOf(m){return m.slice(0,4)+' Q'+(Math.floor((+m.slice(5,7)-1)/3)+1);}
+  list.forEach(function(r){ if(r[1])qs[qOf(r[1].slice(0,7))]=1; cn[r[7]||'Not named']=(cn[r[7]||'Not named']||0)+1; });
+  var byQuarter=Object.keys(qs).length<=10;
+  var key=byQuarter?qOf:function(m){return m.slice(0,4);};
+  var per={};
+  list.forEach(function(r){ if(r[1])per[key(r[1].slice(0,7))]=1; });
+  var P=Object.keys(per).sort().reverse();
+  var C=Object.keys(cn).filter(function(k){return !UI3.c4min||cn[k]>=10;})
+                       .sort(function(a,b){return cn[b]-cn[a];});
+  if(!P.length||!C.length){$('cPlot').innerHTML='<div class="cnone">Not enough in this selection to fill a grid.</div>';return;}
+  var cell={};
+  list.forEach(function(r){
+    if(!r[1])return;
+    var k=(r[7]||'Not named')+'|'+key(r[1].slice(0,7));
+    if(!cell[k])cell[k]={t:0,r:0};
+    cell[k].t++; if(rateOf(r)!=='Unreturned')cell[k].r++;
+  });
+  var L=190,cw=Math.min(88,(1180-L)/P.length),ch=32,T=36;
+  var W=L+P.length*cw,H=T+C.length*ch+8;
+  var s=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H});
+  P.forEach(function(p,i){
+    var t=svgEl('text',{x:L+i*cw+cw/2,y:T-13,class:'cax','text-anchor':'middle'});t.textContent=p;s.appendChild(t);
+  });
+  C.forEach(function(c,j){
+    var t=svgEl('text',{x:0,y:T+j*ch+21,class:'crow'});t.textContent=c;s.appendChild(t);
+    P.forEach(function(p,i){
+      var d=cell[c+'|'+p], x=L+i*cw+2, y=T+j*ch+3, w=cw-4, h=ch-6;
+      if(!d){s.appendChild(svgEl('rect',{x:x,y:y,width:w,height:h,rx:4,fill:'#F3F5F7'}));return;}
+      var pc=d.r/d.t;
+      var rc=svgEl('rect',{x:x,y:y,width:w,height:h,rx:4,fill:'#0E6E6E',opacity:0.14+pc*0.86});
+      rc.addEventListener('mousemove',function(e){tipOn(e,'<b>'+c+'</b><br>'+p+'<br>'+d.r+' of '+d.t+' returned &middot; <b>'+Math.round(pc*100)+'%</b>');});
+      rc.addEventListener('mouseleave',tipOff);
+      s.appendChild(rc);
+      var tx=svgEl('text',{x:x+w/2,y:y+h/2+4,'text-anchor':'middle','font-size':10.5,fill:pc>0.55?'#fff':'#2B3441'});
+      tx.textContent=Math.round(pc*100);s.appendChild(tx);
+    });
+  });
+  $('cPlot').innerHTML='';$('cPlot').appendChild(s);
+}
+
+function seg3Pill(){
+  var ids={a:'v3a',b:'v3b',c:'v3c',d:'v3d'};
+  var b=$(ids[UI3.view]), br=b.getBoundingClientRect(), sr=$('seg3').getBoundingClientRect();
+  $('seg3Pill').style.left=(br.left-sr.left-1)+'px';
+  $('seg3Pill').style.width=br.width+'px';
+}
+function render3(){
+  var list=rows3();
+  if(!list.length){
+    $('cTitle').textContent='Ratings Summary';$('cCap').textContent='';
+    $('cSub').innerHTML='';$('cLgd').innerHTML='';
+    $('cPlot').innerHTML='<div class="cnone">Nothing matches those filters.</div>';
+    return;
+  }
+  if(UI3.view==='a')viewA(list);
+  else if(UI3.view==='b')viewB(list);
+  else if(UI3.view==='c')viewC(list);
+  else viewD(list);
+}
+function setView3(v){
+  if(UI3.view===v)return;
+  UI3.view=v;UI3.c2held=null;
+  [['a','v3a'],['b','v3b'],['c','v3c'],['d','v3d']].forEach(function(x){
+    $(x[1]).classList.toggle('on',x[0]===v);
+  });
+  seg3Pill();render3();
+}
+function setPane3(){
+  var hdr=document.querySelector('.appheader').getBoundingClientRect().height;
+  var fb=$('filt3').getBoundingClientRect().height;
+  var h=window.innerHeight-hdr-fb-78;
+  if(h<380)h=380;
+  document.documentElement.style.setProperty('--h3',h+'px');
+}
+[['p3PerBtn','p3PerPop',168],['p3ConBtn','p3ConPop',0]].forEach(function(p){
+  $(p[0]).addEventListener('click',function(e){e.stopPropagation();openPop($(p[0]),$(p[1]),p[2]);});
+});
+$('p3AuthBtn').addEventListener('click',function(e){
+  e.stopPropagation();auth3Q='';buildAuth3();
+  openPop($('p3AuthBtn'),$('p3AuthPop'),320);
+  var q=$('p3AuthQ');if(q)q.focus();
+});
+$('p3Clear').addEventListener('click',function(){
+  UI3.period='';UI3.from='';UI3.to='';UI3.con='';UI3.auth=[];UI3.c2held=null;
+  auth3Q='';buildFilt3();render3();
+});
+$('v3a').addEventListener('click',function(){setView3('a');});
+$('v3b').addEventListener('click',function(){setView3('b');});
+$('v3c').addEventListener('click',function(){setView3('c');});
+$('v3d').addEventListener('click',function(){setView3('d');});
+document.addEventListener('mousemove',function(e){
+  var t=$('cTipBox'); if(t&&t.style.opacity==1)tipMove(e);
+});
+
 /* ---------- the live source ----------
    A read-only Apps Script sitting on the Service Brief sheet. It runs as the
    sheet's owner, so the sheet itself stays private and unpublished, and it
@@ -1758,13 +2172,15 @@ function boot(data,latest){
   render();
   buildFilt2();
   render2();
+  buildFilt3();
+  render3();
 }
 function setStick(){
   var hh=document.querySelector('.appheader').getBoundingClientRect().height;
   document.documentElement.style.setProperty('--stick',Math.round(hh)+'px');
 }
 setStick();window.addEventListener('resize',setStick);
-window.addEventListener('resize',function(){setPanes();segPill();});
+window.addEventListener('resize',function(){setPanes();segPill();setPane3();seg3Pill();});
 
 $('toTop').addEventListener('click',backToTop);
 window.addEventListener('scroll',function(){
