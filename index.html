@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.5";</script>
+<script>window.BUILD = "1.7";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -240,8 +240,10 @@ function renderBriefs(b){
       '<div class="bl">Excellent or Good</div></div>'+
       '<div class="raterest"><div class="distro">'+bars+'</div><div class="dlegend">'+leg+'</div></div>'+
     '</div>'+
-    '<div class="y12"><b>'+nf(b.returned)+'</b> of <b>'+nf(b.total)+'</b> briefs returned &middot; <b>'+nf(b.unreturned)+'</b> still out</div>'+
-    '<div class="asat">Latest brief '+esc(fmtDay(b.latestBrief))+' &middot; live, not baked</div>';
+    '<div class="y12"><b>'+nf(b.returned)+'</b> of <b>'+nf(b.total)+'</b> briefs returned &middot; <b>'+nf(b.unreturned)+'</b> unreturned</div>'+
+    '<div class="asat">Latest brief '+esc(fmtDay(b.latestBrief))+'</div>';
+  var fb=$('freshBriefs');
+  if(fb)fb.textContent=fmtDay(b.latestBrief);
 }
 
 /* ---------- freshness strip ---------- */
@@ -250,10 +252,11 @@ function renderFresh(hub){
     {k:'Scheduled Training', d:hub&&hub.schedule&&hub.schedule.bakedAt, cy:'updated several times a day', warn:2},
     {k:'Course Evaluations', d:hub&&hub.evaluations&&hub.evaluations.bakedAt, cy:'updated every few days', warn:7}
   ];
-  /* Briefs is read live from the sheet on every visit, so it has no bake time
-     to be stale against — it is always current. */
+  /* Briefs has no bake time — the page reads the sheet on every visit — so the
+     strip shows the date of the newest brief instead, filled in by
+     renderBriefs when the summary arrives. */
   var h2='<span class="fi"><span class="dot"></span><span class="k">Service Briefs</span>'+
-         '<span class="v">live</span><span class="cy">read from the sheet each visit</span></span>';
+         '<span class="v" id="freshBriefs">\u2014</span><span class="cy">latest brief</span></span>';
   var h='';
   items.forEach(function(it){
     var ago=daysSince(it.d);
