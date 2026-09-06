@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.13";</script>
+<script>window.BUILD = "1.14";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -90,10 +90,10 @@
   .sk-bar{height:22px;border-radius:11px}
   .sk-leg{height:11px;margin-top:12px;width:78%}
   .sk-line{height:12px;margin-top:23px;width:88%}
-  .sk-date{height:10px;margin-top:12px;width:46%}
-  .sk-b1{height:11px;margin-top:22px;width:78%}
+  .sk-date{height:11px;margin-top:22px;width:46%}
+  .sk-b1{height:11px;margin-top:11px;width:78%}
   .sk-b2{height:11px;margin-top:18px;width:60%}
-  .sk-b3{height:11px;margin-top:26px;width:44%}
+  .sk-b3{height:11px;margin-top:13px;width:44%}
   .figfail{font-size:12.5px;color:var(--faint);margin-top:16px}
   /* The detail beneath the figures - which brief, or which course. Petrol bar
      and a soft tint, so it reads as a block rather than more small print. */
@@ -219,8 +219,8 @@ function renderSchedule(s){
       '<div class="countbox p"><div class="v">'+nf(s.provisional)+'</div><div class="l">Provisional</div></div>'+
     '</div>'+
     (s.nextCourse
-      ? '<div class="asat">Next <b>'+esc(fmtDay(s.nextCourse))+'</b></div>'+
-        '<div class="lbrief">'+
+      ? '<div class="lbrief">'+
+          '<span class="c">Next</span> &middot; <b>'+esc(fmtDay(s.nextCourse))+'</b><br>'+
           esc(s.nextTitle||'')+
           (s.nextTrainer
             ? '<br><span class="c">Trainer</span> &middot; <b>'+esc(s.nextTrainer)+'</b>'
@@ -284,15 +284,15 @@ function renderBriefs(b){
       '<div class="raterest"><div class="distro">'+bars+'</div><div class="dlegend">'+leg+'</div></div>'+
     '</div>'+
     '<div class="y12"><b>'+nf(b.returned)+'</b> of <b>'+nf(b.total)+'</b> briefs returned &middot; <b>'+nf(b.unreturned)+'</b> unreturned</div>'+
-    '<div class="asat">Latest brief <b>'+esc(fmtDay(b.latestBrief))+'</b></div>'+
     (b.latestAuthority||b.latestDescription||b.latestConsultant
       ? '<div class="lbrief">'+
+          '<span class="c">Latest brief</span> &middot; <b>'+esc(fmtDay(b.latestBrief))+'</b><br>'+
           [esc(b.latestAuthority),esc(b.latestDescription)].filter(Boolean).join(' &middot; ')+
           (b.latestConsultant
             ? '<br><span class="c">Consultant</span> &middot; <b>'+esc(b.latestConsultant)+'</b>'
             : '')+
         '</div>'
-      : '');
+      : '<div class="asat">Latest brief <b>'+esc(fmtDay(b.latestBrief))+'</b></div>');
   var fb=$('freshBriefs');
   if(fb)fb.textContent=fmtDay(b.latestBrief);
 }
