@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.9";</script>
+<script>window.BUILD = "1.10";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -91,7 +91,13 @@
   .sk-leg{height:11px;margin-top:12px;width:78%}
   .sk-line{height:12px;margin-top:23px;width:88%}
   .sk-date{height:10px;margin-top:12px;width:46%}
+  .sk-b1{height:11px;margin-top:15px;width:78%}
+  .sk-b2{height:11px;margin-top:11px;width:60%}
+  .sk-b3{height:11px;margin-top:18px;width:44%}
   .figfail{font-size:12.5px;color:var(--faint);margin-top:16px}
+  /* which brief the date belongs to */
+  .lbrief{font-size:11.5px;color:var(--slate);margin-top:5px;line-height:1.45}
+  .lbrief .c{color:var(--faint)}
   @media (prefers-reduced-motion: reduce){.sk::after{animation:none;display:none}}
   .y12 b{color:var(--ink);font-variant-numeric:tabular-nums}
 
@@ -161,7 +167,8 @@
       <div id="briefFigs"><div class="rateblock">
         <div class="ratebig"><div class="sk sk-big"></div><div class="sk sk-lbl"></div></div>
         <div class="raterest"><div class="sk sk-bar"></div><div class="sk sk-leg"></div></div>
-      </div><div class="sk sk-line"></div><div class="sk sk-date"></div></div>
+      </div><div class="sk sk-line"></div><div class="sk sk-date"></div>
+      <div class="sk sk-b1"></div><div class="sk sk-b2"></div><div class="sk sk-b3"></div></div>
       <div class="spacer"></div>
       <span class="go">Open<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
@@ -261,7 +268,15 @@ function renderBriefs(b){
       '<div class="raterest"><div class="distro">'+bars+'</div><div class="dlegend">'+leg+'</div></div>'+
     '</div>'+
     '<div class="y12"><b>'+nf(b.returned)+'</b> of <b>'+nf(b.total)+'</b> briefs returned &middot; <b>'+nf(b.unreturned)+'</b> unreturned</div>'+
-    '<div class="asat">Latest brief '+esc(fmtDay(b.latestBrief))+'</div>';
+    '<div class="asat">Latest brief '+esc(fmtDay(b.latestBrief))+'</div>'+
+    (b.latestAuthority||b.latestDescription||b.latestConsultant
+      ? '<div class="lbrief">'+
+          [esc(b.latestAuthority),esc(b.latestDescription)].filter(Boolean).join(' &middot; ')+
+          (b.latestConsultant
+            ? '<br><span class="c">Consultant</span> &middot; '+esc(b.latestConsultant)
+            : '')+
+        '</div>'
+      : '');
   var fb=$('freshBriefs');
   if(fb)fb.textContent=fmtDay(b.latestBrief);
 }
