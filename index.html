@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.12";</script>
+<script>window.BUILD = "1.13";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -91,12 +91,15 @@
   .sk-leg{height:11px;margin-top:12px;width:78%}
   .sk-line{height:12px;margin-top:23px;width:88%}
   .sk-date{height:10px;margin-top:12px;width:46%}
-  .sk-b1{height:11px;margin-top:15px;width:78%}
-  .sk-b2{height:11px;margin-top:11px;width:60%}
-  .sk-b3{height:11px;margin-top:18px;width:44%}
+  .sk-b1{height:11px;margin-top:22px;width:78%}
+  .sk-b2{height:11px;margin-top:18px;width:60%}
+  .sk-b3{height:11px;margin-top:26px;width:44%}
   .figfail{font-size:12.5px;color:var(--faint);margin-top:16px}
-  /* which brief the date belongs to */
-  .lbrief{font-size:11.5px;color:var(--slate);margin-top:5px;line-height:1.45}
+  /* The detail beneath the figures - which brief, or which course. Petrol bar
+     and a soft tint, so it reads as a block rather than more small print. */
+  .lbrief{font-size:11.5px;color:var(--slate);line-height:1.45;
+          background:var(--petrol-soft);border-left:3px solid var(--petrol);
+          border-radius:0 8px 8px 0;padding:9px 11px;margin-top:9px}
   .lbrief .c{color:var(--faint)}
   .lbrief b{font-weight:600;color:var(--ink)}
   .asat b{font-weight:600;color:var(--ink)}
