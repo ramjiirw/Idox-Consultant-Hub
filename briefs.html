@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.6";</script>
+<script>window.BUILD = "2.7";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -612,7 +612,7 @@
       <button class="clearbtn" id="p3Clear">Clear</button>
       <div class="f" style="margin-left:auto"><label>&nbsp;</label><div class="seg small" id="seg3"><span class="pilld" id="seg3Pill"></span>
         <button id="v3a" class="on">Over time</button><button id="v3b">By consultant</button>
-        <button id="v3c">The mix</button><button id="v3d">By quarter</button>
+        <button id="v3c">Excellent share</button><button id="v3d">By quarter</button>
       </div></div>
     </div>
 
@@ -1772,7 +1772,7 @@ document.querySelectorAll('#tblAct thead th[data-a]').forEach(function(th){
    the return rate rather than round the rating.                              */
 
 var UI3={period:'',from:'',to:'',con:'',auth:[],view:'a',
-         c2mode:'pct',c2sort:'vol',c2min:false,c2held:null,c3mode:'ret',c1range:24,c4min:true};
+         c2mode:'pct',c2sort:'vol',c2min:false,c2held:null,c3mode:'con',c3min:true,c1range:24,c4min:true};
 var auth3Q='';
 var RCOL3={Excellent:'#1F7A45',Good:'#5CB35F',Average:'#C8741A',Poor:'#B0304B',Unreturned:'#D9C88A','Not rated':'#C9D1DA'};
 var RORD3=['Excellent','Good','Average','Poor','Not rated','Unreturned'];
@@ -1968,24 +1968,26 @@ function viewB(list){
   if(UI3.c2min)arr=arr.filter(function(x){return x.tot>=10;});
   if(!arr.length){$('cPlot').innerHTML='<div class="cnone">No consultants match that selection.</div>';return;}
   arr.sort(UI3.c2sort==='vol'?function(a,b){return b.tot-a.tot;}:function(a,b){return b.rate-a.rate;});
-  var rowH=38,W=1180,L=250,H=arr.length*rowH+10,iw=W-L-10;
+  var rowH=30,W=1180,L=430,H=arr.length*rowH+10,iw=W-L-90;
   var mxTot=Math.max.apply(null,arr.map(function(x){return x.tot;}))||1;
   var s=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H});
   arr.forEach(function(x,i){
-    var y=i*rowH+6;
-    var nm=svgEl('text',{x:0,y:y+14,class:'crow'});nm.textContent=x.n;s.appendChild(nm);
-    var pc=svgEl('text',{x:0,y:y+29,'font-size':12});
+    var y=i*rowH+4;
+    /* name and figures on one line, so the rows are half the height and the
+       bar can start well to the right of the label. */
+    var nm=svgEl('text',{x:0,y:y+16,class:'crow'});nm.textContent=x.n;s.appendChild(nm);
+    var pc=svgEl('text',{x:250,y:y+16,'font-size':12});
     var a=svgEl('tspan',{'font-weight':600,fill:'#0E6E6E'});
     a.textContent=Math.round(x.rate*100)+'% returned';
     var bsp=svgEl('tspan',{fill:'#8792A2'});
-    bsp.textContent='  \u00b7  '+x.tot+' brief'+(x.tot===1?'':'s');
+    bsp.textContent='  \u00b7  '+x.tot;
     pc.appendChild(a);pc.appendChild(bsp);s.appendChild(pc);
     var full=UI3.c2mode==='pct'?iw:iw*(x.tot/mxTot), acc=0;
     RORD3.forEach(function(k){
       var v=x.o[k]||0; if(!v)return;
       var w=full*(v/x.tot);
       var dim=(UI3.c2held&&UI3.c2held!==x.n)?.25:1;
-      var rc=svgEl('rect',{x:L+acc,y:y+5,width:Math.max(w,0),height:22,fill:RCOL3[k],opacity:dim});
+      var rc=svgEl('rect',{x:L+acc,y:y+3,width:Math.max(w,0),height:17,fill:RCOL3[k],opacity:dim});
       rc.style.cursor='pointer';
       rc.addEventListener('mousemove',function(e){tipOn(e,'<b>'+x.n+'</b><br>'+k+': <b>'+v+'</b> of '+x.tot+'<br>'+Math.round(100*v/x.tot)+'% of their briefs');});
       rc.addEventListener('mouseleave',tipOff);
@@ -1996,34 +1998,72 @@ function viewB(list){
   $('cPlot').innerHTML='';$('cPlot').appendChild(s);
 }
 
-/* ---- view C: the mix ---- */
+/* ---- view C: how often the rating is Excellent ----
+   Excellent-or-Good cannot separate anything — it is 98% for Consultancy and
+   99% for Training, and every consultant over five briefs sits between 96 and
+   100. The Excellent share does separate: 92% down to 64%. Unreturned briefs
+   are excluded throughout; a brief that never came back is a missing rating,
+   not a poor one. */
 function viewC(list){
-  $('cTitle').textContent='The mix';
-  $('cCap').textContent='The same briefs, two ways. The switch decides whether briefs that never came back count against the score.';
-  $('cSub').innerHTML=segHTML('c3m',[['ret','Of returned briefs'],['all','Of all briefs']],UI3.c3mode);
+  $('cTitle').textContent='How often the rating is Excellent';
+  $('cCap').textContent='Returned briefs only. Excellent or Good is 98% across the board, so this splits out the top mark instead.';
+  $('cSub').innerHTML=segHTML('c3m',[['con','By consultant'],['typ','By delivery type']],UI3.c3mode)+
+    tickHTML('c3min','Hide under 5 rated briefs',UI3.c3min);
   wireSeg('c3m',function(v){UI3.c3mode=v;render3();});
-  $('cLgd').innerHTML='';
-  var c={};list.forEach(function(r){var k=rateOf(r);c[k]=(c[k]||0)+1;});
-  var keys=UI3.c3mode==='ret'?['Excellent','Good','Average','Poor']:RORD3;
-  var tot=keys.reduce(function(a,k){return a+(c[k]||0);},0);
-  if(!tot){$('cPlot').innerHTML='<div class="cnone">Nothing rated in this selection.</div>';return;}
-  var eg=(c.Excellent||0)+(c.Good||0);
-  var W=1180,H=74,bh=32;
-  var s=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H});
-  var acc=0;
-  keys.forEach(function(k){
-    var v=c[k]||0; if(!v)return;
-    var w=(v/tot)*W;
-    var rc=svgEl('rect',{x:acc,y:0,width:w,height:bh,fill:RCOL3[k]});
-    rc.addEventListener('mousemove',function(e){tipOn(e,'<b>'+k+'</b><br>'+v+' brief'+(v===1?'':'s')+' &middot; '+(v/tot*100).toFixed(1)+'%');});
-    rc.addEventListener('mouseleave',tipOff);
-    s.appendChild(rc);
-    if(w>60){var t=svgEl('text',{x:acc+w/2,y:bh+18,'font-size':11.5,fill:'#18212F','text-anchor':'middle'});t.textContent=k+' '+v;s.appendChild(t);}
-    acc+=w;
+  $('c3min').addEventListener('change',function(){UI3.c3min=this.checked;render3();});
+  $('cLgd').innerHTML=['Excellent','Good','Average','Poor'].map(function(k){
+    return '<span><i style="background:'+RCOL3[k]+'"></i>'+k+'</span>';}).join('');
+
+  var rated=list.filter(function(r){
+    var k=rateOf(r);
+    return k==='Excellent'||k==='Good'||k==='Average'||k==='Poor';
   });
-  $('cPlot').innerHTML='<div class="kfig"><div class="b" style="color:'+(UI3.c3mode==='ret'?'#1F7A45':'#0E6E6E')+'">'+
-    Math.round(eg/tot*100)+'%</div><div class="s">Excellent or Good, out of '+nf(tot)+
-    (UI3.c3mode==='ret'?' returned briefs':' briefs including those never returned')+'</div></div>';
+  if(!rated.length){$('cPlot').innerHTML='<div class="cnone">No returned, rated briefs in this selection.</div>';return;}
+  var keyOf=UI3.c3mode==='typ'?function(r){return r[6]||'Not stated';}:function(r){return r[7]||'Not named';};
+  var by={};
+  rated.forEach(function(r){
+    var k=keyOf(r);
+    if(!by[k])by[k]={tot:0};
+    by[k].tot++;
+    var g=rateOf(r); by[k][g]=(by[k][g]||0)+1;
+  });
+  var arr=Object.keys(by).map(function(k){
+    var o=by[k];
+    return {n:k,o:o,tot:o.tot,exc:(o.Excellent||0)/o.tot};
+  });
+  if(UI3.c3min&&UI3.c3mode==='con')arr=arr.filter(function(x){return x.tot>=5;});
+  if(!arr.length){$('cPlot').innerHTML='<div class="cnone">Nothing left once the small numbers are hidden.</div>';return;}
+  arr.sort(function(a,b){return b.exc-a.exc;});
+
+  var overall=0;
+  rated.forEach(function(r){if(rateOf(r)==='Excellent')overall++;});
+  var rowH=30,W=1180,L=430,H=arr.length*rowH+10,iw=W-L-90;
+  var s=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H});
+  var ORD=['Excellent','Good','Average','Poor'];
+  arr.forEach(function(x,i){
+    var y=i*rowH+4;
+    var nm=svgEl('text',{x:0,y:y+16,class:'crow'});nm.textContent=x.n;s.appendChild(nm);
+    var pc=svgEl('text',{x:250,y:y+16,'font-size':12});
+    var a=svgEl('tspan',{'font-weight':600,fill:'#1F7A45'});
+    a.textContent=Math.round(x.exc*100)+'% Excellent';
+    var bsp=svgEl('tspan',{fill:'#8792A2'});
+    bsp.textContent='  \u00b7  '+x.tot;
+    pc.appendChild(a);pc.appendChild(bsp);s.appendChild(pc);
+    var acc=0;
+    ORD.forEach(function(k){
+      var v=x.o[k]||0; if(!v)return;
+      var w=iw*(v/x.tot);
+      var rc=svgEl('rect',{x:L+acc,y:y+3,width:Math.max(w,0),height:17,fill:RCOL3[k]});
+      rc.addEventListener('mousemove',function(e){tipOn(e,'<b>'+x.n+'</b><br>'+k+': <b>'+v+'</b> of '+x.tot+' rated<br>'+Math.round(100*v/x.tot)+'%');});
+      rc.addEventListener('mouseleave',tipOff);
+      s.appendChild(rc); acc+=w;
+    });
+  });
+  $('cPlot').innerHTML='<div class="kfig"><div class="b" style="color:#1F7A45">'+
+    Math.round(overall/rated.length*100)+'%</div><div class="s">of the '+nf(rated.length)+
+    ' returned briefs in this selection were rated Excellent. Excellent or Good is '+
+    Math.round((rated.filter(function(r){var k=rateOf(r);return k==="Excellent"||k==="Good";}).length)/rated.length*100)+
+    '%, which is why it is not the measure shown here.</div></div>';
   $('cPlot').appendChild(s);
 }
 
