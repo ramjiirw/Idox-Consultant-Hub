@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.4";</script>
+<script>window.BUILD = "2.5";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -34,10 +34,13 @@
   .top h1{font-size:16px;line-height:1.1}
   .top .sub{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate)}
   .top .sp{flex:1}
-  .hublink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--petrol);border:1px solid var(--edge);border-radius:8px;padding:6px 12px;background:var(--surface);white-space:nowrap}
+  .hublink{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--petrol);border:1px solid var(--edge);border-radius:9px;padding:8px 15px;background:var(--surface);white-space:nowrap;
+      box-shadow:0 1px 2px rgba(24,33,47,.06),0 7px 15px -9px rgba(24,33,47,.55);transition:transform .09s ease,box-shadow .09s ease,background .13s,border-color .13s}
   .hublink:hover{border-color:var(--petrol);background:var(--petrol-soft)}
+  .hublink:active{transform:translateY(2px);box-shadow:0 1px 2px rgba(24,33,47,.14)}
+  @media (prefers-reduced-motion: reduce){.hublink{transition:none}.hublink:active{transform:none}}
   .hublink svg{width:14px;height:14px}
-  .dataas{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--edge);border-radius:9px;padding:9px 18px;white-space:nowrap;min-width:252px}
+  .dataas{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--edge);border-radius:9px;padding:9px 18px;white-space:nowrap;min-width:252px;box-shadow:0 1px 2px rgba(24,33,47,.06),0 7px 15px -9px rgba(24,33,47,.55)}
   .dataas svg{width:16px;height:16px;color:var(--petrol);flex-shrink:0}
   .dataas .k{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);font-weight:600;line-height:1.1}
   .dataas .v{font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:500;color:var(--ink);line-height:1.25}
@@ -55,17 +58,25 @@
   /* ---------- cards ---------- */
   .kpis{display:flex;gap:13px;margin-bottom:18px;align-items:stretch}
   .ktrio{display:flex;gap:13px;flex:1 1 0;min-width:0}
-  .kpi{border-radius:var(--radius);padding:11px 18px;border:1px solid var(--edge);display:flex;flex-direction:column;justify-content:center;flex:1 1 0;min-width:0}
-  .kpi .n{font-variant-numeric:tabular-nums;font-size:27px;font-weight:600;line-height:1.05;letter-spacing:-.02em}
-  .kpi .l{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--slate);margin-top:3px}
-  .k1{background:linear-gradient(180deg,#E4F1F0,#CFE6E4);border-color:#7FAFAC}
-  .k1 .n{color:#0A5555} .k1 .l{color:#2C6462}
-  .k2{background:linear-gradient(180deg,#F5EFDF,#EDE3C9);border-color:#C9B279}
-  .k2 .n{color:#7A6520} .k2 .l{color:#6B5A22}
-  .k3{background:linear-gradient(180deg,#EDF0F3,#DFE4EA);border-color:#AEB9C6}
-  .k3 .n{color:#2B3441} .k3 .l{color:#5B6675}
+  .kpi{border-radius:var(--radius);padding:14px 17px 11px;border:1px solid var(--edge);background:var(--surface);
+       display:flex;flex-direction:column;flex:1 1 0;min-width:0;
+       box-shadow:0 1px 2px rgba(24,33,47,.05),0 12px 24px -16px rgba(24,33,47,.6)}
+  .kpi .kt{display:flex;align-items:baseline;justify-content:space-between;gap:9px}
+  .kpi .n{font-variant-numeric:tabular-nums;font-size:36px;font-weight:600;line-height:1;letter-spacing:-.03em}
+  .kpi .l{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--slate);margin-top:4px}
+  /* the trend under each figure — same set of briefs as the number above it */
+  .kpi .dl{font-size:11px;font-weight:600;padding:2px 7px;border-radius:20px;white-space:nowrap}
+  .kpi .dl.up{background:#E4F1E6;color:#2E7A34}
+  .kpi .dl.dn{background:#F7E7EB;color:#B0304B}
+  .kpi .dl.fl{background:var(--paper);color:var(--slate);font-weight:500}
+  .kpi .spw{margin-top:10px;line-height:0}
+  .kpi .spk{width:100%;height:32px;display:block}
+  .kpi .cp{font-size:10px;color:var(--faint);margin-top:5px}
+  .k1 .n{color:var(--petrol)} .k1 .spw{color:var(--petrol)}
+  .k2 .n{color:#B0801E}       .k2 .spw{color:#C8741A}
+  .k3 .n{color:#2B3441}       .k3 .spw{color:#8792A2}
 
-  .panel{background:var(--surface);border:1px solid var(--edge);border-radius:var(--radius);padding:13px 17px 12px;min-width:0;display:flex;flex-direction:column}
+  .panel{background:var(--surface);border:1px solid var(--edge);border-radius:var(--radius);padding:13px 17px 12px;min-width:0;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(24,33,47,.05),0 12px 24px -16px rgba(24,33,47,.6)}
   .panel.rating{flex:0 0 696px}
   .panel .l{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--slate);margin:0 0 9px;display:flex;align-items:center;gap:8px}
   .panel .l .sp{flex:1}
@@ -335,7 +346,11 @@
   .dtab tbody tr td:first-child{border-left:1px solid var(--edge);border-radius:7px 0 0 7px}
   .dtab tbody tr td:last-child{border-right:1px solid var(--edge);border-radius:0 7px 7px 0}
   .dtab tr.r:hover td{background:#F0F6F6;border-color:var(--petrol)}
-  .dtab tr.gap td{height:7px;padding:0;background:var(--paper);border:none}
+  /* written to outweigh the side-border rule, or the spacer keeps a 1px stub
+     at each end — which is the little line that appeared between cards. */
+  .dtab tbody tr.gap td,
+  .dtab tbody tr.gap td:first-child,
+  .dtab tbody tr.gap td:last-child{height:7px;padding:0;background:var(--paper);border:none;box-shadow:none}
   .dtab tr.r.hascm{cursor:pointer}
   .dnone{padding:38px 16px;text-align:center;color:var(--slate);font-size:13.5px}
 
@@ -442,9 +457,9 @@
 
     <div class="kpis">
       <div class="ktrio">
-        <div class="kpi k1"><div class="n" id="kRet">&mdash;</div><div class="l">Returned</div></div>
-        <div class="kpi k2"><div class="n" id="kUnret">&mdash;</div><div class="l">Unreturned</div></div>
-        <div class="kpi k3"><div class="n" id="kTot">&mdash;</div><div class="l">Total Briefs</div></div>
+        <div class="kpi k1"><div class="kt"><div class="n" id="kRet">&mdash;</div><span class="dl fl" id="dRet"></span></div><div class="l">Returned</div><div class="spw" id="sRet"></div><div class="cp" id="cRet"></div></div>
+        <div class="kpi k2"><div class="kt"><div class="n" id="kUnret">&mdash;</div><span class="dl fl" id="dUnret"></span></div><div class="l">Unreturned</div><div class="spw" id="sUnret"></div><div class="cp" id="cUnret"></div></div>
+        <div class="kpi k3"><div class="kt"><div class="n" id="kTot">&mdash;</div><span class="dl fl" id="dTot"></span></div><div class="l">Total Briefs</div><div class="spw" id="sTot"></div><div class="cp" id="cTot"></div></div>
       </div>
       <div class="panel rating">
         <div class="l">Service Delivery Rating<span class="sp"></span><span class="note" id="ratedNote"></span></div>
@@ -656,6 +671,7 @@ function renderCards(list){
     bars+='<i style="width:'+(c[k]/(rated||1)*100)+'%;background:'+RCOL[k]+'" title="'+k+': '+c[k]+'"></i>';
     leg+='<span><span class="sw" style="background:'+RCOL[k]+'"></span>'+k+' <b>'+nf(c[k])+'</b></span>';
   });
+  drawTrends(list);
   $('distro').innerHTML=bars;
   $('dlegend').innerHTML=leg||'<span style="color:var(--faint)">No rated briefs in this selection.</span>';
 }
@@ -761,6 +777,87 @@ function twelveMonthsAgo(){
   d.setFullYear(d.getFullYear()-1);
   var p=function(n){n=String(n);return n.length<2?'0'+n:n;};
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+}
+
+/* The trend under each figure describes the same briefs as the figure, so it
+   is built from the filtered list, grouped by month on the return date — the
+   same field the Year filter uses. Twelve months to the newest brief in view. */
+function monthKeys(list){
+  var newest='';
+  list.forEach(function(r){ if(r[1]&&r[1]>newest)newest=r[1]; });
+  if(!newest)return [];
+  var y=+newest.slice(0,4), m=+newest.slice(5,7), out=[];
+  for(var i=11;i>=0;i--){
+    var mm=m-i, yy=y;
+    while(mm<1){mm+=12;yy--;}
+    out.push(yy+'-'+(mm<10?'0':'')+mm);
+  }
+  return out;
+}
+function monthlyCounts(list,keys,pick){
+  var m={};keys.forEach(function(k){m[k]=0;});
+  list.forEach(function(r){
+    if(!r[1])return;
+    var k=r[1].slice(0,7);
+    if(m[k]===undefined)return;
+    if(pick(r))m[k]++;
+  });
+  return keys.map(function(k){return m[k];});
+}
+function sparkSVG(v,area){
+  var w=150,h=32,mx=Math.max.apply(null,v)||1,n=v.length;
+  if(n<2)return '';
+  var pts=v.map(function(x,i){return [i*(w/(n-1)),h-2-(x/mx)*(h-6)];});
+  var d='M'+pts.map(function(p){return p[0].toFixed(1)+' '+p[1].toFixed(1);}).join(' L');
+  var f=area?'<path d="'+d+' L'+w+' '+h+' L0 '+h+' Z" fill="currentColor" opacity=".18"/>':'';
+  return '<svg class="spk" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'+f+
+         '<path d="'+d+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+}
+function barsSVG(v){
+  var w=150,h=32,mx=Math.max.apply(null,v)||1,n=v.length,g=w/n,bw=g*0.66,out='';
+  for(var i=0;i<n;i++){
+    var bh=Math.max(2,(v[i]/mx)*(h-3));
+    out+='<rect x="'+(i*g).toFixed(1)+'" y="'+(h-bh).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="1.5" fill="currentColor"/>';
+  }
+  return '<svg class="spk" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'+out+'</svg>';
+}
+/* Last six months against the six before them. */
+function chipFor(v){
+  var a=0,b=0,i;
+  for(i=0;i<6;i++)b+=v[i];
+  for(i=6;i<12;i++)a+=v[i];
+  if(!a&&!b)return ['fl','no briefs'];
+  if(!b)return ['up','all recent'];
+  var pc=Math.round((a-b)/b*100);
+  if(pc>=10)return ['up','\u25b2 '+pc+'%'];
+  if(pc<=-10)return ['dn','\u25bc '+Math.abs(pc)+'%'];
+  return ['fl','steady'];
+}
+function monLabel(k){
+  var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return m[+k.slice(5,7)-1]+' '+k.slice(2,4);
+}
+function drawTrends(list){
+  var keys=monthKeys(list);
+  var sets=[
+    ['Ret',  function(r){return r[8]!=='Unreturned';}, true ],
+    ['Unret',function(r){return r[8]==='Unreturned';}, true ],
+    ['Tot',  function(){return true;},                 false]
+  ];
+  if(keys.length<2){
+    sets.forEach(function(x){$('s'+x[0]).innerHTML='';$('c'+x[0]).textContent='';$('d'+x[0]).textContent='';});
+    return;
+  }
+  var cap=monLabel(keys[0])+' \u2013 '+monLabel(keys[11]);
+  sets.forEach(function(x){
+    var v=monthlyCounts(list,keys,x[1]);
+    $('s'+x[0]).innerHTML=x[2]?sparkSVG(v,true):barsSVG(v);
+    $('c'+x[0]).textContent=cap;
+    var ch=chipFor(v);
+    var el=$('d'+x[0]);
+    el.className='dl '+ch[0];
+    el.textContent=ch[1];
+  });
 }
 
 function rebuildFilters(){
