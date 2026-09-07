@@ -20,11 +20,11 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-09-07T14:15:09.173Z",
+    "bakedAt": "2026-09-07T15:15:08.231Z",
     "courses": 44,
-    "confirmed": 166,
+    "confirmed": 165,
     "provisional": 7,
-    "booked": 190,
+    "booked": 189,
     "nextCourse": "2026-09-07",
     "nextTitle": "Uniform Enterprise Administrator",
     "nextTrainer": "Ian Woodland",
