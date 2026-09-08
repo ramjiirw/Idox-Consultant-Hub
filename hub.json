@@ -20,16 +20,16 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-09-07T21:15:09.122Z",
-    "courses": 44,
-    "confirmed": 165,
+    "bakedAt": "2026-09-08T06:05:08.647Z",
+    "courses": 43,
+    "confirmed": 159,
     "provisional": 7,
-    "booked": 189,
-    "nextCourse": "2026-09-07",
-    "nextTitle": "Uniform Enterprise Administrator",
-    "nextTrainer": "Ian Woodland",
-    "nextBooked": 6,
-    "nextConfirmed": 6,
+    "booked": 183,
+    "nextCourse": "2026-09-13",
+    "nextTitle": "UMW2 Spatial Administration",
+    "nextTrainer": "Josh Elms",
+    "nextBooked": 5,
+    "nextConfirmed": 5,
     "nextProvisional": 0
   }
 }
