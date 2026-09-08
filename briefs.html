@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.15";</script>
+<script>window.BUILD = "2.16";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1970,7 +1970,7 @@ function tickHTML(id,label,on){
 function viewA(list){
   $('cTitle').textContent='Return rate over time';
   $('cCap').textContent='Grey bars are how many briefs that month. The line is the share that came back signed.';
-  $('cSub').innerHTML=segHTML('c1r',[['12','Last 12 months'],['24','Last 24'],['99','All']],String(UI3.c1range));
+  $('cSub').innerHTML=segHTML('c1r',[['12','12 months'],['24','24 months'],['99','All months']],String(UI3.c1range));
   wireSeg('c1r',function(v){UI3.c1range=+v;render3();});
   $('cLgd').innerHTML='';
   var ms=monKeys3(list);
