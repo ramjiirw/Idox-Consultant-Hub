@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.10";</script>
+<script>window.BUILD = "2.11";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -902,6 +902,26 @@ function chipFor(v){
   if(pc<=-10)return ['dn','\u25bc '+Math.abs(pc)+'%'];
   return ['fl','steady'];
 }
+/* Returned and Unreturned are shares of all briefs, not counts. A count moves
+   with how much work was delivered, so a quiet six months makes chasing look
+   as though it improved. The share holds still when volume changes and only
+   moves when the behaviour does. Shown as the earlier half then the recent
+   half, so no one has to work out what the change is a percentage of.
+   goodDown says which way is the good news: falling for unreturned, rising
+   for returned. Total Briefs stays a count and keeps chipFor. */
+function shareChip(v,tot,goodDown){
+  var a=0,b=0,ta=0,tb=0,i;
+  for(i=0;i<6;i++){ b+=v[i]; tb+=tot[i]; }
+  for(i=6;i<12;i++){ a+=v[i]; ta+=tot[i]; }
+  if(!ta&&!tb)return ['fl','no briefs'];
+  var pb=tb?Math.round(b/tb*100):null;
+  var pa=ta?Math.round(a/ta*100):null;
+  var txt=(pb===null?'\u2014':pb+'%')+' \u2192 '+(pa===null?'\u2014':pa+'%');
+  if(pb===null||pa===null)return ['fl',txt];
+  if(pa===pb)return ['fl',txt];
+  var better=goodDown?(pa<pb):(pa>pb);
+  return [better?'up':'dn',txt];
+}
 function monLabel(k){
   var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return m[+k.slice(5,7)-1]+' '+k.slice(2,4);
@@ -909,20 +929,21 @@ function monLabel(k){
 function drawTrends(list){
   var keys=monthKeys(list);
   var sets=[
-    ['Ret',  function(r){return r[8]!=='Unreturned';}, true ],
-    ['Unret',function(r){return r[8]==='Unreturned';}, true ],
-    ['Tot',  function(){return true;},                 false]
+    ['Ret',  function(r){return r[8]!=='Unreturned';}, true,  false],
+    ['Unret',function(r){return r[8]==='Unreturned';}, true,  true ],
+    ['Tot',  function(){return true;},                 false, null ]
   ];
   if(keys.length<2){
     sets.forEach(function(x){$('s'+x[0]).innerHTML='';$('c'+x[0]).textContent='';$('d'+x[0]).textContent='';});
     return;
   }
   var cap=monLabel(keys[0])+' \u2013 '+monLabel(keys[11]);
+  var totV=monthlyCounts(list,keys,function(){return true;});
   sets.forEach(function(x){
     var v=monthlyCounts(list,keys,x[1]);
     $('s'+x[0]).innerHTML=x[2]?sparkSVG(v,true):barsSVG(v);
     $('c'+x[0]).textContent=cap;
-    var ch=chipFor(v);
+    var ch=(x[3]===null)?chipFor(v):shareChip(v,totV,x[3]);
     var el=$('d'+x[0]);
     el.className='dl '+ch[0];
     el.textContent=ch[1];
