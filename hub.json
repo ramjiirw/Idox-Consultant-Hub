@@ -20,11 +20,11 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-09-08T13:15:12.099Z",
+    "bakedAt": "2026-09-08T14:15:09.820Z",
     "courses": 43,
-    "confirmed": 162,
+    "confirmed": 170,
     "provisional": 7,
-    "booked": 186,
+    "booked": 194,
     "nextCourse": "2026-09-13",
     "nextTitle": "UMW2 Spatial Administration",
     "nextTrainer": "Josh Elms",
