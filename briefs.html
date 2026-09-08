@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.14";</script>
+<script>window.BUILD = "2.15";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -945,14 +945,16 @@ function drawTrends(list){
      comparison between two halves of the year: a bare pair of percentages was
      not something anyone could read off the card without being told what it
      meant. Counted straight from the list, so it always matches the numbers
-     above it. Returned is rounded and unreturned takes the remainder, so the
-     two can never round to 99 or 101 between them. Total Briefs keeps its
-     count trend. */
+     above it. Both are shares of the total, and the words are left off - the
+     card's own heading says which is which, and spelling it out overflowed the
+     pill. Returned is rounded and unreturned takes the remainder, so the two
+     can never round to 99 or 101 between them. Total Briefs keeps its count
+     trend. */
   var totN=list.length, unN=0;
   list.forEach(function(r){ if(r[8]==='Unreturned')unN++; });
   var retPc=totN?Math.round((totN-unN)/totN*100):null;
-  var rates={Ret:(retPc===null?'no briefs':retPc+'% returned'),
-             Unret:(retPc===null?'no briefs':(100-retPc)+'% unreturned')};
+  var rates={Ret:(retPc===null?'no briefs':retPc+'%'),
+             Unret:(retPc===null?'no briefs':(100-retPc)+'%')};
   var totV=monthlyCounts(list,keys,function(){return true;});
   sets.forEach(function(x){
     var v=monthlyCounts(list,keys,x[1]);
