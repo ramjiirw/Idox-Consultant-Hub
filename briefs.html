@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.12";</script>
+<script>window.BUILD = "2.14";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -941,12 +941,24 @@ function drawTrends(list){
     return;
   }
   var cap=monLabel(keys[0])+' \u2013 '+monLabel(keys[11]);
+  /* The two rate cards show a plain rate of the briefs in view rather than a
+     comparison between two halves of the year: a bare pair of percentages was
+     not something anyone could read off the card without being told what it
+     meant. Counted straight from the list, so it always matches the numbers
+     above it. Returned is rounded and unreturned takes the remainder, so the
+     two can never round to 99 or 101 between them. Total Briefs keeps its
+     count trend. */
+  var totN=list.length, unN=0;
+  list.forEach(function(r){ if(r[8]==='Unreturned')unN++; });
+  var retPc=totN?Math.round((totN-unN)/totN*100):null;
+  var rates={Ret:(retPc===null?'no briefs':retPc+'% returned'),
+             Unret:(retPc===null?'no briefs':(100-retPc)+'% unreturned')};
   var totV=monthlyCounts(list,keys,function(){return true;});
   sets.forEach(function(x){
     var v=monthlyCounts(list,keys,x[1]);
     $('s'+x[0]).innerHTML=x[2]?sparkSVG(v,true):barsSVG(v);
     $('c'+x[0]).textContent=cap;
-    var ch=(x[3]===null)?chipFor(v):shareChip(v,totV,x[3]);
+    var ch=(x[3]===null)?chipFor(v):['fl',rates[x[0]]];
     var el=$('d'+x[0]);
     el.className='dl '+ch[0];
     el.textContent=ch[1];
