@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.16";</script>
+<script>window.BUILD = "2.17";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1845,7 +1845,7 @@ document.querySelectorAll('#tblAct thead th[data-a]').forEach(function(th){
    the return rate rather than round the rating.                              */
 
 var UI3={period:'',from:'',to:'',con:'',auth:[],view:'a',
-         c2mode:'pct',c2sort:'vol',c2min:false,c2held:null,c3mode:'con',c3min:true,c1range:24,c4min:true};
+         c2mode:'pct',c2sort:'vol',c2min:false,c2held:null,c3mode:'con',c3min:true,c1range:12,c4min:true};
 var auth3Q='';
 var RCOL3={Excellent:'#1F7A45',Good:'#5CB35F',Average:'#C8741A',Poor:'#B0304B',Unreturned:'#D9C88A','Not rated':'#C9D1DA'};
 var RORD3=['Excellent','Good','Average','Poor','Not rated','Unreturned'];
@@ -1970,7 +1970,7 @@ function tickHTML(id,label,on){
 function viewA(list){
   $('cTitle').textContent='Return rate over time';
   $('cCap').textContent='Grey bars are how many briefs that month. The line is the share that came back signed.';
-  $('cSub').innerHTML=segHTML('c1r',[['12','12 months'],['24','24 months'],['99','All months']],String(UI3.c1range));
+  $('cSub').innerHTML=segHTML('c1r',[['6','6 months'],['12','12 months'],['24','24 months'],['99','All months']],String(UI3.c1range));
   wireSeg('c1r',function(v){UI3.c1range=+v;render3();});
   $('cLgd').innerHTML='';
   var ms=monKeys3(list);
