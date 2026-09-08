@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.17";</script>
+<script>window.BUILD = "1.18";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -239,7 +239,8 @@ function renderSchedule(s){
     '</div>'+
     (s.nextCourse
       ? '<div class="lbrief">'+
-          '<span class="c">Next</span> &middot; <b>'+esc(fmtDay(s.nextCourse))+'</b><br>'+
+          '<span class="c">'+(isRunning(s.nextCourse,s.nextEnd)?'Today':'Next')+'</span>'+
+          ' &middot; <b>'+esc(fmtSpan(s.nextCourse,s.nextEnd))+'</b><br>'+
           esc(s.nextTitle||'')+
           (s.nextTrainer
             ? '<br><span class="c">Trainer</span> &middot; <b>'+esc(s.nextTrainer)+'</b>'
@@ -298,6 +299,35 @@ function fmtDay(iso){
   var p=String(iso).split('-');
   if(p.length!==3)return '\u2014';
   return String(+p[2])+' '+MONTHS[+p[1]-1].slice(0,3)+' '+p[0];
+}
+
+/* Today's date on the reader's own calendar, as YYYY-MM-DD, so the card is
+   right whenever the page is opened rather than only when it was baked. */
+function todayKey(){
+  var d=new Date();
+  return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+}
+
+/* A course counts as running from the day it starts to the day it ends, so a
+   two-day course still says Today on its second day. */
+function isRunning(start,end){
+  if(!start)return false;
+  var t=todayKey();
+  return start<=t && t<=(end||start);
+}
+
+/* One day, or a span. The month is repeated only when the two days fall in
+   different months, and the year is shown once at the end unless the span
+   crosses into a new year. */
+function fmtSpan(start,end){
+  if(!start)return '\u2014';
+  if(!end||end===start)return fmtDay(start);
+  var a=String(start).split('-'), b=String(end).split('-');
+  if(a.length!==3||b.length!==3)return fmtDay(start);
+  var ma=MONTHS[+a[1]-1].slice(0,3), mb=MONTHS[+b[1]-1].slice(0,3);
+  if(a[0]!==b[0])return String(+a[2])+' '+ma+' '+a[0]+' - '+String(+b[2])+' '+mb+' '+b[0];
+  if(a[1]!==b[1])return String(+a[2])+' '+ma+' - '+String(+b[2])+' '+mb+' '+b[0];
+  return String(+a[2])+'-'+String(+b[2])+' '+ma+' '+a[0];
 }
 function renderBriefs(b){
   if(!b||!b.ok){$('briefFigs').innerHTML='<div class="figfail">Figures unavailable just now.</div>';return;}
