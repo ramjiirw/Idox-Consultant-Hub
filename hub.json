@@ -20,11 +20,11 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-09-09T21:15:10.768Z",
+    "bakedAt": "2026-09-09T22:20:15.222Z",
     "courses": 44,
-    "confirmed": 168,
+    "confirmed": 176,
     "provisional": 7,
-    "booked": 190,
+    "booked": 200,
     "nextCourse": "2026-09-08",
     "nextEnd": "2026-09-09",
     "nextTitle": "Uniform Enterprise Administrator",
