@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.19";</script>
+<script>window.BUILD = "2.20";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -665,6 +665,7 @@
     <label class="toggle" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="repNoUn">Exclude unreturned</label>
     <div class="sp"></div>
     <button class="printbtn" id="repGo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M6 17H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>Save PDF</button>
+    <button class="clearbtn" id="repClear">Clear</button>
     <button class="clearbtn" id="repClose">Close</button>
   </div>
   <div class="rprint-page" id="repBody"></div>
@@ -1554,6 +1555,22 @@ function openReport(){
   buildRepPops();renderReport();
   $('repOverlay').classList.add('show');
 }
+function clearReport(){
+  /* The report is filtered by more than its own toolbar holds: consultant is
+     shared with the Briefs tab, and authority, type and rating are inherited
+     from it. Clearing only the toolbar would leave the scope line still naming
+     filters you cannot see from here, so this resets those too and repaints the
+     page behind. */
+  REP.from='';REP.to='';REP.q='';REP.cmt=true;REP.noUn=false;
+  REP.period=UI.year||repYears()[0]||'';   /* the same period the report opens on */
+  UI.con='';UI.auth=[];UI.typ='';UI.rat='';UI.page=1;
+  authQ='';
+  $('repQ').value='';
+  $('repFrom').value='';$('repTo').value='';
+  $('repCmt').checked=true;$('repNoUn').checked=false;
+  buildRepPops();renderReport();
+  rebuildFilters();render();
+}
 function closeReport(){ closeWith($('repOverlay'),200); }
 
 /* ---------- tab 2: service deliverables ------------------------------------
@@ -2368,6 +2385,7 @@ $('bd').addEventListener('click',closeModal);
 
 $('repBtn').addEventListener('click',openReport);
 $('repClose').addEventListener('click',closeReport);
+$('repClear').addEventListener('click',clearReport);
 $('repGo').addEventListener('click',function(){window.print();});
 $('repCmt').addEventListener('change',function(){REP.cmt=this.checked;renderReport();});
 $('repNoUn').addEventListener('change',function(){
