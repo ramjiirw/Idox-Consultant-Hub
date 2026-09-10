@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.18";</script>
+<script>window.BUILD = "2.19";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -660,6 +660,7 @@
     <span class="fl">Period</span><span class="ddwrap"><button class="ddbtn" id="repYrBtn" style="width:168px"><span class="cv" id="repYrCv">&mdash;</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="repYrPop"></div></span>
     <span class="repcustom" id="repCustom"><input class="inp" type="date" id="repFrom"><span class="fl" style="margin:0 2px">to</span><input class="inp" type="date" id="repTo"></span>
     <span class="fl">Consultant</span><span class="ddwrap"><button class="ddbtn" id="repConBtn"><span class="cv" id="repConCv">All consultants</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="ddpop" id="repConPop"></div></span>
+    <span class="fl">Find</span><span class="searchwrap" style="width:210px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input class="inp search" id="repQ" placeholder="Search"></span>
     <label class="toggle" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="repCmt" checked>Include comments</label>
     <label class="toggle" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="repNoUn">Exclude unreturned</label>
     <div class="sp"></div>
@@ -679,9 +680,15 @@ var $=function(i){return document.getElementById(i);};
 var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 var PER=60;
 
-/* Row layout:
-   0 delivery date (ISO)   1 return date (ISO)   2 PR   3 authority   4 contact
-   5 description           6 type                7 consultant        8 rating   9 comment   */
+/* Row layout — all 21 fields. The first ten are the ones the Briefs tab and the
+   printed report show; the rest belong to the Deliveries tab, apart from the
+   email, which is only ever used to key the person card.
+    0 delivery date (ISO)   1 return date (ISO)    2 PR                3 authority
+    4 contact               5 description          6 type              7 consultant
+    8 rating                9 customer comment    10 contact email    11 delivery days
+   12 deliverable 1        13 deliverable 2       14 deliverable 3    15 deliverable 4
+   16 deliverable 5        17 deliverable 6       18 consultant comments
+   19 post delivery actions                       20 post delivery actionee          */
 var ROWS=[];
 var UI={year:'',month:'',con:'',auth:[],typ:'',rat:'',q:'',showCmt:true,sort:1,desc:true,page:1,open:{}};
 
@@ -696,6 +703,26 @@ function dmy(iso){
 function yearOf(r){return r[1]?r[1].slice(0,4):'';}
 function monthOf(r){return r[1]?parseInt(r[1].slice(5,7),10):0;}
 
+/* ---------- what each search box is allowed to look at ----------
+   A search only reads the columns showing on screen, so every result can be
+   explained by looking at it. Anything held on the row but not displayed —
+   the email, and whatever the other tab shows — stays out of the haystack. */
+var COLS_BRIEF=[0,1,2,3,4,5,6,7,8,9];              /* Briefs tab, and the printed report */
+var COLS_DEL  =[0,1,3,5,6,7,8,11,12,13,14,15,16,17];/* Deliveries tab, Deliverables view */
+var COLS_ACT  =[0,3,18,19,20];                      /* Deliveries tab, Comments & Actions view */
+
+/* Date columns go in twice, once as held and once as dd/mm/yy, so both read
+   the way they look on screen. */
+function hayFor(r,cols){
+  var out=[];
+  for(var i=0;i<cols.length;i++){
+    var c=cols[i], v=r[c];
+    out.push(v==null?'':v);
+    if(c===0||c===1)out.push(dmy(v));
+  }
+  return norm(out.join(' '));
+}
+
 /* ---------- filtering ---------- */
 function passes(r,skip){
   if(skip!=='year'  && UI.year  && yearOf(r)!==UI.year) return false;
@@ -708,9 +735,7 @@ function passes(r,skip){
     else if(r[8]!==UI.rat) return false;
   }
   if(skip!=='q' && UI.q){
-    var q=norm(UI.q);
-    var hay=norm(r.join(' ')+' '+dmy(r[0])+' '+dmy(r[1]));
-    if(hay.indexOf(q)<0) return false;
+    if(hayFor(r,COLS_BRIEF).indexOf(norm(UI.q))<0) return false;
   }
   return true;
 }
@@ -1313,11 +1338,44 @@ document.querySelectorAll('.tab').forEach(function(t){
    changing it in the report changes the page behind. Period is not shared.
    The range is always bounded — an unbounded report with comments would run
    to 432 briefs and 240 comments. */
-var REP={period:'',from:'',to:'',cmt:true,noUn:false};
+/* q is the report's own search term. Unlike the consultant, which is shared
+   with the page behind, this one stands alone: typing here changes nothing on
+   the Briefs tab, and the Briefs search changes nothing here. */
+var REP={period:'',from:'',to:'',cmt:true,noUn:false,q:''};
 
 function todayISO(){
   var d=new Date(),p=function(n){n=String(n);return n.length<2?'0'+n:n;};
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+}
+/* ---------- how far the custom date pickers may go ----------
+   Both tabs filter on the return date, and a brief cannot be returned in the
+   future, nor before the first one ever was. So the pickers are held to the
+   earliest and latest return dates actually on file, and widen by themselves
+   as new briefs arrive. Nothing here is derived from today's date. */
+function retBounds(){
+  var lo='',hi='';
+  ROWS.forEach(function(r){
+    var d=r[1];if(!d)return;
+    if(!lo||d<lo)lo=d;
+    if(!hi||d>hi)hi=d;
+  });
+  return {lo:lo,hi:hi};
+}
+function clampRet(iso){
+  var b=retBounds();
+  if(!iso||!b.lo)return iso;
+  if(iso<b.lo)return b.lo;
+  if(iso>b.hi)return b.hi;
+  return iso;
+}
+function applyDateBounds(){
+  var b=retBounds();
+  if(!b.lo)return;
+  ['repFrom','repTo','p2From','p2To'].forEach(function(id){
+    var el=$(id);
+    if(!el)return;
+    el.min=b.lo;el.max=b.hi;
+  });
 }
 function repRange(){
   var TODAY=todayISO(), from, to=TODAY;
@@ -1363,9 +1421,8 @@ function repRows(){
       if(UI.rat==='Not rated'){ if(r[8]!=='')return false; }
       else if(r[8]!==UI.rat)return false;
     }
-    if(UI.q){
-      var hay=norm(r.join(' ')+' '+dmy(r[0])+' '+dmy(r[1]));
-      if(hay.indexOf(norm(UI.q))<0)return false;
+    if(REP.q){
+      if(hayFor(r,COLS_BRIEF).indexOf(norm(REP.q))<0)return false;
     }
     return true;
   }).sort(function(a,b){return a[1]<b[1]?1:(a[1]>b[1]?-1:0);});
@@ -1376,7 +1433,7 @@ function repScope(){
   if(UI.auth.length)bits.push(UI.auth.length===1?'Authority: '+UI.auth[0]:UI.auth.length+' authorities');
   if(UI.typ)bits.push(UI.typ);
   if(UI.rat)bits.push('Rated '+UI.rat);
-  if(UI.q)bits.push('Search: "'+UI.q+'"');
+  if(REP.q)bits.push('Search: "'+REP.q+'"');
   if(REP.noUn)bits.push('Unreturned excluded');
   return bits.join('   \u00b7   ');
 }
@@ -1459,7 +1516,8 @@ function buildRepPops(){
       REP.period=b.getAttribute('data-ry');
       if(REP.period==='custom'&&!REP.from){
         var a=new Date(todayISO());a.setFullYear(a.getFullYear()-1);
-        REP.from=a.toISOString().slice(0,10);REP.to=todayISO();
+        /* the opening pair sits inside the pickers' own limits */
+        REP.from=clampRet(a.toISOString().slice(0,10));REP.to=clampRet(todayISO());
         $('repFrom').value=REP.from;$('repTo').value=REP.to;
       }
       $('repCustom').classList.toggle('on',REP.period==='custom');
@@ -1492,6 +1550,7 @@ function openReport(){
   if(!REP.period)REP.period=UI.year||repYears()[0]||'';
   REP.cmt=$('repCmt').checked;
   REP.noUn=$('repNoUn').checked;
+  $('repQ').value=REP.q;   /* its own term, held between openings */
   buildRepPops();renderReport();
   $('repOverlay').classList.add('show');
 }
@@ -1520,8 +1579,9 @@ function pass2(r,skip){
   if(skip!=='con'  &&UI2.con&&r[7]!==UI2.con)return false;
   if(skip!=='auth' &&UI2.auth.length&&UI2.auth.indexOf(r[3])<0)return false;
   if(skip!=='q'&&UI2.q){
-    var hay=norm(r.join(' ')+' '+dmy(r[0])+' '+dmy(r[1]));
-    if(hay.indexOf(norm(UI2.q))<0)return false;
+    /* the two views show different columns, so the search follows the switch */
+    var cols=(VIEW2==='act')?COLS_ACT:COLS_DEL;
+    if(hayFor(r,cols).indexOf(norm(UI2.q))<0)return false;
   }
   return true;
 }
@@ -1544,7 +1604,8 @@ function buildPer2(){
       UI2.period=b.getAttribute('data-p2y');
       if(UI2.period==='custom'&&!UI2.from){
         var a=new Date(todayISO());a.setFullYear(a.getFullYear()-1);
-        UI2.from=a.toISOString().slice(0,10);UI2.to=todayISO();
+        /* the opening pair sits inside the pickers' own limits */
+        UI2.from=clampRet(a.toISOString().slice(0,10));UI2.to=clampRet(todayISO());
         $('p2From').value=UI2.from;$('p2To').value=UI2.to;
       }
       UI2.pageD=1;UI2.pageA=1;$('p2PerPop').classList.remove('on');
@@ -1783,6 +1844,9 @@ function setView2(v){
   function swap(){
     if(done)return; done=true;
     $('segPill').removeEventListener('transitionend',swap);
+    /* the two views search different columns, so with a term typed the
+       consultant and authority lists change with the switch too */
+    buildFilt2();
     render2();
     box.classList.add('fadein');
   }
@@ -2279,6 +2343,7 @@ function boot(data,latest){
   LATEST=latest||'';
   FETCHED=new Date();
   paintStamp();
+  applyDateBounds();
   buildLastSeen();
   buildPeople();
   rebuildFilters();
@@ -2310,6 +2375,7 @@ $('repNoUn').addEventListener('change',function(){
   /* the consultant list can shrink, and a chosen consultant may vanish */
   buildRepPops();renderReport();
 });
+$('repQ').addEventListener('input',function(e){REP.q=e.target.value;renderReport();});
 $('repFrom').addEventListener('change',function(){REP.from=this.value;renderReport();});
 $('repTo').addEventListener('change',function(){REP.to=this.value;renderReport();});
 [['repYrBtn','repYrPop',168],['repConBtn','repConPop',0]].forEach(function(p){
