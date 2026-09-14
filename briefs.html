@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.20";</script>
+<script>window.BUILD = "2.21";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -374,6 +374,105 @@
   .dtab tr.r.hascm{cursor:pointer}
   .dnone{padding:38px 16px;text-align:center;color:var(--slate);font-size:13.5px}
 
+  /* ---------- tab 4: full service brief ----------------------------------
+     One brief at a time, read top to bottom in the order the form asks for
+     it. Colour carries meaning rather than decorating: petrol for the
+     delivery, slate for the deliverables, amber for what the consultant
+     wrote, and the rating's own colour on the customer's section, so a poor
+     or unreturned brief announces itself before you have read a word. A
+     brief with no rating gets no colour — that is an absent judgement, not
+     a bad one. */
+  .fbar{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);padding:12px 14px;margin-bottom:18px;
+        display:flex;flex-direction:column;gap:10px;overflow:visible}
+  .frow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .frule{height:1px;background:var(--hairline);margin:1px -14px}
+  .fsp{flex:1}
+  .fhalf{flex:1 1 0;min-width:270px}
+  .fthird{flex:0 1 31%;min-width:190px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{border:1px solid var(--hairline);background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:500;color:var(--slate)}
+  .chip:hover:not(.on){border-color:var(--edge);color:var(--ink)}
+  .chip.on{background:var(--petrol);border-color:var(--petrol);color:#fff;font-weight:600}
+  .fcount{font-size:12.5px;color:var(--slate);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .fcount b{color:var(--ink);font-weight:600}
+  .fstep{display:flex;align-items:center;gap:8px}
+  .fstep button{border:1px solid var(--edge);background:#fff;border-radius:8px;width:34px;height:34px;
+        display:flex;align-items:center;justify-content:center;color:var(--ink)}
+  .fstep button:hover:not(:disabled){border-color:var(--petrol);color:var(--petrol)}
+  .fstep button:disabled{opacity:.4;cursor:default}
+  .fstep svg{width:15px;height:15px}
+  .fpdf{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--edge);background:#fff;border-radius:8px;
+        padding:8px 13px;font-size:12.5px;font-weight:600;color:var(--petrol);white-space:nowrap}
+  .fpdf svg{width:14px;height:14px}
+
+  /* the brief picker's rows carry more than a dropdown item, so they are
+     their own thing rather than a wider .dditem */
+  .bitem{display:flex;align-items:center;gap:11px;width:100%;min-width:340px;border:none;background:none;
+        padding:8px 9px;border-radius:7px;text-align:left;color:var(--ink);font-size:13px;line-height:1.4}
+  .bitem:hover{background:var(--petrol-soft)}
+  .bitem.on{background:var(--petrol);color:#fff}
+  .bitem .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .bitem .au{font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bitem .bm{font-size:11.5px;color:var(--slate);font-variant-numeric:tabular-nums;flex-shrink:0;white-space:nowrap}
+  .bitem .bc{font-size:11.5px;color:var(--slate);flex-shrink:0;width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bitem.on .bm,.bitem.on .bc{color:rgba(255,255,255,.78)}
+  .d-exc{background:var(--exc)}.d-good{background:var(--gd)}.d-avg{background:var(--amber)}
+  .d-poor{background:var(--rose)}.d-unret{background:var(--unret)}.d-na{background:var(--edge)}
+
+  .fstage{display:flex;flex-direction:column;gap:14px;max-width:1080px}
+  .fstage.fadein{animation:d2fade .19s ease}
+  .fcard{background:var(--surface);border:1px solid var(--hairline);border-left:3px solid var(--petrol);
+        border-radius:var(--radius);box-shadow:0 1px 2px rgba(24,33,47,.05);overflow:hidden}
+  .fch{display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--hairline);background:#FAFBFC}
+  .fch h3{font-size:14px}
+  .fhero{display:flex;align-items:center;gap:18px;padding:16px 18px;flex-wrap:wrap;background:var(--petrol);color:#fff}
+  .fhero h2{font-size:19px;color:#fff}
+  .fhero .fmeta{font-size:12.5px;color:rgba(255,255,255,.82);margin-top:2px}
+  .fhero .pill.ghost{background:rgba(255,255,255,.22);color:#fff}
+  .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline)}
+  .fcell{background:#fff;padding:11px 18px;min-width:0}
+  .fcell.rest{background:#FAFBFC}
+  .fcell.wide{grid-column:span 2}
+  .fcell.full{grid-column:span 3}
+  .fk{font-size:11px;color:var(--slate);font-weight:500;margin-bottom:3px}
+  .fv{font-size:14px;color:var(--ink);word-wrap:break-word;overflow-wrap:anywhere}
+  .fv.big{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600}
+  .fv.note{white-space:pre-wrap;font-size:13.5px;line-height:1.55;background:#fff;border:1px solid var(--hairline);
+        border-radius:8px;padding:10px 12px}
+  .fem{color:var(--faint)}
+  .fdgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hairline)}
+  .fdcell{background:#fff;padding:10px 18px;display:flex;gap:12px;align-items:baseline}
+  .fdcell:nth-child(4n+1),.fdcell:nth-child(4n+2){background:#FAFBFC}
+  .fdn{flex:0 0 88px;font-size:11.5px;color:var(--slate);font-weight:500}
+  .fcard.deliv{border-left-color:var(--slate)}
+  .fcard.deliv .fch h3{color:#3f4a59}
+  .fcard.cons{border-left-color:var(--amber)}
+  .fcard.cons .fch{background:var(--amber-soft)}
+  .fcard.cons .fch h3{color:var(--amber)}
+  .fcard.cust.r-exc{border-left-color:var(--exc)}
+  .fcard.cust.r-exc .fch{background:var(--exc-soft)}
+  .fcard.cust.r-exc .fch h3{color:var(--exc)}
+  .fcard.cust.r-good{border-left-color:var(--gd)}
+  .fcard.cust.r-good .fch{background:var(--gd-soft)}
+  .fcard.cust.r-good .fch h3{color:#3c7f3f}
+  .fcard.cust.r-avg{border-left-color:var(--amber)}
+  .fcard.cust.r-avg .fch{background:var(--amber-soft)}
+  .fcard.cust.r-avg .fch h3{color:var(--amber)}
+  .fcard.cust.r-poor{border-left-color:var(--rose)}
+  .fcard.cust.r-poor .fch{background:var(--rose-soft)}
+  .fcard.cust.r-poor .fch h3{color:var(--rose)}
+  .fcard.cust.r-unret{border-left-color:var(--unret)}
+  .fcard.cust.r-unret .fch{background:var(--unret-soft)}
+  .fcard.cust.r-unret .fch h3{color:var(--unret)}
+  .fwait{padding:18px;display:flex;align-items:flex-start;gap:12px;color:var(--slate);font-size:13.5px;background:#fff}
+  .fwait svg{width:18px;height:18px;color:var(--unret);flex-shrink:0;margin-top:1px}
+  @media (max-width:900px){
+    .fgrid{grid-template-columns:1fr 1fr}
+    .fcell.full{grid-column:span 2}
+    .fdgrid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion: reduce){.fstage.fadein{animation:none}}
+
   /* the wide table: fourteen columns, so it scrolls sideways */
   #tblDel{min-width:2468px}
   #tblDel .w-dl{width:88px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -500,6 +599,7 @@
     <button class="tab on" data-pane="p1">Service Delivery &amp; Ratings <span class="badge" id="badge1">&mdash;</span></button>
     <button class="tab" data-pane="p2">Service Deliverables</button>
     <button class="tab" data-pane="p3">Ratings Summary</button>
+    <button class="tab" data-pane="p4">Full Service Brief</button>
   </div>
 </div>
 
@@ -647,6 +747,58 @@
       <div id="cPlot"></div>
       <div class="clgd" id="cLgd"></div>
     </div>
+
+  </div>
+
+  <!-- ============ TAB 4 ============ -->
+  <div class="pane" id="p4">
+
+    <div class="fbar" id="fbar">
+      <!-- row one: which briefs am I looking at -->
+      <div class="frow">
+        <span class="ddwrap">
+          <button class="ddbtn w-con" id="p4ConBtn"><span class="cv" id="p4ConCv">All consultants</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ddpop" id="p4ConPop"></div>
+        </span>
+        <div class="chips" id="p4Chips">
+          <button class="chip" data-f="7">Last 7 days</button>
+          <button class="chip" data-f="30">Last month</button>
+          <button class="chip" data-f="year">This year</button>
+          <button class="chip on" data-f="">All</button>
+        </div>
+        <div class="seg small" id="seg4"><span class="pilld" id="seg4Pill"></span>
+          <button id="r4All" class="on">All</button>
+          <button id="r4Ret">Returned</button>
+          <button id="r4Unr">Unreturned</button>
+        </div>
+        <div class="fsp"></div>
+        <span class="fcount" id="p4Scope"></span>
+      </div>
+
+      <div class="frule"></div>
+
+      <!-- row two: which one am I reading -->
+      <div class="frow">
+        <span class="ddwrap fhalf">
+          <button class="ddbtn" id="p4BriefBtn" style="width:100%"><span class="cv" id="p4BriefCv">&mdash;</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ddpop" id="p4BriefPop"></div>
+        </span>
+        <span class="searchwrap fthird">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input class="inp search" id="p4Search" placeholder="Search any field" autocomplete="off">
+        </span>
+        <div class="fstep">
+          <button id="p4Prev" title="Previous brief" aria-label="Previous brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m15 6-6 6 6 6"/></svg></button>
+          <span class="fcount" id="p4Count"></span>
+          <button id="p4Next" title="Next brief" aria-label="Next brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
+        </div>
+        <button class="fpdf" id="p4Pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M6 17H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>Save PDF</button>
+      </div>
+    </div>
+
+    <div class="fstage" id="p4Stage"><div class="dnone">Reading the latest service briefs&hellip;</div></div>
 
   </div>
 
@@ -1330,6 +1482,9 @@ document.querySelectorAll('.tab').forEach(function(t){
     $(t.getAttribute('data-pane')).classList.add('on');
     if(t.getAttribute('data-pane')==='p2'){setPanes();segPill();}
     if(t.getAttribute('data-pane')==='p3'){setPane3();seg3Pill();}
+    /* the pill cannot be measured while the pane is hidden, so it is set the
+       moment the tab is shown, exactly as tabs 2 and 3 do */
+    if(t.getAttribute('data-pane')==='p4'){seg4Pill();}
   });
 });
 
@@ -2355,6 +2510,281 @@ function paintStamp(){
   $('asAt').textContent='Refreshed '+agoText(FETCHED)+(l?' \u00b7 latest brief '+l:'');
 }
 
+/* ---------- tab 4: full service brief --------------------------------------
+   The whole of one brief, in the order the Idox Service Brief form asks for
+   it. The other tabs answer "what happened across the briefs"; this one
+   answers "what does this brief say".
+
+   Its filters are its own, as tab 2's and tab 3's are, so moving between
+   tabs never disturbs what you were reading. Period filters on the return
+   date, position 1, exactly as the other three do — the feed fills that on
+   every brief, unreturned ones included, because it is the submission
+   timestamp rather than a customer signature.
+
+   Which brief you are on is held as a row key rather than an index, so
+   changing a filter keeps you on the same brief wherever it lands in the
+   new set, and only moves you when the filters push it out of view.        */
+
+var UI4={con:'',span:'',ret:'all',q:'',key:''};
+var brQ='';
+
+function span4(){
+  if(!UI4.span)return null;
+  var b=retBounds(),hi=b.hi||todayISO();
+  if(UI4.span==='year')return {from:hi.slice(0,4)+'-01-01',to:hi};
+  var p=hi.split('-'),d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]));
+  d.setUTCDate(d.getUTCDate()-(+UI4.span));
+  return {from:d.toISOString().slice(0,10),to:hi};
+}
+
+/* The set the picker lists and the stepper walks. */
+function pass4(r,skip){
+  var rg=span4();
+  if(skip!=='span'&&rg){ if(!r[1]||r[1]<rg.from||r[1]>rg.to)return false; }
+  if(skip!=='con'&&UI4.con&&r[7]!==UI4.con)return false;
+  if(skip!=='ret'&&UI4.ret==='ret'&&r[8]==='Unreturned')return false;
+  if(skip!=='ret'&&UI4.ret==='unr'&&r[8]!=='Unreturned')return false;
+  return true;
+}
+function rows4(skip){return ROWS.filter(function(r){return pass4(r,skip);});}
+
+/* Newest delivery first, so the most recent work is brief 1. */
+function list4(){
+  return rows4().slice().sort(function(a,b){
+    if(a[0]!==b[0])return a[0]<b[0]?1:-1;
+    if(a[1]!==b[1])return a[1]<b[1]?1:-1;
+    return 0;
+  });
+}
+function cur4(){
+  var l=list4();
+  if(!l.length)return null;
+  for(var i=0;i<l.length;i++){ if(rowKey(l[i])===UI4.key)return l[i]; }
+  UI4.key=rowKey(l[0]);
+  return l[0];
+}
+
+/* Everything is on screen here, so the search may read the whole row —
+   the 2.19 rule is that a search only reads what you can see, not that it
+   reads a fixed set of columns. The e-mail is the one exception: it is
+   shown, so it is searchable. */
+var COLS_ALL=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+
+var RCLASS={Excellent:'exc',Good:'good',Average:'avg',Poor:'poor',Unreturned:'unret'};
+var FCLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+
+function fv(v){return v?esc(v):'<span class="fem">&mdash;</span>';}
+function fnote(v){return v?esc(v).replace(/\n/g,'<br>'):'<span class="fem">&mdash;</span>';}
+
+function form4(r){
+  var dl='',i;
+  for(i=0;i<6;i++){
+    dl+='<div class="fdcell"><div class="fdn">Deliverable '+(i+1)+'</div><div class="fv">'+fv(r[12+i])+'</div></div>';
+  }
+
+  /* An unreturned brief was signed off with the ICS mailbox, so the name on
+     it is ours, not the customer's. Naming it here would read as though the
+     customer had signed. The section says what is missing instead. */
+  var out=(r[8]==='Unreturned');
+  var cust=out
+    ? '<div class="fwait">'+FCLOCK+'<div>This brief has not come back from the customer. '+
+      'It was signed off internally on '+esc(dmy(r[1]))+', and carries no rating, customer comment or signature.</div></div>'
+    : '<div class="fgrid">'+
+        '<div class="fcell full"><div class="fk">Customer comments</div><div class="fv note">'+fnote(r[9])+'</div></div>'+
+        '<div class="fcell wide"><div class="fk">Signed by</div><div class="fv">'+fv(r[4])+'</div></div>'+
+        '<div class="fcell rest"><div class="fk">Signed by e-mail</div><div class="fv">'+fv(r[10])+'</div></div>'+
+      '</div>';
+
+  return '<div class="fcard"><div class="fhero">'+
+      '<div><h2>'+esc(r[3])+'</h2><div class="fmeta">'+esc(r[2]||'No PR')+' &middot; '+
+        (r[6]?esc(r[6]):'no delivery type')+' &middot; '+esc(r[7]||'no consultant')+'</div></div>'+
+      '<div class="fsp"></div><span class="pill ghost">'+esc(r[8]||'Not rated')+'</span></div>'+
+      '<div class="fgrid">'+
+        '<div class="fcell rest"><div class="fk">Delivery date</div><div class="fv big">'+(dmy(r[0])||'<span class="fem">&mdash;</span>')+'</div></div>'+
+        '<div class="fcell rest"><div class="fk">Returned</div><div class="fv big">'+(dmy(r[1])||'<span class="fem">&mdash;</span>')+'</div></div>'+
+        '<div class="fcell rest"><div class="fk">Days delivered</div><div class="fv big">'+(r[11]===''||r[11]==null?'<span class="fem">&mdash;</span>':esc(String(r[11])))+'</div></div>'+
+        '<div class="fcell"><div class="fk">Delivery type</div><div class="fv">'+fv(r[6])+'</div></div>'+
+        '<div class="fcell wide"><div class="fk">Idox consultant</div><div class="fv">'+fv(r[7])+'</div></div>'+
+        '<div class="fcell full"><div class="fk">Delivery description</div><div class="fv">'+fv(r[5])+'</div></div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="fcard deliv"><div class="fch"><h3>Deliverables</h3></div><div class="fdgrid">'+dl+'</div></div>'+
+
+    '<div class="fcard cons"><div class="fch"><h3>Idox consultant comments and post delivery actions</h3></div>'+
+      '<div class="fgrid">'+
+        '<div class="fcell full"><div class="fk">Consultant comments</div><div class="fv note">'+fnote(r[18])+'</div></div>'+
+        '<div class="fcell wide"><div class="fk">Post delivery actions</div><div class="fv note">'+fnote(r[19])+'</div></div>'+
+        '<div class="fcell rest"><div class="fk">Post delivery actionee</div><div class="fv">'+fv(r[20])+'</div></div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="fcard cust r-'+(RCLASS[r[8]]||'na')+'"><div class="fch"><h3>Customer completion</h3>'+
+      '<div class="fsp"></div>'+pillFor(r[8])+'</div>'+cust+'</div>';
+}
+
+function render4(anim){
+  var l=list4(), r=cur4();
+  $('p4Scope').textContent=nf(l.length)+' brief'+(l.length===1?'':'s')+' in view';
+  if(!r){
+    $('p4Stage').innerHTML='<div class="dnone">Nothing matches those filters.</div>';
+    $('p4Count').innerHTML='';
+    $('p4BriefCv').textContent='\u2014';
+    $('p4Prev').disabled=true;$('p4Next').disabled=true;
+    buildBriefPop();
+    return;
+  }
+  var pos=0;
+  for(var i=0;i<l.length;i++){ if(rowKey(l[i])===UI4.key){pos=i;break;} }
+  $('p4Stage').innerHTML=form4(r);
+  if(anim){
+    var st=$('p4Stage');
+    st.classList.remove('fadein');void st.offsetWidth;st.classList.add('fadein');
+  }
+  $('p4Count').innerHTML='Brief <b>'+nf(pos+1)+'</b> of <b>'+nf(l.length)+'</b>';
+  $('p4Prev').disabled=pos<=0;
+  $('p4Next').disabled=pos>=l.length-1;
+  $('p4BriefCv').textContent=r[3]+'  \u00b7  '+dmy(r[0]);
+  buildBriefPop();
+}
+
+function step4(d){
+  var l=list4(),pos=-1;
+  for(var i=0;i<l.length;i++){ if(rowKey(l[i])===UI4.key){pos=i;break;} }
+  if(pos<0)return;
+  var next=pos+d;
+  if(next<0||next>=l.length)return;
+  UI4.key=rowKey(l[next]);
+  render4(true);
+  window.scrollTo(0,0);
+}
+
+/* ---- the consultant dropdown, split on the last twelve months as tab 2 ---- */
+function buildCon4(){
+  var base=rows4('con');
+  var cc=countBy(base,function(r){return r[7];});
+  var cons=cc.keys.slice().sort(function(a,b){return norm(a)<norm(b)?-1:1;});
+  if(UI4.con&&cons.indexOf(UI4.con)<0)UI4.con='';
+  var cut=twelveMonthsAgo(),act=[],dorm=[];
+  cons.forEach(function(c){ (LASTSEEN[c]&&LASTSEEN[c]>=cut?act:dorm).push(c); });
+  var h='<div class="pophead">Briefs</div>'+popItem('','All consultants',base.length,!UI4.con,'data-p4c');
+  if(act.length){
+    h+='<div class="ddhead">Currently delivering</div>';
+    act.forEach(function(c){h+=popItem(c,c,cc.m[c],UI4.con===c,'data-p4c');});
+  }
+  if(dorm.length){
+    h+='<div class="ddhead later">Not in the last 12 months ('+dorm.length+')</div>';
+    dorm.forEach(function(c){h+=popItem(c,c,cc.m[c],UI4.con===c,'data-p4c');});
+  }
+  $('p4ConPop').innerHTML=h;
+  $('p4ConPop').querySelectorAll('.dditem').forEach(function(b){
+    b.addEventListener('click',function(){
+      UI4.con=b.getAttribute('data-p4c');
+      $('p4ConCv').textContent=UI4.con||'All consultants';
+      $('p4ConPop').classList.remove('on');
+      buildCon4();render4(true);
+    });
+  });
+  $('p4ConCv').textContent=UI4.con||'All consultants';
+}
+
+/* ---- the picker: every brief the filters leave, narrowed as you type ---- */
+function buildBriefPop(){
+  var l=list4(),q=norm(brQ);
+  var shown=l.filter(function(r){return !q||hayFor(r,COLS_ALL).indexOf(q)>-1;});
+  var h='<div class="popsearch"><input id="p4BriefQ" placeholder="Type to narrow the list" value="'+esc(brQ)+'"></div>';
+  h+='<div class="pophead">'+nf(shown.length)+' brief'+(shown.length===1?'':'s')+'</div>';
+  if(!shown.length)h+='<div class="popnone">No brief matches that.</div>';
+  shown.forEach(function(r){
+    var k=rowKey(r);
+    h+='<button class="bitem'+(k===UI4.key?' on':'')+'" data-k="'+esc(k)+'">'+
+       '<span class="dot d-'+(RCLASS[r[8]]||'na')+'"></span>'+
+       '<span class="au">'+esc(r[3])+'</span>'+
+       '<span class="bm">'+esc(dmy(r[0]))+'</span>'+
+       '<span class="bm">'+esc(r[2]||'')+'</span>'+
+       '<span class="bc">'+esc(r[7])+'</span></button>';
+  });
+  $('p4BriefPop').innerHTML=h;
+  var qi=$('p4BriefQ');
+  qi.addEventListener('click',function(e){e.stopPropagation();});
+  qi.addEventListener('input',function(e){
+    brQ=e.target.value;buildBriefPop();
+    var f=$('p4BriefQ');f.focus();f.setSelectionRange(f.value.length,f.value.length);
+  });
+  $('p4BriefPop').querySelectorAll('.bitem').forEach(function(b){
+    b.addEventListener('click',function(){
+      UI4.key=b.getAttribute('data-k');
+      brQ='';$('p4BriefPop').classList.remove('on');render4(true);
+    });
+  });
+}
+
+/* ---- the free search: jumps to the first brief that carries the term ---- */
+function search4(){
+  var q=norm(UI4.q);
+  if(!q)return;
+  var l=list4();
+  for(var i=0;i<l.length;i++){
+    if(hayFor(l[i],COLS_ALL).indexOf(q)>-1){
+      if(rowKey(l[i])!==UI4.key){UI4.key=rowKey(l[i]);render4(true);}
+      return;
+    }
+  }
+}
+
+function buildFilt4(){
+  buildCon4();
+  buildBriefPop();
+}
+
+/* The pill is measured from the button rather than guessed, the same way the
+   chart selector does it, so it lands right whatever the text. */
+function seg4Pill(){
+  var ids={all:'r4All',ret:'r4Ret',unr:'r4Unr'};
+  var b=$(ids[UI4.ret]);
+  if(!b)return;
+  var br=b.getBoundingClientRect(), sr=$('seg4').getBoundingClientRect();
+  $('seg4Pill').style.left=(br.left-sr.left-1)+'px';
+  $('seg4Pill').style.width=br.width+'px';
+}
+function setRet4(v){
+  if(UI4.ret===v)return;
+  UI4.ret=v;
+  [['all','r4All'],['ret','r4Ret'],['unr','r4Unr']].forEach(function(x){
+    $(x[1]).classList.toggle('on',x[0]===v);
+  });
+  seg4Pill();buildCon4();render4(true);
+}
+
+$('p4ConBtn').addEventListener('click',function(e){e.stopPropagation();openPop($('p4ConBtn'),$('p4ConPop'),0);});
+$('p4BriefBtn').addEventListener('click',function(e){
+  e.stopPropagation();
+  openPop($('p4BriefBtn'),$('p4BriefPop'),0);
+  var f=$('p4BriefQ');if(f&&$('p4BriefPop').classList.contains('on'))f.focus();
+});
+$('r4All').addEventListener('click',function(){setRet4('all');});
+$('r4Ret').addEventListener('click',function(){setRet4('ret');});
+$('r4Unr').addEventListener('click',function(){setRet4('unr');});
+$('p4Prev').addEventListener('click',function(){step4(-1);});
+$('p4Next').addEventListener('click',function(){step4(1);});
+$('p4Search').addEventListener('input',function(e){UI4.q=e.target.value;search4();});
+$('p4Chips').querySelectorAll('.chip').forEach(function(c){
+  c.addEventListener('click',function(){
+    $('p4Chips').querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});
+    c.classList.add('on');
+    UI4.span=c.getAttribute('data-f');
+    buildCon4();render4(true);
+  });
+});
+/* Arrow keys step, but only on this tab and never while typing. */
+document.addEventListener('keydown',function(e){
+  if(!$('p4').classList.contains('on'))return;
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(document.querySelector('.ddpop.on'))return;
+  if(e.key==='ArrowLeft'){e.preventDefault();step4(-1);}
+  if(e.key==='ArrowRight'){e.preventDefault();step4(1);}
+});
+
 function boot(data,latest){
   ROWS=data||[];
   LATEST=latest||'';
@@ -2369,13 +2799,15 @@ function boot(data,latest){
   render2();
   buildFilt3();
   render3();
+  buildFilt4();
+  render4();
 }
 function setStick(){
   var hh=document.querySelector('.appheader').getBoundingClientRect().height;
   document.documentElement.style.setProperty('--stick',Math.round(hh)+'px');
 }
 setStick();window.addEventListener('resize',setStick);
-window.addEventListener('resize',function(){setPanes();segPill();setPane3();seg3Pill();});
+window.addEventListener('resize',function(){setPanes();segPill();setPane3();seg3Pill();seg4Pill();});
 
 $('toTop').addEventListener('click',backToTop);
 window.addEventListener('scroll',function(){
