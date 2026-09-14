@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.26";</script>
+<script>window.BUILD = "2.27";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -466,17 +466,17 @@
      grey headers, no colour, so it never competes with the card above. */
   .fsec{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin:20px 0 8px}
   .scard{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);overflow:hidden}
-  .sch{padding:9px 16px;border-bottom:1px solid var(--hairline);background:#FCFDFD;font-size:12.5px;font-weight:600;
+  .sch{padding:10px 16px;border-bottom:1px solid var(--hairline);background:#FCFDFD;font-size:14px;font-weight:600;
         color:var(--slate);display:flex;align-items:center;gap:10px}
   .sch.topline{border-top:1px solid var(--hairline)}
-  .sch .sn{margin-left:auto;font-weight:500;color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
   .sdl{display:flex;flex-direction:column}
-  .sdrow{display:flex;gap:12px;padding:7px 16px;border-bottom:1px solid var(--hairline);font-size:13px;align-items:baseline}
+  .sdrow{display:flex;gap:12px;padding:8px 16px;border-bottom:1px solid var(--hairline);font-size:14.5px;align-items:baseline}
   .sdrow:last-child{border-bottom:none}
-  .sdn{flex:0 0 22px;color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
+  .sdn{flex:0 0 22px;color:var(--faint);font-size:12.5px;font-variant-numeric:tabular-nums}
   .sdv{min-width:0;word-wrap:break-word;overflow-wrap:anywhere}
-  .sbody{padding:11px 16px;font-size:13px}
-  .st{white-space:pre-wrap;line-height:1.5;margin-bottom:11px}
+  .sbody{padding:12px 16px;font-size:14.5px}
+  .sbody .fk{font-size:12px}
+  .st{white-space:pre-wrap;line-height:1.5;margin-bottom:12px}
   .st.last{margin-bottom:0}
   @media (max-width:900px){
     .fgrid{grid-template-columns:1fr 1fr}
@@ -810,6 +810,7 @@
           <input class="inp search" id="p4Search" placeholder="Search any field" autocomplete="off">
         </span>
         <div class="fstep">
+          <button id="p4First" title="Back to the first brief" aria-label="Back to the first brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m18 6-6 6 6 6"/><path d="m11 6-6 6 6 6"/></svg></button>
           <button id="p4Prev" title="Previous brief" aria-label="Previous brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m15 6-6 6 6 6"/></svg></button>
           <span class="fcount" id="p4Count"></span>
           <button id="p4Next" title="Next brief" aria-label="Next brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
@@ -2607,8 +2608,6 @@ function form4(r){
   for(i=0;i<6;i++){
     dl+='<div class="sdrow"><span class="sdn">'+(i+1)+'</span><span class="sdv">'+fv(r[12+i])+'</span></div>';
   }
-  var used=0;
-  for(i=0;i<6;i++){ if(r[12+i])used++; }
 
   /* An unreturned brief was signed off with the ICS mailbox, so the name on
      it is ours, not the customer's. Naming it here would read as though the
@@ -2641,7 +2640,7 @@ function form4(r){
 
     '<div class="fsec">Supporting detail</div>'+
     '<div class="scard">'+
-      '<div class="sch">Deliverables<span class="sn">'+used+' of 6 used</span></div>'+
+      '<div class="sch">Deliverables</div>'+
       '<div class="sdl">'+dl+'</div>'+
       '<div class="sch topline">Idox consultant comments and post delivery actions</div>'+
       '<div class="sbody">'+
@@ -2668,7 +2667,7 @@ function render4(anim){
     $('p4Stage').innerHTML='<div class="dnone">Nothing matches those filters.</div>';
     $('p4Count').innerHTML='';
     $('p4BriefCv').textContent='\u2014';
-    $('p4Prev').disabled=true;$('p4Next').disabled=true;
+    $('p4First').disabled=true;$('p4Prev').disabled=true;$('p4Next').disabled=true;
     buildBriefPop();
     return;
   }
@@ -2680,6 +2679,7 @@ function render4(anim){
     st.classList.remove('fadein');void st.offsetWidth;st.classList.add('fadein');
   }
   $('p4Count').innerHTML='Brief <b>'+nf(pos+1)+'</b> of <b>'+nf(l.length)+'</b>';
+  $('p4First').disabled=pos<=0;
   $('p4Prev').disabled=pos<=0;
   $('p4Next').disabled=pos>=l.length-1;
   $('p4BriefCv').textContent=briefLine(r);
@@ -2807,6 +2807,16 @@ $('p4BriefBtn').addEventListener('click',function(e){
 $('r4All').addEventListener('click',function(){setRet4('all');});
 $('r4Ret').addEventListener('click',function(){setRet4('ret');});
 $('r4Unr').addEventListener('click',function(){setRet4('unr');});
+/* Jumps to the top of whatever the filters leave, not to the newest brief on
+   file — the two are the same only when nothing is filtered. */
+function first4(){
+  var l=list4();
+  if(!l.length||rowKey(l[0])===UI4.key)return;
+  UI4.key=rowKey(l[0]);
+  render4(true);
+  window.scrollTo(0,0);
+}
+$('p4First').addEventListener('click',first4);
 $('p4Prev').addEventListener('click',function(){step4(-1);});
 $('p4Next').addEventListener('click',function(){step4(1);});
 $('p4Search').addEventListener('input',function(e){UI4.q=e.target.value;search4();});
@@ -2838,6 +2848,7 @@ document.addEventListener('keydown',function(e){
   if(document.querySelector('.ddpop.on'))return;
   if(e.key==='ArrowLeft'){e.preventDefault();step4(-1);}
   if(e.key==='ArrowRight'){e.preventDefault();step4(1);}
+  if(e.key==='Home'){e.preventDefault();first4();}
 });
 
 function boot(data,latest){
