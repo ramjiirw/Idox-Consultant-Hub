@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.28";</script>
+<script>window.BUILD = "2.29";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -304,6 +304,31 @@
     .rprint-page{flex:none !important;height:auto !important;box-shadow:none !important;margin:0 !important;max-width:none !important;width:auto !important;padding:0 !important;overflow:visible !important;border-radius:0 !important}
     .ptab tbody tr{page-break-inside:avoid}
     .ptab thead{display:table-header-group}
+
+    /* Printing one brief from tab 4. The page size is injected at print time
+       rather than declared here, because the @page rule above is landscape
+       for the report and cannot be scoped by selector. Everything outside
+       the form is hidden, and the cards are kept whole across pages. */
+    body.printbrief > *{display:none !important}
+    body.printbrief > .wrap{display:block !important}
+    body.printbrief .wrap > .pane{display:none !important}
+    body.printbrief .wrap > #p4{display:block !important}
+    body.printbrief #p4 > .fbar{display:none !important}
+    body.printbrief .wrap{max-width:none;padding:0}
+    body.printbrief .fstage{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    body.printbrief .fcard,body.printbrief .scard,body.printbrief .fband,
+    body.printbrief .sbody,body.printbrief .sdrow{page-break-inside:avoid}
+    body.printbrief .fcard.fmain{box-shadow:none}
+    body.printbrief .fprintft{display:block !important}
+    /* On screen the pill is white on a translucent white; on paper that washes
+       out, so it prints solid white with the rating's own colour as the text. */
+    body.printbrief .pill.ghost{background:#fff !important;border:1px solid rgba(255,255,255,.6)}
+    body.printbrief .fmain.r-exc .pill.ghost{color:#14603A !important}
+    body.printbrief .fmain.r-good .pill.ghost{color:#2E7A34 !important}
+    body.printbrief .fmain.r-avg .pill.ghost{color:#C8741A !important}
+    body.printbrief .fmain.r-poor .pill.ghost{color:#B4304B !important}
+    body.printbrief .fmain.r-unret .pill.ghost{color:#7A6520 !important}
+    body.printbrief .fmain.r-na .pill.ghost{color:#5B6675 !important}
   }
   @media (prefers-reduced-motion: reduce){
     .rprint.show,.rprint.show .rprint-page,.rprint.closing,.rprint.closing .rprint-page{animation:none !important}
@@ -433,8 +458,7 @@
   .fhero h2{font-size:23px;color:#fff;line-height:1.25}
   .fhero .fmeta{font-size:13px;color:rgba(255,255,255,.85);margin-top:4px}
   .pill.ghost{background:rgba(255,255,255,.22);color:#fff}
-  .pill.lg{font-size:13px;padding:6px 15px}
-  .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline)}
+  .pill.lg{font-size:13px;padding:6px 15px}  .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline)}
   .fcell{background:#fff;padding:13px 22px;min-width:0}
   .fcell.rest{background:#FAFBFC}
   .fcell.wide{grid-column:span 2}
@@ -478,6 +502,8 @@
   .sbody .fk{font-size:12px}
   .st{white-space:pre-wrap;line-height:1.5;margin-bottom:12px}
   .st.last{margin-bottom:0}
+  /* Shown only on paper: the same generated and build line the report carries. */
+  .fprintft{display:none;margin-top:14px;font-size:11px;color:var(--faint);text-align:right}
   @media (max-width:900px){
     .fgrid{grid-template-columns:1fr 1fr}
     .fcell.full{grid-column:span 2}
@@ -2648,7 +2674,16 @@ function form4(r){
         '<div class="fk">Post delivery actions</div><div class="st">'+fnote(r[19])+'</div>'+
         '<div class="fk">Post delivery actionee</div><div class="st last">'+fv(r[20])+'</div>'+
       '</div>'+
-    '</div>';
+    '</div>'+
+    '<div class="fprintft">Generated '+esc(stampNow())+' &middot; Build '+esc(window.BUILD||'?')+'</div>';
+}
+
+/* The same wording the report footer uses, so a printed brief and a printed
+   report date themselves identically. */
+function stampNow(){
+  var d=new Date();
+  return d.getDate()+' '+MONTHS[d.getMonth()].slice(0,3)+' '+d.getFullYear()+', '+
+    ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
 }
 
 /* The closed button says exactly what its row in the list says, in the same
@@ -2807,6 +2842,31 @@ $('p4BriefBtn').addEventListener('click',function(e){
 $('r4All').addEventListener('click',function(){setRet4('all');});
 $('r4Ret').addEventListener('click',function(){setRet4('ret');});
 $('r4Unr').addEventListener('click',function(){setRet4('unr');});
+/* Save PDF. No overlay and no options: what is on screen is what prints.
+   The @page rule in the stylesheet is landscape for the report and cannot be
+   scoped by selector, so a portrait rule is injected for the duration of the
+   print and removed afterwards — a later @page declaration wins. */
+function printBrief(){
+  if(!cur4())return;
+  var st=document.createElement('style');
+  st.id='p4PrintPage';
+  st.textContent='@media print{@page{size:A4 portrait;margin:12mm}}';
+  document.head.appendChild(st);
+  document.body.classList.add('printbrief');
+  var done=false;
+  function tidy(){
+    if(done)return; done=true;
+    document.body.classList.remove('printbrief');
+    var s=$('p4PrintPage'); if(s)s.parentNode.removeChild(s);
+    window.removeEventListener('afterprint',tidy);
+  }
+  window.addEventListener('afterprint',tidy);
+  /* Safari has never fired afterprint reliably, so a timer clears up too. */
+  setTimeout(tidy,4000);
+  window.print();
+}
+$('p4Pdf').addEventListener('click',printBrief);
+
 /* Jumps to the top of whatever the filters leave, not to the newest brief on
    file — the two are the same only when nothing is filtered. */
 function first4(){
