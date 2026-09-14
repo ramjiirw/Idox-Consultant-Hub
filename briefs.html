@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.21";</script>
+<script>window.BUILD = "2.22";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -388,7 +388,7 @@
   .frule{height:1px;background:var(--hairline);margin:1px -14px}
   .fsp{flex:1}
   .fhalf{flex:1 1 0;min-width:270px}
-  .fthird{flex:0 1 31%;min-width:190px}
+  .fthird{flex:0 0 210px;min-width:170px}
   .chips{display:flex;gap:6px;flex-wrap:wrap}
   .chip{border:1px solid var(--hairline);background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:500;color:var(--slate)}
   .chip:hover:not(.on){border-color:var(--edge);color:var(--ink)}
@@ -2623,6 +2623,15 @@ function form4(r){
       '<div class="fsp"></div>'+pillFor(r[8])+'</div>'+cust+'</div>';
 }
 
+/* The closed button says exactly what its row in the list says, in the same
+   order: authority, delivery date, PR, consultant. */
+function briefLine(r){
+  var bits=[r[3],dmy(r[0])];
+  if(r[2])bits.push(r[2]);
+  if(r[7])bits.push(r[7]);
+  return bits.join('  \u00b7  ');
+}
+
 function render4(anim){
   var l=list4(), r=cur4();
   $('p4Scope').textContent=nf(l.length)+' brief'+(l.length===1?'':'s')+' in view';
@@ -2644,7 +2653,7 @@ function render4(anim){
   $('p4Count').innerHTML='Brief <b>'+nf(pos+1)+'</b> of <b>'+nf(l.length)+'</b>';
   $('p4Prev').disabled=pos<=0;
   $('p4Next').disabled=pos>=l.length-1;
-  $('p4BriefCv').textContent=r[3]+'  \u00b7  '+dmy(r[0]);
+  $('p4BriefCv').textContent=briefLine(r);
   buildBriefPop();
 }
 
@@ -2759,7 +2768,11 @@ function setRet4(v){
 $('p4ConBtn').addEventListener('click',function(e){e.stopPropagation();openPop($('p4ConBtn'),$('p4ConPop'),0);});
 $('p4BriefBtn').addEventListener('click',function(e){
   e.stopPropagation();
-  openPop($('p4BriefBtn'),$('p4BriefPop'),0);
+  /* The picker's button is half the toolbar, so openPop's own sizing — which
+     caps at 430px for the narrow filter dropdowns — makes the list narrower
+     than the field it drops from. Passing the button's measured width pins
+     the two together, and they stay together as the window changes. */
+  openPop($('p4BriefBtn'),$('p4BriefPop'),$('p4BriefBtn').getBoundingClientRect().width);
   var f=$('p4BriefQ');if(f&&$('p4BriefPop').classList.contains('on'))f.focus();
 });
 $('r4All').addEventListener('click',function(){setRet4('all');});
