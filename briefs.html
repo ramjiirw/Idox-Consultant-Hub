@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.22";</script>
+<script>window.BUILD = "2.23";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -466,6 +466,14 @@
   .fcard.cust.r-unret .fch h3{color:var(--unret)}
   .fwait{padding:18px;display:flex;align-items:flex-start;gap:12px;color:var(--slate);font-size:13.5px;background:#fff}
   .fwait svg{width:18px;height:18px;color:var(--unret);flex-shrink:0;margin-top:1px}
+  /* The popup carries 7px of its own padding and the search box adds 3 more,
+     and rows were scrolling up through that 10px band above the box. The box
+     sticks 7px higher and pads the difference back, so it covers the gap. The
+     count below it is a count rather than a control, so it scrolls away
+     instead of being pinned underneath. Scoped to this popup: the authority
+     dropdowns on the other tabs are unchanged. */
+  #p4BriefPop .popsearch{top:-7px;padding-top:10px}
+  #p4BriefPop .pophead{position:static}
   @media (max-width:900px){
     .fgrid{grid-template-columns:1fr 1fr}
     .fcell.full{grid-column:span 2}
@@ -773,6 +781,7 @@
           <button id="r4Unr">Unreturned</button>
         </div>
         <div class="fsp"></div>
+        <button class="clearbtn" id="p4Clear">Clear</button>
         <span class="fcount" id="p4Scope"></span>
       </div>
 
@@ -2548,11 +2557,17 @@ function pass4(r,skip){
 }
 function rows4(skip){return ROWS.filter(function(r){return pass4(r,skip);});}
 
-/* Newest delivery first, so the most recent work is brief 1. */
+/* Return date first, newest first, with the delivery date breaking ties —
+   which is where tab 1 lands too: its sort is on position 1 descending, and
+   because sorting is stable it leaves equal return dates in the order the
+   feed sent them, and the feed sorts by return then delivery, both
+   descending. The whole tool keys off the return date; this tab must not be
+   the exception, or the same three briefs appear in two different orders on
+   two tabs. */
 function list4(){
   return rows4().slice().sort(function(a,b){
-    if(a[0]!==b[0])return a[0]<b[0]?1:-1;
     if(a[1]!==b[1])return a[1]<b[1]?1:-1;
+    if(a[0]!==b[0])return a[0]<b[0]?1:-1;
     return 0;
   });
 }
@@ -2604,7 +2619,8 @@ function form4(r){
         '<div class="fcell rest"><div class="fk">Returned</div><div class="fv big">'+(dmy(r[1])||'<span class="fem">&mdash;</span>')+'</div></div>'+
         '<div class="fcell rest"><div class="fk">Days delivered</div><div class="fv big">'+(r[11]===''||r[11]==null?'<span class="fem">&mdash;</span>':esc(String(r[11])))+'</div></div>'+
         '<div class="fcell"><div class="fk">Delivery type</div><div class="fv">'+fv(r[6])+'</div></div>'+
-        '<div class="fcell wide"><div class="fk">Idox consultant</div><div class="fv">'+fv(r[7])+'</div></div>'+
+        '<div class="fcell"><div class="fk">Idox consultant</div><div class="fv">'+fv(r[7])+'</div></div>'+
+        '<div class="fcell"><div class="fk">Contact</div><div class="fv">'+fv(r[4])+'</div></div>'+
         '<div class="fcell full"><div class="fk">Delivery description</div><div class="fv">'+fv(r[5])+'</div></div>'+
       '</div>'+
     '</div>'+
@@ -2788,6 +2804,19 @@ $('p4Chips').querySelectorAll('.chip').forEach(function(c){
     UI4.span=c.getAttribute('data-f');
     buildCon4();render4(true);
   });
+});
+/* Clears the filters, not the brief. The key survives, so if the brief you
+   were reading is still in view once the filters are off, you stay on it. */
+$('p4Clear').addEventListener('click',function(){
+  UI4.con='';UI4.span='';UI4.ret='all';UI4.q='';
+  brQ='';$('p4Search').value='';
+  $('p4Chips').querySelectorAll('.chip').forEach(function(x){
+    x.classList.toggle('on',x.getAttribute('data-f')==='');
+  });
+  [['all','r4All'],['ret','r4Ret'],['unr','r4Unr']].forEach(function(x){
+    $(x[1]).classList.toggle('on',x[0]==='all');
+  });
+  seg4Pill();buildCon4();render4(true);
 });
 /* Arrow keys step, but only on this tab and never while typing. */
 document.addEventListener('keydown',function(e){
