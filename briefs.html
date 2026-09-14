@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.29";</script>
+<script>window.BUILD = "2.30";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -315,9 +315,28 @@
     body.printbrief .wrap > #p4{display:block !important}
     body.printbrief #p4 > .fbar{display:none !important}
     body.printbrief .wrap{max-width:none;padding:0}
+    /* A4 portrait at 12mm leaves roughly 790px, which trips the narrow-screen
+       rule below and drops the grid to two columns, costing a whole row of
+       height. On paper it stays three across. */
+    body.printbrief .fgrid{grid-template-columns:repeat(3,1fr)}
+    body.printbrief .fcell.full{grid-column:span 3}
+    /* Tighter on paper than on screen. Padding only — no type is shrunk. */
+    body.printbrief .fhero{padding:14px 18px}
+    body.printbrief .fcell{padding:9px 16px}
+    body.printbrief .fband{padding:12px 18px}
+    body.printbrief .sdrow{padding:6px 16px}
+    body.printbrief .sch{padding:8px 16px}
+    body.printbrief .sbody{padding:10px 16px}
+    body.printbrief .st{margin-bottom:9px}
+    body.printbrief .fsec{margin:12px 0 6px}
     body.printbrief .fstage{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    body.printbrief .fcard,body.printbrief .scard,body.printbrief .fband,
+    /* The cards that must not split are the ones a reader takes in whole. The
+       supporting card is a list: it may break, so long as no single row or
+       comment block is cut in half, and its heading travels with it. */
+    body.printbrief .fcard,body.printbrief .fband,
     body.printbrief .sbody,body.printbrief .sdrow{page-break-inside:avoid}
+    body.printbrief .fsec{page-break-after:avoid;break-after:avoid}
+    body.printbrief .sch{page-break-after:avoid;break-after:avoid}
     body.printbrief .fcard.fmain{box-shadow:none}
     body.printbrief .fprintft{display:block !important}
     /* On screen the pill is white on a translucent white; on paper that washes
@@ -426,9 +445,14 @@
   .fstep button:hover:not(:disabled){border-color:var(--petrol);color:var(--petrol)}
   .fstep button:disabled{opacity:.4;cursor:default}
   .fstep svg{width:15px;height:15px}
-  .fpdf{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--edge);background:#fff;border-radius:8px;
-        padding:8px 13px;font-size:12.5px;font-weight:600;color:var(--petrol);white-space:nowrap}
+  .fpdf{display:inline-flex;align-items:center;gap:7px;border:none;background:var(--petrol);color:#fff;
+        border-radius:9px;padding:9px 15px;font-size:12.5px;font-weight:600;white-space:nowrap;
+        transition:background .12s ease,transform .1s ease}
+  .fpdf:hover{background:#0b5a5a}
+  .fpdf:active{transform:translateY(1px)}
+  .fpdf:disabled{opacity:.7;cursor:default;transform:none}
   .fpdf svg{width:14px;height:14px}
+  @media (prefers-reduced-motion: reduce){.fpdf{transition:none}.fpdf:active{transform:none}}
 
   /* the brief picker's rows carry more than a dropdown item, so they are
      their own thing rather than a wider .dditem */
@@ -2848,6 +2872,8 @@ $('r4Unr').addEventListener('click',function(){setRet4('unr');});
    print and removed afterwards — a later @page declaration wins. */
 function printBrief(){
   if(!cur4())return;
+  var btn=$('p4Pdf'),label=btn.innerHTML;
+  btn.disabled=true;btn.textContent='Preparing\u2026';
   var st=document.createElement('style');
   st.id='p4PrintPage';
   st.textContent='@media print{@page{size:A4 portrait;margin:12mm}}';
@@ -2858,6 +2884,7 @@ function printBrief(){
     if(done)return; done=true;
     document.body.classList.remove('printbrief');
     var s=$('p4PrintPage'); if(s)s.parentNode.removeChild(s);
+    btn.disabled=false;btn.innerHTML=label;
     window.removeEventListener('afterprint',tidy);
   }
   window.addEventListener('afterprint',tidy);
