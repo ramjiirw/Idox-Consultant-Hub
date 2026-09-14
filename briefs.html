@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.23";</script>
+<script>window.BUILD = "2.24";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -419,53 +419,70 @@
   .d-exc{background:var(--exc)}.d-good{background:var(--gd)}.d-avg{background:var(--amber)}
   .d-poor{background:var(--rose)}.d-unret{background:var(--unret)}.d-na{background:var(--edge)}
 
-  .fstage{display:flex;flex-direction:column;gap:14px;max-width:1080px}
+  .fstage{display:flex;flex-direction:column;max-width:1080px}
   .fstage.fadein{animation:d2fade .19s ease}
-  .fcard{background:var(--surface);border:1px solid var(--hairline);border-left:3px solid var(--petrol);
-        border-radius:var(--radius);box-shadow:0 1px 2px rgba(24,33,47,.05);overflow:hidden}
-  .fch{display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--hairline);background:#FAFBFC}
-  .fch h3{font-size:14px}
-  .fhero{display:flex;align-items:center;gap:18px;padding:16px 18px;flex-wrap:wrap;background:var(--petrol);color:#fff}
-  .fhero h2{font-size:19px;color:#fff}
-  .fhero .fmeta{font-size:12.5px;color:rgba(255,255,255,.82);margin-top:2px}
-  .fhero .pill.ghost{background:rgba(255,255,255,.22);color:#fff}
+
+  /* The primary card carries the whole point of the tab: who, what, when,
+     and what the customer made of it. It is deliberately heavier than
+     anything below — bigger heading, the description promoted to the first
+     thing read, larger figures, and a shadow that lifts it off the page. */
+  .fcard.top{background:var(--surface);border:1px solid var(--hairline);border-left:3px solid var(--petrol);
+        border-radius:var(--radius);overflow:hidden;margin-bottom:14px;
+        box-shadow:0 2px 4px rgba(24,33,47,.06),0 12px 28px rgba(24,33,47,.07)}
+  .fhero{display:flex;align-items:center;gap:18px;padding:20px 22px;flex-wrap:wrap;background:var(--petrol);color:#fff}
+  .fhero h2{font-size:23px;color:#fff;line-height:1.25}
+  .fhero .fmeta{font-size:13px;color:rgba(255,255,255,.85);margin-top:4px}
+  .pill.ghost{background:rgba(255,255,255,.22);color:#fff}
+  .pill.lg{font-size:13px;padding:6px 15px}
   .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline)}
-  .fcell{background:#fff;padding:11px 18px;min-width:0}
+  .fcell{background:#fff;padding:13px 22px;min-width:0}
   .fcell.rest{background:#FAFBFC}
   .fcell.wide{grid-column:span 2}
   .fcell.full{grid-column:span 3}
   .fk{font-size:11px;color:var(--slate);font-weight:500;margin-bottom:3px}
-  .fv{font-size:14px;color:var(--ink);word-wrap:break-word;overflow-wrap:anywhere}
-  .fv.big{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600}
-  .fv.note{white-space:pre-wrap;font-size:13.5px;line-height:1.55;background:#fff;border:1px solid var(--hairline);
-        border-radius:8px;padding:10px 12px}
+  .fv{font-size:14.5px;color:var(--ink);word-wrap:break-word;overflow-wrap:anywhere}
+  .fv.big{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600}
+  .fv.lead{font-size:15.5px;line-height:1.45}
   .fem{color:var(--faint)}
-  .fdgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hairline)}
-  .fdcell{background:#fff;padding:10px 18px;display:flex;gap:12px;align-items:baseline}
-  .fdcell:nth-child(4n+1),.fdcell:nth-child(4n+2){background:#FAFBFC}
-  .fdn{flex:0 0 88px;font-size:11.5px;color:var(--slate);font-weight:500}
-  .fcard.deliv{border-left-color:var(--slate)}
-  .fcard.deliv .fch h3{color:#3f4a59}
-  .fcard.cons{border-left-color:var(--amber)}
-  .fcard.cons .fch{background:var(--amber-soft)}
-  .fcard.cons .fch h3{color:var(--amber)}
-  .fcard.cust.r-exc{border-left-color:var(--exc)}
-  .fcard.cust.r-exc .fch{background:var(--exc-soft)}
-  .fcard.cust.r-exc .fch h3{color:var(--exc)}
-  .fcard.cust.r-good{border-left-color:var(--gd)}
-  .fcard.cust.r-good .fch{background:var(--gd-soft)}
-  .fcard.cust.r-good .fch h3{color:#3c7f3f}
-  .fcard.cust.r-avg{border-left-color:var(--amber)}
-  .fcard.cust.r-avg .fch{background:var(--amber-soft)}
-  .fcard.cust.r-avg .fch h3{color:var(--amber)}
-  .fcard.cust.r-poor{border-left-color:var(--rose)}
-  .fcard.cust.r-poor .fch{background:var(--rose-soft)}
-  .fcard.cust.r-poor .fch h3{color:var(--rose)}
-  .fcard.cust.r-unret{border-left-color:var(--unret)}
-  .fcard.cust.r-unret .fch{background:var(--unret-soft)}
-  .fcard.cust.r-unret .fch h3{color:var(--unret)}
-  .fwait{padding:18px;display:flex;align-items:flex-start;gap:12px;color:var(--slate);font-size:13.5px;background:#fff}
-  .fwait svg{width:18px;height:18px;color:var(--unret);flex-shrink:0;margin-top:1px}
+
+  /* What the customer wrote, tinted by the rating they gave. This is the one
+     place colour means something on this tab, so it is the only place that
+     carries any. */
+  .fband{border-top:1px solid var(--hairline);padding:15px 22px;display:flex;gap:18px;flex-wrap:wrap;
+        align-items:flex-start;background:#FAFBFC}
+  .flead{flex:0 0 130px;font-size:11px;color:var(--slate);font-weight:500;padding-top:2px}
+  .fbody{flex:1;min-width:240px}
+  .fsaid{white-space:pre-wrap;font-size:14.5px;line-height:1.6}
+  .fby{font-size:11.5px;color:var(--slate);margin-top:8px}
+  .fcard.top.r-exc .fband{background:var(--exc-soft);border-top-color:#c4dccf}
+  .fcard.top.r-good .fband{background:var(--gd-soft);border-top-color:#d3ead0}
+  .fcard.top.r-avg .fband{background:var(--amber-soft);border-top-color:#eeddc9}
+  .fcard.top.r-poor .fband{background:var(--rose-soft);border-top-color:#eed3da}
+  .fcard.top.r-unret .fband{background:var(--unret-soft);border-top-color:#e6dcc0}
+  .fwait{display:flex;align-items:flex-start;gap:11px;color:var(--slate);font-size:13.5px}
+  .fwait svg{width:17px;height:17px;color:var(--unret);flex-shrink:0;margin-top:2px}
+
+  /* Everything else is reference rather than reading: one card, small type,
+     grey headers, no colour, so it never competes with the card above. */
+  .fsec{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin:20px 0 8px}
+  .scard{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);overflow:hidden}
+  .sch{padding:9px 16px;border-bottom:1px solid var(--hairline);background:#FCFDFD;font-size:12.5px;font-weight:600;
+        color:var(--slate);display:flex;align-items:center;gap:10px}
+  .sch.topline{border-top:1px solid var(--hairline)}
+  .sch .sn{margin-left:auto;font-weight:500;color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
+  .sdl{display:flex;flex-direction:column}
+  .sdrow{display:flex;gap:12px;padding:7px 16px;border-bottom:1px solid var(--hairline);font-size:13px;align-items:baseline}
+  .sdrow:last-child{border-bottom:none}
+  .sdn{flex:0 0 22px;color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
+  .sdv{min-width:0;word-wrap:break-word;overflow-wrap:anywhere}
+  .sbody{padding:11px 16px;font-size:13px}
+  .st{white-space:pre-wrap;line-height:1.5;margin-bottom:11px}
+  .st.last{margin-bottom:0}
+  @media (max-width:900px){
+    .fgrid{grid-template-columns:1fr 1fr}
+    .fcell.full{grid-column:span 2}
+  }
+  @media (prefers-reduced-motion: reduce){.fstage.fadein{animation:none}}
   /* The popup carries 7px of its own padding and the search box adds 3 more,
      and rows were scrolling up through that 10px band above the box. The box
      sticks 7px higher and pads the difference back, so it covers the gap. The
@@ -474,12 +491,6 @@
      dropdowns on the other tabs are unchanged. */
   #p4BriefPop .popsearch{top:-7px;padding-top:10px}
   #p4BriefPop .pophead{position:static}
-  @media (max-width:900px){
-    .fgrid{grid-template-columns:1fr 1fr}
-    .fcell.full{grid-column:span 2}
-    .fdgrid{grid-template-columns:1fr}
-  }
-  @media (prefers-reduced-motion: reduce){.fstage.fadein{animation:none}}
 
   /* the wide table: fourteen columns, so it scrolls sideways */
   #tblDel{min-width:2468px}
@@ -2594,49 +2605,51 @@ function fnote(v){return v?esc(v).replace(/\n/g,'<br>'):'<span class="fem">&mdas
 function form4(r){
   var dl='',i;
   for(i=0;i<6;i++){
-    dl+='<div class="fdcell"><div class="fdn">Deliverable '+(i+1)+'</div><div class="fv">'+fv(r[12+i])+'</div></div>';
+    dl+='<div class="sdrow"><span class="sdn">'+(i+1)+'</span><span class="sdv">'+fv(r[12+i])+'</span></div>';
   }
+  var used=0;
+  for(i=0;i<6;i++){ if(r[12+i])used++; }
 
   /* An unreturned brief was signed off with the ICS mailbox, so the name on
      it is ours, not the customer's. Naming it here would read as though the
-     customer had signed. The section says what is missing instead. */
-  var out=(r[8]==='Unreturned');
-  var cust=out
-    ? '<div class="fwait">'+FCLOCK+'<div>This brief has not come back from the customer. '+
-      'It was signed off internally on '+esc(dmy(r[1]))+', and carries no rating, customer comment or signature.</div></div>'
-    : '<div class="fgrid">'+
-        '<div class="fcell full"><div class="fk">Customer comments</div><div class="fv note">'+fnote(r[9])+'</div></div>'+
-        '<div class="fcell wide"><div class="fk">Signed by</div><div class="fv">'+fv(r[4])+'</div></div>'+
-        '<div class="fcell rest"><div class="fk">Signed by e-mail</div><div class="fv">'+fv(r[10])+'</div></div>'+
-      '</div>';
+     customer had signed, so the band says what is missing instead. */
+  var band=(r[8]==='Unreturned')
+    ? '<div class="fband"><div class="fbody"><div class="fwait">'+FCLOCK+
+      '<div>Not returned by the customer. It was signed off internally on '+esc(dmy(r[1]))+
+      ', so there is no rating, comment or signature.</div></div></div></div>'
+    : '<div class="fband"><div class="flead">What the customer said</div><div class="fbody">'+
+      '<div class="fsaid">'+(r[9]?fnote(r[9]):'<span class="fem">Returned without a comment.</span>')+'</div>'+
+      '<div class="fby">Signed by '+esc(r[4]||'\u2014')+
+      (r[10]?' &middot; '+esc(r[10]):'')+
+      (r[1]?' &middot; returned '+esc(dmy(r[1])):'')+'</div></div></div>';
 
-  return '<div class="fcard"><div class="fhero">'+
-      '<div><h2>'+esc(r[3])+'</h2><div class="fmeta">'+esc(r[2]||'No PR')+' &middot; '+
+  return '<div class="fcard top r-'+(RCLASS[r[8]]||'na')+'">'+
+      '<div class="fhero"><div><h2>'+esc(r[3])+'</h2>'+
+        '<div class="fmeta">'+esc(r[2]||'No PR')+' &middot; '+
         (r[6]?esc(r[6]):'no delivery type')+' &middot; '+esc(r[7]||'no consultant')+'</div></div>'+
-      '<div class="fsp"></div><span class="pill ghost">'+esc(r[8]||'Not rated')+'</span></div>'+
+        '<div class="fsp"></div><span class="pill ghost lg">'+esc(r[8]||'Not rated')+'</span></div>'+
       '<div class="fgrid">'+
+        '<div class="fcell full"><div class="fk">Delivery description</div><div class="fv lead">'+fv(r[5])+'</div></div>'+
         '<div class="fcell rest"><div class="fk">Delivery date</div><div class="fv big">'+(dmy(r[0])||'<span class="fem">&mdash;</span>')+'</div></div>'+
         '<div class="fcell rest"><div class="fk">Returned</div><div class="fv big">'+(dmy(r[1])||'<span class="fem">&mdash;</span>')+'</div></div>'+
         '<div class="fcell rest"><div class="fk">Days delivered</div><div class="fv big">'+(r[11]===''||r[11]==null?'<span class="fem">&mdash;</span>':esc(String(r[11])))+'</div></div>'+
         '<div class="fcell"><div class="fk">Delivery type</div><div class="fv">'+fv(r[6])+'</div></div>'+
         '<div class="fcell"><div class="fk">Idox consultant</div><div class="fv">'+fv(r[7])+'</div></div>'+
         '<div class="fcell"><div class="fk">Contact</div><div class="fv">'+fv(r[4])+'</div></div>'+
-        '<div class="fcell full"><div class="fk">Delivery description</div><div class="fv">'+fv(r[5])+'</div></div>'+
-      '</div>'+
+      '</div>'+band+
     '</div>'+
 
-    '<div class="fcard deliv"><div class="fch"><h3>Deliverables</h3></div><div class="fdgrid">'+dl+'</div></div>'+
-
-    '<div class="fcard cons"><div class="fch"><h3>Idox consultant comments and post delivery actions</h3></div>'+
-      '<div class="fgrid">'+
-        '<div class="fcell full"><div class="fk">Consultant comments</div><div class="fv note">'+fnote(r[18])+'</div></div>'+
-        '<div class="fcell wide"><div class="fk">Post delivery actions</div><div class="fv note">'+fnote(r[19])+'</div></div>'+
-        '<div class="fcell rest"><div class="fk">Post delivery actionee</div><div class="fv">'+fv(r[20])+'</div></div>'+
+    '<div class="fsec">Supporting detail</div>'+
+    '<div class="scard">'+
+      '<div class="sch">Deliverables<span class="sn">'+used+' of 6 used</span></div>'+
+      '<div class="sdl">'+dl+'</div>'+
+      '<div class="sch topline">Idox consultant comments and post delivery actions</div>'+
+      '<div class="sbody">'+
+        '<div class="fk">Consultant comments</div><div class="st">'+fnote(r[18])+'</div>'+
+        '<div class="fk">Post delivery actions</div><div class="st">'+fnote(r[19])+'</div>'+
+        '<div class="fk">Post delivery actionee</div><div class="st last">'+fv(r[20])+'</div>'+
       '</div>'+
-    '</div>'+
-
-    '<div class="fcard cust r-'+(RCLASS[r[8]]||'na')+'"><div class="fch"><h3>Customer completion</h3>'+
-      '<div class="fsp"></div>'+pillFor(r[8])+'</div>'+cust+'</div>';
+    '</div>';
 }
 
 /* The closed button says exactly what its row in the list says, in the same
