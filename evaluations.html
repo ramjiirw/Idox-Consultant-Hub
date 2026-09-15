@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.31";</script>
+<script>window.BUILD = "1.32";</script>
 <!-- =================================================================================== -->
 <title>Idox Training Evaluations</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -716,7 +716,18 @@ else{ $('app').style.display=''; boot(); }
 function boot(){
 
 var DICT=D.dict, ROWS=D.rows, INTERNAL=D.internal||[], DCOLS=[3,6,7,8,9,10,11];
-var NEWIDS={}; (D.change&&D.change.newIds||[]).forEach(function(i){NEWIDS[i]=1;});
+/* "new" pill: based on the COURSE DATE, not on the baked newIds list.
+   A row is flagged new when its course date falls in the 7 days up to and
+   including the date this file was generated. */
+var NEWTO='', NEWFROM='';
+(function(){
+  var g=D.generatedAt?new Date(D.generatedAt):null;
+  if(!g||isNaN(g))return;
+  function iso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
+  NEWTO=iso(g);
+  var f=new Date(g.getTime());f.setDate(f.getDate()-7);NEWFROM=iso(f);
+})();
+function isNewRow(r){var d=r&&r[4];if(!d||!NEWFROM)return false;return d>=NEWFROM&&d<=NEWTO;}
 
 function dv(r,c){return DCOLS.indexOf(c)>-1?DICT[c][r[c]]:r[c];}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -1037,7 +1048,7 @@ function rowHTML(r,i,open){
   return '<tr class="r'+(n?' hascm':'')+(open?' open':'')+'" data-i="'+i+'">'+
     '<td class="cx">'+mark+'</td>'+
     '<td class="c-date mono">'+fmtDate(r[4])+
-      (NEWIDS[r[0]]?'<span class="newpill">new</span>':'')+'</td>'+
+      (isNewRow(r)?'<span class="newpill">new</span>':'')+'</td>'+
     '<td class="c-del">'+delNameCell(r,i)+'</td>'+
     '<td class="c-auth">'+esc(titleCase(dv(r,3),true))+'</td>'+
     '<td class="c-crs">'+esc(shortCourse(dv(r,6)))+'</td>'+
