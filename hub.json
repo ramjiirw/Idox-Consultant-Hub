@@ -1,17 +1,17 @@
 {
   "evaluations": {
-    "bakedAt": "2026-09-17T08:11:21.531Z",
-    "evals": 2866,
+    "bakedAt": "2026-09-17T08:14:19.433Z",
+    "evals": 2868,
     "courses": 1510,
     "ratings": {
-      "Excellent": 1799,
+      "Excellent": 1801,
       "Good": 973,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 388,
+    "evals12": 390,
     "pct12": 99,
     "latestEval": "2026-09-14",
     "latestAuthority": "Royal Borough Kensington and Chelsea",
