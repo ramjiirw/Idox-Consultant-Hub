@@ -20,17 +20,17 @@
     "latestComments": 2
   },
   "schedule": {
-    "bakedAt": "2026-09-17T21:15:05.687Z",
-    "courses": 42,
-    "confirmed": 169,
-    "provisional": 7,
-    "booked": 197,
-    "nextCourse": "2026-09-17",
+    "bakedAt": "2026-09-18T06:05:07.828Z",
+    "courses": 41,
+    "confirmed": 165,
+    "provisional": 6,
+    "booked": 192,
+    "nextCourse": "2026-09-22",
     "nextEnd": null,
-    "nextTitle": "Uniform Enterprise Plus",
-    "nextTrainer": "Ian Woodland",
-    "nextBooked": 5,
-    "nextConfirmed": 4,
-    "nextProvisional": 1
+    "nextTitle": "System Supervisor 1- People & Permissions AM",
+    "nextTrainer": "Sam Alderson",
+    "nextBooked": 10,
+    "nextConfirmed": 8,
+    "nextProvisional": 0
   }
 }
