@@ -1,17 +1,17 @@
 {
   "evaluations": {
-    "bakedAt": "2026-09-18T11:43:08.756Z",
-    "evals": 2874,
-    "courses": 1513,
+    "bakedAt": "2026-09-19T06:10:08.085Z",
+    "evals": 2876,
+    "courses": 1514,
     "ratings": {
-      "Excellent": 1807,
-      "Good": 973,
+      "Excellent": 1808,
+      "Good": 974,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 396,
+    "evals12": 393,
     "pct12": 99,
     "latestEval": "2026-09-17",
     "latestAuthority": "Shropshire Council",
