@@ -20,17 +20,17 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-09-22T21:15:05.804Z",
-    "courses": 41,
-    "confirmed": 173,
+    "bakedAt": "2026-09-23T06:05:07.751Z",
+    "courses": 39,
+    "confirmed": 158,
     "provisional": 6,
-    "booked": 196,
-    "nextCourse": "2026-09-22",
+    "booked": 176,
+    "nextCourse": "2026-09-23",
     "nextEnd": null,
-    "nextTitle": "System Supervisor 1- People & Permissions AM",
+    "nextTitle": "System Supervisor 3 - Beyond the Default AM",
     "nextTrainer": "Sam Alderson",
     "nextBooked": 10,
-    "nextConfirmed": 8,
+    "nextConfirmed": 9,
     "nextProvisional": 0
   }
 }
