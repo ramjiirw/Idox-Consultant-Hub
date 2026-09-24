@@ -20,7 +20,7 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-09-24T09:15:07.453Z",
+    "bakedAt": "2026-09-24T10:15:08.916Z",
     "courses": 37,
     "confirmed": 141,
     "provisional": 6,
@@ -29,8 +29,8 @@
     "nextEnd": null,
     "nextTitle": "Idox (IDMT) Idox Data Management Tool",
     "nextTrainer": "Tracey Konynenburg",
-    "nextBooked": 1,
-    "nextConfirmed": 1,
+    "nextBooked": 0,
+    "nextConfirmed": 0,
     "nextProvisional": 0
   }
 }
