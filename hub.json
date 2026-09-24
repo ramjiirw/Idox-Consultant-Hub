@@ -20,17 +20,17 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-09-23T21:15:07.444Z",
-    "courses": 39,
-    "confirmed": 158,
+    "bakedAt": "2026-09-24T06:05:09.710Z",
+    "courses": 37,
+    "confirmed": 141,
     "provisional": 6,
-    "booked": 182,
-    "nextCourse": "2026-09-23",
+    "booked": 161,
+    "nextCourse": "2026-09-24",
     "nextEnd": null,
-    "nextTitle": "System Supervisor 3 - Beyond the Default AM",
-    "nextTrainer": "Sam Alderson",
-    "nextBooked": 10,
-    "nextConfirmed": 9,
+    "nextTitle": "Idox (IDMT) Idox Data Management Tool",
+    "nextTrainer": "Tracey Konynenburg",
+    "nextBooked": 1,
+    "nextConfirmed": 1,
     "nextProvisional": 0
   }
 }
