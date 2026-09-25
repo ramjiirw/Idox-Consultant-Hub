@@ -20,17 +20,17 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-09-24T21:15:14.276Z",
-    "courses": 37,
+    "bakedAt": "2026-09-25T06:05:15.575Z",
+    "courses": 36,
     "confirmed": 141,
     "provisional": 6,
     "booked": 161,
-    "nextCourse": "2026-09-24",
+    "nextCourse": "2026-09-28",
     "nextEnd": null,
-    "nextTitle": "Idox (IDMT) Idox Data Management Tool",
-    "nextTrainer": "Tracey Konynenburg",
-    "nextBooked": 0,
-    "nextConfirmed": 0,
+    "nextTitle": "Document Templates 1 - Foundations and Fundamentals AM",
+    "nextTrainer": "Adelle Barry",
+    "nextBooked": 8,
+    "nextConfirmed": 7,
     "nextProvisional": 0
   }
 }
