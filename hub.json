@@ -20,11 +20,11 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-09-25T08:15:08.109Z",
+    "bakedAt": "2026-09-25T09:15:24.077Z",
     "courses": 36,
     "confirmed": 141,
-    "provisional": 6,
-    "booked": 161,
+    "provisional": 12,
+    "booked": 167,
     "nextCourse": "2026-09-28",
     "nextEnd": null,
     "nextTitle": "Document Templates 1 - Foundations and Fundamentals AM",
