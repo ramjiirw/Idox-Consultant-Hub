@@ -20,17 +20,17 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-09-28T21:15:06.068Z",
-    "courses": 36,
-    "confirmed": 141,
+    "bakedAt": "2026-09-29T06:05:08.304Z",
+    "courses": 33,
+    "confirmed": 127,
     "provisional": 12,
-    "booked": 167,
-    "nextCourse": "2026-09-28",
+    "booked": 151,
+    "nextCourse": "2026-09-29",
     "nextEnd": null,
-    "nextTitle": "Document Templates 1 - Foundations and Fundamentals AM",
+    "nextTitle": "Document Templates 3 - Merge, Create, Repeat AM",
     "nextTrainer": "Adelle Barry",
     "nextBooked": 8,
-    "nextConfirmed": 7,
+    "nextConfirmed": 6,
     "nextProvisional": 0
   }
 }
