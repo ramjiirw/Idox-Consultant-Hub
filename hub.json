@@ -1,22 +1,22 @@
 {
   "evaluations": {
-    "bakedAt": "2026-09-29T06:10:07.958Z",
-    "evals": 2880,
-    "courses": 1516,
+    "bakedAt": "2026-09-30T06:10:10.371Z",
+    "evals": 2883,
+    "courses": 1519,
     "ratings": {
-      "Excellent": 1811,
+      "Excellent": 1814,
       "Good": 975,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 396,
+    "evals12": 399,
     "pct12": 99,
-    "latestEval": "2026-09-25",
-    "latestAuthority": "Colchester City Council",
-    "latestCourse": "Uniform - Tree Preservation Orders Module Training Course",
-    "latestTrainer": "Adelle Barry",
+    "latestEval": "2026-09-29",
+    "latestAuthority": "Royal Borough of Kensington and Chelsea",
+    "latestCourse": "Uniform - Enforcements Module Training Course",
+    "latestTrainer": "Tracey Konynenburg",
     "latestComments": 0
   },
   "schedule": {
