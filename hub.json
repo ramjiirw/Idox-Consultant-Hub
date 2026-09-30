@@ -20,17 +20,17 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-09-29T21:15:05.709Z",
-    "courses": 33,
-    "confirmed": 127,
+    "bakedAt": "2026-09-30T06:05:09.520Z",
+    "courses": 31,
+    "confirmed": 113,
     "provisional": 6,
-    "booked": 145,
-    "nextCourse": "2026-09-29",
-    "nextEnd": null,
-    "nextTitle": "Document Templates 3 - Merge, Create, Repeat AM",
-    "nextTrainer": "Adelle Barry",
-    "nextBooked": 8,
-    "nextConfirmed": 6,
+    "booked": 126,
+    "nextCourse": "2026-10-06",
+    "nextEnd": "2026-10-07",
+    "nextTitle": "UMW2 Spatial Administration",
+    "nextTrainer": "Josh Elms",
+    "nextBooked": 2,
+    "nextConfirmed": 2,
     "nextProvisional": 0
   }
 }
