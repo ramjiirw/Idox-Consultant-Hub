@@ -1,22 +1,22 @@
 {
   "evaluations": {
-    "bakedAt": "2026-10-02T06:10:04.817Z",
-    "evals": 2884,
-    "courses": 1520,
+    "bakedAt": "2026-10-03T06:10:15.664Z",
+    "evals": 2887,
+    "courses": 1523,
     "ratings": {
-      "Excellent": 1815,
+      "Excellent": 1818,
       "Good": 975,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 399,
+    "evals12": 397,
     "pct12": 99,
-    "latestEval": "2026-09-29",
-    "latestAuthority": "Royal Borough of Kensington and Chelsea",
-    "latestCourse": "Uniform - Enforcements Module Training Course",
-    "latestTrainer": "Tracey Konynenburg",
+    "latestEval": "2026-10-02",
+    "latestAuthority": "East Lothian Council",
+    "latestCourse": "Uniform - Enterprise Administrator Training",
+    "latestTrainer": "David Hillerby",
     "latestComments": 0
   },
   "schedule": {
