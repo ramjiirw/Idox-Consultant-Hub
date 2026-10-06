@@ -1,17 +1,17 @@
 {
   "evaluations": {
-    "bakedAt": "2026-10-05T06:10:07.819Z",
-    "evals": 2887,
-    "courses": 1523,
+    "bakedAt": "2026-10-06T06:10:05.957Z",
+    "evals": 2888,
+    "courses": 1524,
     "ratings": {
-      "Excellent": 1818,
+      "Excellent": 1819,
       "Good": 975,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 395,
+    "evals12": 396,
     "pct12": 99,
     "latestEval": "2026-10-02",
     "latestAuthority": "East Lothian Council",
