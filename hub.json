@@ -20,17 +20,17 @@
     "latestComments": 3
   },
   "schedule": {
-    "bakedAt": "2026-10-07T21:15:05.718Z",
-    "courses": 31,
-    "confirmed": 113,
+    "bakedAt": "2026-10-08T06:05:05.814Z",
+    "courses": 30,
+    "confirmed": 111,
     "provisional": 14,
-    "booked": 134,
-    "nextCourse": "2026-10-06",
-    "nextEnd": "2026-10-07",
-    "nextTitle": "UMW2 Spatial Administration",
-    "nextTrainer": "Josh Elms",
-    "nextBooked": 2,
-    "nextConfirmed": 2,
+    "booked": 132,
+    "nextCourse": "2026-10-15",
+    "nextEnd": null,
+    "nextTitle": "Uniform Building Control - Building Safety Level AM",
+    "nextTrainer": "David Hillerby",
+    "nextBooked": 0,
+    "nextConfirmed": 0,
     "nextProvisional": 0
   }
 }
