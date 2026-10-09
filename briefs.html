@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "2.30";</script>
+<script>window.BUILD = "2.31";</script>
 <!-- =================================================================================== -->
 <title>Idox Service Briefs</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   :root{
     --ink:#18212F;--slate:#5B6675;--faint:#7d8794;--paper:#F4F6F8;--surface:#FFFFFF;
     --hairline:#DCE2E9;--edge:#AEB9C6;
-    --petrol:#0E6E6E;--petrol-soft:#E2F0EF;--amber:#C8741A;--amber-soft:#FBEFE2;
+    --petrol:#0A1F8F;--petrol-soft:#D9EEFA;--amber:#C8741A;--amber-soft:#FBEFE2;
     --rose:#B4304B;--rose-soft:#F8E6EA;
     --exc:#14603A;--exc-soft:#D3E7DC;--gd:#5CB35F;--gd-soft:#E7F5E3;
     --unret:#B49638;--unret-soft:#F3EDDC;
@@ -141,7 +141,7 @@
   .ddhead{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);padding:9px 9px 5px}
   .ddhead.later{border-top:1px solid var(--hairline);margin-top:7px;padding-top:11px}
   .popnone{padding:14px 9px;font-size:12.5px;color:var(--slate);text-align:center}
-  .selall{width:100%;border:1px solid rgba(14,110,110,.35);background:var(--petrol-soft);color:var(--petrol);border-radius:7px;padding:8px 10px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:5px;text-align:left}
+  .selall{width:100%;border:1px solid rgba(10,31,143,.35);background:var(--petrol-soft);color:var(--petrol);border-radius:7px;padding:8px 10px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:5px;text-align:left}
   .selall:hover{background:var(--petrol);color:#fff;border-color:var(--petrol)}
   .selall svg{width:13px;height:13px;flex-shrink:0}
   .selall .ct{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:500}
@@ -154,7 +154,7 @@
   .tblhead h3{font-size:14px}
   .tblhead .meta{font-size:12px;color:var(--slate);font-variant-numeric:tabular-nums}
   table{width:100%;border-collapse:collapse}
-  .tblwrap thead th{text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;padding:9px 12px;border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);background:#E7F0EF;color:#2C6462;user-select:none;vertical-align:bottom;line-height:1.3;position:sticky;top:var(--stick,0px);z-index:20;cursor:pointer;box-shadow:0 1px 0 var(--edge),0 6px 10px -6px rgba(24,33,47,.35)}
+  .tblwrap thead th{text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;padding:9px 12px;border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);background:#DDEFFA;color:#2C3564;user-select:none;vertical-align:bottom;line-height:1.3;position:sticky;top:var(--stick,0px);z-index:20;cursor:pointer;box-shadow:0 1px 0 var(--edge),0 6px 10px -6px rgba(24,33,47,.35)}
   /* The header row is a card too — it was the one strip still drawn as a
      plain band, between the title card above and the brief cards below. */
   .tblwrap thead th:first-child{border-left:1px solid var(--edge);border-radius:7px 0 0 7px}
@@ -193,7 +193,7 @@
   tbody tr.r:hover td,
   tbody tr.r:hover + tr.cmt td,
   tbody tr.cmt:hover td,
-  tbody tr.r:has(+ tr.cmt:hover) td{background:#F0F6F6;border-color:var(--petrol)}
+  tbody tr.r:has(+ tr.cmt:hover) td{background:#EAF5FC;border-color:var(--petrol)}
   td.cx{padding:9px 0 9px 14px;width:46px}
   th.c-date,td.c-date{width:88px;white-space:nowrap;font-variant-numeric:tabular-nums}
   th.c-pr,td.c-pr{width:86px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -204,7 +204,7 @@
   th.c-cons,td.c-cons{width:128px}
   th.c-rat,td.c-rat{width:112px;padding-left:9px;padding-right:9px;white-space:nowrap}
   .newpill{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--amber);border-radius:4px;padding:1px 5px}
-  .cmark{display:inline-flex;align-items:center;color:var(--petrol);background:var(--petrol-soft);border:1px solid rgba(14,110,110,.28);border-radius:6px;padding:3px 6px;line-height:1}
+  .cmark{display:inline-flex;align-items:center;color:var(--petrol);background:var(--petrol-soft);border:1px solid rgba(10,31,143,.28);border-radius:6px;padding:3px 6px;line-height:1}
   .cmark svg{width:13px;height:13px}
   tr.open .cmark{background:var(--petrol);color:#fff;border-color:var(--petrol)}
   .pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;line-height:1.5}
@@ -249,7 +249,7 @@
   .repbtn:hover{background:var(--petrol-soft)}
   .repbtn svg{width:14px;height:14px}
   .printbtn{display:inline-flex;align-items:center;gap:7px;border:none;background:var(--petrol);color:#fff;border-radius:9px;padding:8px 15px;font-size:12.5px;font-weight:600}
-  .printbtn:hover{background:#0b5a5a}
+  .printbtn:hover{background:#081975}
   .printbtn svg{width:15px;height:15px}
   .rprint{position:fixed;inset:0;z-index:60;background:rgba(24,33,47,.55);display:none;flex-direction:column}
   .rprint.show{display:flex;animation:overlayFade .2s ease}
@@ -275,7 +275,7 @@
   .pwhen{margin-left:auto;color:var(--slate);font-size:12.5px;white-space:nowrap;text-align:right;line-height:1.45}
   .pwhen .pb{font-size:11px;color:var(--faint)}
   .pstats{display:flex;gap:10px;margin-bottom:16px}
-  .pstat{flex:1;border:1px solid var(--edge);border-left:5px solid var(--petrol);border-radius:7px;padding:9px 14px;background:#F7FAFA}
+  .pstat{flex:1;border:1px solid var(--edge);border-left:5px solid var(--petrol);border-radius:7px;padding:9px 14px;background:#F4FAFD}
   .pstat .n{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:23px;line-height:1.1;color:var(--petrol)}
   .pstat .l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);margin-top:2px}
   .pstat.good{border-left-color:var(--exc);background:#F4FAF6}
@@ -290,7 +290,7 @@
   .ptab tbody tr.d:nth-of-type(even){background:#F7F8FA}
   .ptab td.nw{white-space:nowrap}
   .ptab .rp{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:700}
-  .ptab tr.pc td{background:#F2F7F7;padding:6px 7px 9px 20px;border-top:none}
+  .ptab tr.pc td{background:#EDF7FD;padding:6px 7px 9px 20px;border-top:none}
   .ptab tr.pc .pck{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);margin-top:6px}
   .ptab tr.pc .pcv{font-size:13px;line-height:1.5;border-left:2px solid var(--petrol);padding-left:9px;margin-top:2px}
   .pempty{color:var(--slate);padding:30px;text-align:center}
@@ -396,7 +396,7 @@
      paper between them, a real edge-grey border round each, and a hover you
      can actually see. No banding — neither page has ever used it on screen. */
   .dtab{width:100%;border-collapse:separate;border-spacing:0 5px}
-  .dtab thead th{position:sticky;top:0;z-index:12;text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;padding:9px 12px;background:#E7F0EF;color:#2C6462;border-bottom:1px solid var(--edge);white-space:nowrap;vertical-align:bottom;line-height:1.3;user-select:none;cursor:pointer}
+  .dtab thead th{position:sticky;top:0;z-index:12;text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;padding:9px 12px;background:#DDEFFA;color:#2C3564;border-bottom:1px solid var(--edge);white-space:nowrap;vertical-align:bottom;line-height:1.3;user-select:none;cursor:pointer}
   .dtab thead th{border-top:1px solid var(--edge)}
   .dtab thead th:first-child{border-left:1px solid var(--edge);border-radius:7px 0 0 7px}
   .dtab thead th:last-child{border-right:1px solid var(--edge);border-radius:0 7px 7px 0}
@@ -409,7 +409,7 @@
   .dtab td{padding:10px 12px;font-size:13px;vertical-align:top;background:var(--surface);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);transition:border-color .12s ease,background .12s ease}
   .dtab tbody tr td:first-child{border-left:1px solid var(--edge);border-radius:7px 0 0 7px}
   .dtab tbody tr td:last-child{border-right:1px solid var(--edge);border-radius:0 7px 7px 0}
-  .dtab tr.r:hover td{background:#F0F6F6;border-color:var(--petrol)}
+  .dtab tr.r:hover td{background:#EAF5FC;border-color:var(--petrol)}
   /* written to outweigh the side-border rule, or the spacer keeps a 1px stub
      at each end — which is the little line that appeared between cards. */
   .dtab tbody tr.gap td,
@@ -448,7 +448,7 @@
   .fpdf{display:inline-flex;align-items:center;gap:7px;border:none;background:var(--petrol);color:#fff;
         border-radius:9px;padding:9px 15px;font-size:12.5px;font-weight:600;white-space:nowrap;
         transition:background .12s ease,transform .1s ease}
-  .fpdf:hover{background:#0b5a5a}
+  .fpdf:hover{background:#081975}
   .fpdf:active{transform:translateY(1px)}
   .fpdf:disabled{opacity:.7;cursor:default;transform:none}
   .fpdf svg{width:14px;height:14px}
@@ -553,7 +553,7 @@
   #tblDel .w-da{width:84px;text-align:center;font-variant-numeric:tabular-nums}
   #tblDel .w-ty{width:100px}
   #tblDel .w-dv{width:200px}
-  #tblDel thead th.w-au{color:#2C6462}
+  #tblDel thead th.w-au{color:#2C3564}
   #tblDel thead th.w-da{text-align:center}
 
   /* Nothing is frozen. Sticky cells stop the browser sliding the table as a
@@ -561,7 +561,7 @@
      Delivery, Return and Local Authority repeat at the far right instead —
      which is what the Power BI table did, for the same reason. */
   #tblDel .rpt{color:var(--faint)}
-  #tblDel thead th.rpt{color:#6E8B8A}
+  #tblDel thead th.rpt{color:#6E738B}
 
   /* the actions table underneath */
   /* Five columns, following the Power BI widths. Half the comments are 41
@@ -609,9 +609,9 @@
   .buildft{position:fixed;left:14px;bottom:12px;font-size:11px;color:var(--faint);z-index:30;pointer-events:none}
 
   /* ---------- back to top ---------- */
-  .totop{position:fixed;right:26px;bottom:26px;z-index:70;width:44px;height:44px;border-radius:50%;background:var(--petrol);border:1px solid #0b5a5a;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(24,33,47,.28);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .18s,transform .18s}
+  .totop{position:fixed;right:26px;bottom:26px;z-index:70;width:44px;height:44px;border-radius:50%;background:var(--petrol);border:1px solid #081975;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(24,33,47,.28);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .18s,transform .18s}
   .totop.on{opacity:1;pointer-events:auto;transform:none}
-  .totop:hover{background:#0b5a5a}
+  .totop:hover{background:#081975}
   .totop svg{width:19px;height:19px}
 
   /* ---------- contact history popup ---------- */
@@ -2313,10 +2313,10 @@ function viewA(list){
     var p0=pts[i],p1=pts[i+1],cx=(p0[0]+p1[0])/2;
     d+=' C'+cx+' '+p0[1]+','+cx+' '+p1[1]+','+p1[0]+' '+p1[1];
   }
-  s.appendChild(svgEl('path',{d:d+' L'+pts[pts.length-1][0]+' '+(T+ih)+' L'+pts[0][0]+' '+(T+ih)+' Z',fill:'#0E6E6E',opacity:.10}));
-  s.appendChild(svgEl('path',{d:d,fill:'none',stroke:'#0E6E6E','stroke-width':2.6,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  s.appendChild(svgEl('path',{d:d+' L'+pts[pts.length-1][0]+' '+(T+ih)+' L'+pts[0][0]+' '+(T+ih)+' Z',fill:'#0A1F8F',opacity:.10}));
+  s.appendChild(svgEl('path',{d:d,fill:'none',stroke:'#0A1F8F','stroke-width':2.6,'stroke-linejoin':'round','stroke-linecap':'round'}));
   pts.forEach(function(p,i){
-    var c=svgEl('circle',{cx:p[0],cy:p[1],r:3.4,fill:'#fff',stroke:'#0E6E6E','stroke-width':2});
+    var c=svgEl('circle',{cx:p[0],cy:p[1],r:3.4,fill:'#fff',stroke:'#0A1F8F','stroke-width':2});
     c.addEventListener('mousemove',function(e){var m=ms[i];tipOn(e,'<b>'+mLab3(m)+'</b><br>'+ret[m]+' of '+tot[m]+' returned<br><b>'+(tot[m]?Math.round(100*ret[m]/tot[m]):0)+'%</b>');});
     c.addEventListener('mouseleave',tipOff);
     s.appendChild(c);
@@ -2357,7 +2357,7 @@ function viewB(list){
        bar can start well to the right of the label. */
     var nm=svgEl('text',{x:0,y:y+16,class:'crow'});nm.textContent=x.n;s.appendChild(nm);
     var pc=svgEl('text',{x:250,y:y+16,'font-size':12});
-    var a=svgEl('tspan',{'font-weight':600,fill:'#0E6E6E'});
+    var a=svgEl('tspan',{'font-weight':600,fill:'#0A1F8F'});
     a.textContent=Math.round(x.rate*100)+'% returned';
     var bsp=svgEl('tspan',{fill:'#8792A2'});
     bsp.textContent='  \u00b7  '+x.tot;
@@ -2486,7 +2486,7 @@ function viewD(list){
       var d=cell[c+'|'+p], x=L+i*cw+2, y=T+j*ch+3, w=cw-4, h=ch-6;
       if(!d){s.appendChild(svgEl('rect',{x:x,y:y,width:w,height:h,rx:4,fill:'#F3F5F7'}));return;}
       var pc=d.r/d.t;
-      var rc=svgEl('rect',{x:x,y:y,width:w,height:h,rx:4,fill:'#0E6E6E',opacity:0.14+pc*0.86});
+      var rc=svgEl('rect',{x:x,y:y,width:w,height:h,rx:4,fill:'#0A1F8F',opacity:0.14+pc*0.86});
       rc.addEventListener('mousemove',function(e){tipOn(e,'<b>'+c+'</b><br>'+p+'<br>'+d.r+' of '+d.t+' returned &middot; <b>'+Math.round(pc*100)+'%</b>');});
       rc.addEventListener('mouseleave',tipOff);
       s.appendChild(rc);
