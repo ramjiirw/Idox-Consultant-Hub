@@ -20,11 +20,11 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-10-13T07:15:18.285Z",
+    "bakedAt": "2026-10-13T08:15:08.423Z",
     "courses": 30,
     "confirmed": 110,
-    "provisional": 9,
-    "booked": 132,
+    "provisional": 17,
+    "booked": 140,
     "nextCourse": "2026-10-15",
     "nextEnd": null,
     "nextTitle": "Uniform Building Control - Building Safety Level AM",
