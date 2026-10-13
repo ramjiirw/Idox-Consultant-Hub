@@ -1,22 +1,22 @@
 {
   "evaluations": {
-    "bakedAt": "2026-10-12T06:10:09.376Z",
-    "evals": 2892,
-    "courses": 1526,
+    "bakedAt": "2026-10-13T06:10:10.578Z",
+    "evals": 2894,
+    "courses": 1527,
     "ratings": {
-      "Excellent": 1822,
+      "Excellent": 1824,
       "Good": 976,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 397,
+    "evals12": 399,
     "pct12": 99,
-    "latestEval": "2026-10-08",
-    "latestAuthority": "Oxford City Council",
-    "latestCourse": "Uniform - Development Management (DC) Module Training Course",
-    "latestTrainer": "Adelle Barry",
+    "latestEval": "2026-10-12",
+    "latestAuthority": "Royal Borough of Kensington and Chelsea",
+    "latestCourse": "Uniform - Building Control Module Training Course",
+    "latestTrainer": "David Hillerby",
     "latestComments": 0
   },
   "schedule": {
