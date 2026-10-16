@@ -20,15 +20,15 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-10-15T21:15:10.534Z",
-    "courses": 30,
+    "bakedAt": "2026-10-16T06:05:07.162Z",
+    "courses": 28,
     "confirmed": 109,
     "provisional": 22,
     "booked": 144,
-    "nextCourse": "2026-10-15",
+    "nextCourse": "2026-10-19",
     "nextEnd": null,
-    "nextTitle": "Uniform Building Control - Building Safety Level AM",
-    "nextTrainer": "David Hillerby",
+    "nextTitle": "Idox (IDMT) Idox Data Management Tool",
+    "nextTrainer": "Tracey Konynenburg",
     "nextBooked": 0,
     "nextConfirmed": 0,
     "nextProvisional": 0
