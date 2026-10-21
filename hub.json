@@ -20,17 +20,17 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-10-20T21:15:07.081Z",
-    "courses": 35,
-    "confirmed": 96,
+    "bakedAt": "2026-10-21T06:05:07.690Z",
+    "courses": 33,
+    "confirmed": 82,
     "provisional": 18,
-    "booked": 129,
-    "nextCourse": "2026-10-20",
+    "booked": 112,
+    "nextCourse": "2026-10-22",
     "nextEnd": null,
-    "nextTitle": "System Supervisor 3 - Beyond the Default AM",
-    "nextTrainer": "Adelle Barry",
-    "nextBooked": 10,
-    "nextConfirmed": 8,
+    "nextTitle": "Uniform Building Control - Building Safety Level AM",
+    "nextTrainer": "Tracey Konynenburg",
+    "nextBooked": 0,
+    "nextConfirmed": 0,
     "nextProvisional": 0
   }
 }
