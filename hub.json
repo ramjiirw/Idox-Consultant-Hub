@@ -1,23 +1,23 @@
 {
   "evaluations": {
-    "bakedAt": "2026-10-20T06:10:06.267Z",
-    "evals": 2894,
-    "courses": 1527,
+    "bakedAt": "2026-10-21T06:10:05.795Z",
+    "evals": 2898,
+    "courses": 1529,
     "ratings": {
-      "Excellent": 1824,
+      "Excellent": 1828,
       "Good": 976,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 391,
+    "evals12": 395,
     "pct12": 99,
-    "latestEval": "2026-10-12",
-    "latestAuthority": "Royal Borough of Kensington and Chelsea",
-    "latestCourse": "Uniform - Building Control Module Training Course",
-    "latestTrainer": "David Hillerby",
-    "latestComments": 0
+    "latestEval": "2026-10-20",
+    "latestAuthority": "Oxford City Council",
+    "latestCourse": "Uniform - Planning Component Module Training Course",
+    "latestTrainer": "Tracey Konynenburg",
+    "latestComments": 1
   },
   "schedule": {
     "bakedAt": "2026-10-21T06:05:07.690Z",
