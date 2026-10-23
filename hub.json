@@ -20,17 +20,17 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-10-22T21:15:06.239Z",
-    "courses": 33,
+    "bakedAt": "2026-10-23T06:05:09.200Z",
+    "courses": 31,
     "confirmed": 88,
     "provisional": 16,
     "booked": 112,
-    "nextCourse": "2026-10-22",
+    "nextCourse": "2026-10-26",
     "nextEnd": null,
-    "nextTitle": "Uniform Building Control - Building Safety Level AM",
+    "nextTitle": "Document Templates 1 - Foundations and Fundamentals AM",
     "nextTrainer": "Tracey Konynenburg",
-    "nextBooked": 0,
-    "nextConfirmed": 0,
+    "nextBooked": 3,
+    "nextConfirmed": 3,
     "nextProvisional": 0
   }
 }
