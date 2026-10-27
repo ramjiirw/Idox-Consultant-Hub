@@ -20,17 +20,17 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-10-26T22:15:07.726Z",
-    "courses": 31,
-    "confirmed": 88,
+    "bakedAt": "2026-10-27T07:05:25.201Z",
+    "courses": 29,
+    "confirmed": 83,
     "provisional": 16,
-    "booked": 112,
-    "nextCourse": "2026-10-26",
+    "booked": 107,
+    "nextCourse": "2026-10-27",
     "nextEnd": null,
-    "nextTitle": "Document Templates 1 - Foundations and Fundamentals AM",
+    "nextTitle": "Document Templates 3 - Merge, Create, Repeat AM",
     "nextTrainer": "Tracey Konynenburg",
-    "nextBooked": 3,
+    "nextBooked": 5,
     "nextConfirmed": 3,
-    "nextProvisional": 0
+    "nextProvisional": 2
   }
 }
