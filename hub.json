@@ -20,17 +20,17 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-10-27T22:15:08.031Z",
-    "courses": 29,
-    "confirmed": 83,
-    "provisional": 8,
-    "booked": 107,
-    "nextCourse": "2026-10-27",
+    "bakedAt": "2026-10-28T07:05:07.577Z",
+    "courses": 27,
+    "confirmed": 76,
+    "provisional": 6,
+    "booked": 98,
+    "nextCourse": "2026-10-29",
     "nextEnd": null,
-    "nextTitle": "Document Templates 3 - Merge, Create, Repeat AM",
-    "nextTrainer": "Tracey Konynenburg",
-    "nextBooked": 5,
+    "nextTitle": "Uniform Enterprise Plus",
+    "nextTrainer": "Sam Alderson",
+    "nextBooked": 3,
     "nextConfirmed": 3,
-    "nextProvisional": 2
+    "nextProvisional": 0
   }
 }
