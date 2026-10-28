@@ -1,23 +1,23 @@
 {
   "evaluations": {
-    "bakedAt": "2026-10-27T07:10:25.524Z",
-    "evals": 2898,
-    "courses": 1529,
+    "bakedAt": "2026-10-28T07:10:07.281Z",
+    "evals": 2900,
+    "courses": 1531,
     "ratings": {
-      "Excellent": 1828,
-      "Good": 976,
+      "Excellent": 1829,
+      "Good": 977,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 390,
+    "evals12": 387,
     "pct12": 99,
-    "latestEval": "2026-10-20",
-    "latestAuthority": "Oxford City Council",
-    "latestCourse": "Uniform - Planning Component Module Training Course",
+    "latestEval": "2026-10-27",
+    "latestAuthority": "Stroud District Council",
+    "latestCourse": "Uniform - Document Templates Training Course",
     "latestTrainer": "Tracey Konynenburg",
-    "latestComments": 1
+    "latestComments": 3
   },
   "schedule": {
     "bakedAt": "2026-10-28T07:05:07.577Z",
