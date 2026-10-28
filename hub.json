@@ -20,11 +20,11 @@
     "latestComments": 3
   },
   "schedule": {
-    "bakedAt": "2026-10-28T12:15:24.121Z",
+    "bakedAt": "2026-10-28T13:15:06.717Z",
     "courses": 27,
-    "confirmed": 76,
+    "confirmed": 77,
     "provisional": 6,
-    "booked": 98,
+    "booked": 99,
     "nextCourse": "2026-10-29",
     "nextEnd": null,
     "nextTitle": "Uniform Enterprise Plus",
