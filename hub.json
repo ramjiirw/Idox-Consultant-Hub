@@ -20,17 +20,17 @@
     "latestComments": 3
   },
   "schedule": {
-    "bakedAt": "2026-10-29T22:15:07.283Z",
-    "courses": 27,
-    "confirmed": 88,
+    "bakedAt": "2026-10-30T07:05:17.950Z",
+    "courses": 26,
+    "confirmed": 85,
     "provisional": 6,
-    "booked": 111,
-    "nextCourse": "2026-10-29",
+    "booked": 108,
+    "nextCourse": "2026-11-03",
     "nextEnd": null,
-    "nextTitle": "Uniform Enterprise Plus",
+    "nextTitle": "Enterprise Admin 1 - The Power of Tasks",
     "nextTrainer": "Sam Alderson",
-    "nextBooked": 3,
-    "nextConfirmed": 3,
+    "nextBooked": 9,
+    "nextConfirmed": 8,
     "nextProvisional": 0
   }
 }
