@@ -20,9 +20,9 @@
     "latestComments": 3
   },
   "schedule": {
-    "bakedAt": "2026-10-30T14:15:11.991Z",
+    "bakedAt": "2026-10-30T15:15:17.422Z",
     "courses": 26,
-    "confirmed": 85,
+    "confirmed": 79,
     "provisional": 6,
     "booked": 108,
     "nextCourse": "2026-11-03",
@@ -30,7 +30,7 @@
     "nextTitle": "Enterprise Admin 1 - The Power of Tasks",
     "nextTrainer": "Sam Alderson",
     "nextBooked": 9,
-    "nextConfirmed": 8,
+    "nextConfirmed": 2,
     "nextProvisional": 0
   }
 }
