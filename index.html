@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ===================== BUILD NUMBER — bump this on every change ===================== -->
-<script>window.BUILD = "1.22";</script>
+<script>window.BUILD = "1.23";</script>
 <!-- =================================================================================== -->
 <title>Idox Consultant Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -373,7 +373,7 @@ function renderBriefs(b){
 function renderFresh(hub){
   var items=[
     {k:'Scheduled Training', d:hub&&hub.schedule&&hub.schedule.bakedAt, cy:'updated several times a day', warn:2},
-    {k:'Course Evaluations', d:hub&&hub.evaluations&&hub.evaluations.bakedAt, cy:'updated every few days', warn:7}
+    {k:'Course Evaluations', d:hub&&hub.evaluations&&hub.evaluations.bakedAt, cy:'updated daily', warn:3}
   ];
   /* Briefs has no bake time — the page reads the sheet on every visit — so the
      strip shows the date of the newest brief instead, filled in by
