@@ -20,11 +20,11 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-11-04T07:05:06.874Z",
+    "bakedAt": "2026-11-04T07:15:17.339Z",
     "courses": 25,
     "confirmed": 77,
-    "provisional": 6,
-    "booked": 99,
+    "provisional": 9,
+    "booked": 102,
     "nextCourse": "2026-11-03",
     "nextEnd": "2026-11-04",
     "nextTitle": "UMW2 Spatial Administration",
