@@ -20,16 +20,16 @@
     "latestComments": 3
   },
   "schedule": {
-    "bakedAt": "2026-11-03T22:15:03.364Z",
-    "courses": 26,
-    "confirmed": 79,
+    "bakedAt": "2026-11-04T07:05:06.874Z",
+    "courses": 25,
+    "confirmed": 77,
     "provisional": 6,
-    "booked": 108,
+    "booked": 99,
     "nextCourse": "2026-11-03",
-    "nextEnd": null,
-    "nextTitle": "Enterprise Admin 1 - The Power of Tasks",
-    "nextTrainer": "Sam Alderson",
-    "nextBooked": 9,
+    "nextEnd": "2026-11-04",
+    "nextTitle": "UMW2 Spatial Administration",
+    "nextTrainer": "Josh Elms",
+    "nextBooked": 14,
     "nextConfirmed": 2,
     "nextProvisional": 0
   }
