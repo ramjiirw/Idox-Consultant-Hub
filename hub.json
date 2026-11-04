@@ -1,23 +1,23 @@
 {
   "evaluations": {
-    "bakedAt": "2026-11-03T07:10:07.446Z",
-    "evals": 2900,
-    "courses": 1531,
+    "bakedAt": "2026-11-04T07:10:15.163Z",
+    "evals": 2904,
+    "courses": 1533,
     "ratings": {
-      "Excellent": 1829,
-      "Good": 977,
+      "Excellent": 1832,
+      "Good": 978,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 381,
+    "evals12": 383,
     "pct12": 99,
-    "latestEval": "2026-10-27",
-    "latestAuthority": "Stroud District Council",
-    "latestCourse": "Uniform - Document Templates Training Course",
-    "latestTrainer": "Tracey Konynenburg",
-    "latestComments": 3
+    "latestEval": "2026-11-03",
+    "latestAuthority": "SHDC / BBC",
+    "latestCourse": "Uniform - Introduction to Uniform (1 day)",
+    "latestTrainer": "Adelle Barry",
+    "latestComments": 0
   },
   "schedule": {
     "bakedAt": "2026-11-04T07:05:06.874Z",
