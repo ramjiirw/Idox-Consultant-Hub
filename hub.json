@@ -20,11 +20,11 @@
     "latestComments": 0
   },
   "schedule": {
-    "bakedAt": "2026-11-06T07:05:05.785Z",
+    "bakedAt": "2026-11-06T12:15:16.106Z",
     "courses": 25,
     "confirmed": 77,
-    "provisional": 10,
-    "booked": 95,
+    "provisional": 14,
+    "booked": 99,
     "nextCourse": "2026-11-09",
     "nextEnd": null,
     "nextTitle": "Idox (IDMT) Idox Data Management Tool",
