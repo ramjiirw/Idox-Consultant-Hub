@@ -1,6 +1,6 @@
 {
   "evaluations": {
-    "bakedAt": "2026-11-05T07:10:14.630Z",
+    "bakedAt": "2026-11-06T07:10:14.658Z",
     "evals": 2904,
     "courses": 1533,
     "ratings": {
@@ -11,7 +11,7 @@
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 383,
+    "evals12": 381,
     "pct12": 99,
     "latestEval": "2026-11-03",
     "latestAuthority": "SHDC / BBC",
