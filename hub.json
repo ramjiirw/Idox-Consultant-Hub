@@ -20,10 +20,10 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-11-07T07:05:25.531Z",
+    "bakedAt": "2026-11-09T09:15:08.912Z",
     "courses": 25,
     "confirmed": 77,
-    "provisional": 14,
+    "provisional": 16,
     "booked": 99,
     "nextCourse": "2026-11-09",
     "nextEnd": null,
