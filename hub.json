@@ -20,17 +20,17 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-11-09T22:15:17.614Z",
-    "courses": 25,
-    "confirmed": 77,
+    "bakedAt": "2026-11-10T07:05:05.992Z",
+    "courses": 24,
+    "confirmed": 72,
     "provisional": 16,
-    "booked": 99,
-    "nextCourse": "2026-11-09",
+    "booked": 94,
+    "nextCourse": "2026-11-10",
     "nextEnd": null,
-    "nextTitle": "Idox (IDMT) Idox Data Management Tool",
-    "nextTrainer": "Tracey Konynenburg",
-    "nextBooked": 5,
-    "nextConfirmed": 5,
+    "nextTitle": "Enterprise Admin 2 - Analytics Unlocked",
+    "nextTrainer": "Sam Alderson",
+    "nextBooked": 2,
+    "nextConfirmed": 2,
     "nextProvisional": 0
   }
 }
