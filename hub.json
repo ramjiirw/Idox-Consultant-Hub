@@ -20,17 +20,17 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-11-10T22:15:15.993Z",
-    "courses": 24,
-    "confirmed": 72,
+    "bakedAt": "2026-11-11T07:05:12.058Z",
+    "courses": 23,
+    "confirmed": 70,
     "provisional": 16,
-    "booked": 94,
-    "nextCourse": "2026-11-10",
+    "booked": 92,
+    "nextCourse": "2026-11-16",
     "nextEnd": null,
-    "nextTitle": "Enterprise Admin 2 - Analytics Unlocked",
-    "nextTrainer": "Sam Alderson",
-    "nextBooked": 2,
-    "nextConfirmed": 2,
-    "nextProvisional": 0
+    "nextTitle": "System Supervisor 1- People & Permissions AM",
+    "nextTrainer": "Tracey Konynenburg",
+    "nextBooked": 7,
+    "nextConfirmed": 5,
+    "nextProvisional": 2
   }
 }
