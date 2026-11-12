@@ -20,7 +20,7 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-11-12T10:19:26.527Z",
+    "bakedAt": "2026-11-12T11:15:32.828Z",
     "courses": 27,
     "confirmed": 77,
     "provisional": 9,
@@ -29,8 +29,8 @@
     "nextEnd": null,
     "nextTitle": "System Supervisor 1- People & Permissions AM",
     "nextTrainer": "Tracey Konynenburg",
-    "nextBooked": 7,
-    "nextConfirmed": 6,
+    "nextBooked": 6,
+    "nextConfirmed": 5,
     "nextProvisional": 1
   }
 }
