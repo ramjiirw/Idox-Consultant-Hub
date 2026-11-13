@@ -1,23 +1,23 @@
 {
   "evaluations": {
-    "bakedAt": "2026-11-13T12:57:11.966Z",
-    "evals": 2906,
-    "courses": 1534,
+    "bakedAt": "2026-11-13T13:04:36.010Z",
+    "evals": 2908,
+    "courses": 1535,
     "ratings": {
-      "Excellent": 1833,
-      "Good": 979,
+      "Excellent": 1834,
+      "Good": 980,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 374,
+    "evals12": 376,
     "pct12": 99,
-    "latestEval": "2026-11-05",
-    "latestAuthority": "Colchester City Council",
-    "latestCourse": "Uniform - Development Management (DC) Module Training Course",
+    "latestEval": "2026-11-12",
+    "latestAuthority": "Oxford City Council",
+    "latestCourse": "Uniform - Development Condition Monitoring Module Training Course",
     "latestTrainer": "Adelle Barry",
-    "latestComments": 1
+    "latestComments": 0
   },
   "schedule": {
     "bakedAt": "2026-11-13T10:22:57.149Z",
