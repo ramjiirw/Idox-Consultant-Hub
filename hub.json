@@ -1,6 +1,6 @@
 {
   "evaluations": {
-    "bakedAt": "2026-11-14T07:10:05.539Z",
+    "bakedAt": "2026-11-15T07:10:06.770Z",
     "evals": 2909,
     "courses": 1536,
     "ratings": {
@@ -11,7 +11,7 @@
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 377,
+    "evals12": 375,
     "pct12": 99,
     "latestEval": "2026-11-13",
     "latestAuthority": "Oxford City Council",
