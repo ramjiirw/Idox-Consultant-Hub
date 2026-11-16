@@ -20,11 +20,11 @@
     "latestComments": 2
   },
   "schedule": {
-    "bakedAt": "2026-11-16T11:41:30.763Z",
+    "bakedAt": "2026-11-16T12:18:16.197Z",
     "courses": 32,
-    "confirmed": 83,
+    "confirmed": 84,
     "provisional": 5,
-    "booked": 95,
+    "booked": 96,
     "nextCourse": "2026-11-16",
     "nextEnd": null,
     "nextTitle": "System Supervisor 1- People & Permissions AM",
