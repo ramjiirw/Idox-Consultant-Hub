@@ -20,11 +20,11 @@
     "latestComments": 2
   },
   "schedule": {
-    "bakedAt": "2026-11-17T11:15:11.742Z",
-    "courses": 27,
+    "bakedAt": "2026-11-17T12:15:33.019Z",
+    "courses": 28,
     "confirmed": 73,
-    "provisional": 5,
-    "booked": 80,
+    "provisional": 9,
+    "booked": 84,
     "nextCourse": "2026-11-17",
     "nextEnd": null,
     "nextTitle": "Enterprise Admin 3 - Automation & Intelligence",
