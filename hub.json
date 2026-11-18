@@ -20,17 +20,17 @@
     "latestComments": 2
   },
   "schedule": {
-    "bakedAt": "2026-11-17T22:15:15.750Z",
-    "courses": 69,
-    "confirmed": 75,
+    "bakedAt": "2026-11-18T07:05:09.430Z",
+    "courses": 64,
+    "confirmed": 57,
     "provisional": 9,
-    "booked": 86,
-    "nextCourse": "2026-11-17",
+    "booked": 68,
+    "nextCourse": "2026-11-18",
     "nextEnd": null,
-    "nextTitle": "Enterprise Admin 3 - Automation & Intelligence",
-    "nextTrainer": "Sam Alderson",
-    "nextBooked": 2,
-    "nextConfirmed": 2,
+    "nextTitle": "System Supervisor 1- People & Permissions AM",
+    "nextTrainer": "Adelle Barry",
+    "nextBooked": 1,
+    "nextConfirmed": 1,
     "nextProvisional": 0
   }
 }
