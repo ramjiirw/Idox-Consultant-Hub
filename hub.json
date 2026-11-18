@@ -1,21 +1,21 @@
 {
   "evaluations": {
-    "bakedAt": "2026-11-17T07:10:06.275Z",
-    "evals": 2909,
-    "courses": 1536,
+    "bakedAt": "2026-11-18T07:10:05.624Z",
+    "evals": 2913,
+    "courses": 1537,
     "ratings": {
-      "Excellent": 1835,
-      "Good": 980,
+      "Excellent": 1838,
+      "Good": 981,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 375,
+    "evals12": 378,
     "pct12": 99,
-    "latestEval": "2026-11-13",
-    "latestAuthority": "Oxford City Council",
-    "latestCourse": "Uniform - System Supervisor Training Course",
+    "latestEval": "2026-11-17",
+    "latestAuthority": "Chesterfield Borough Council",
+    "latestCourse": "Uniform - Enterprise Overview Training (Consultancy)",
     "latestTrainer": "Adelle Barry",
     "latestComments": 2
   },
