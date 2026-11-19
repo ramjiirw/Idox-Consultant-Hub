@@ -20,17 +20,17 @@
     "latestComments": 2
   },
   "schedule": {
-    "bakedAt": "2026-11-18T22:15:15.704Z",
-    "courses": 78,
-    "confirmed": 57,
-    "provisional": 9,
-    "booked": 68,
-    "nextCourse": "2026-11-18",
+    "bakedAt": "2026-11-19T07:05:07.954Z",
+    "courses": 74,
+    "confirmed": 47,
+    "provisional": 5,
+    "booked": 54,
+    "nextCourse": "2026-11-19",
     "nextEnd": null,
-    "nextTitle": "System Supervisor 1- People & Permissions AM",
+    "nextTitle": "System Supervisor 3 - Beyond the Default AM",
     "nextTrainer": "Adelle Barry",
-    "nextBooked": 1,
-    "nextConfirmed": 1,
+    "nextBooked": 0,
+    "nextConfirmed": 0,
     "nextProvisional": 0
   }
 }
