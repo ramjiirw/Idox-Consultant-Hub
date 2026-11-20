@@ -20,17 +20,17 @@
     "latestComments": 2
   },
   "schedule": {
-    "bakedAt": "2026-11-19T22:15:12.301Z",
-    "courses": 81,
+    "bakedAt": "2026-11-20T07:05:16.630Z",
+    "courses": 79,
     "confirmed": 48,
     "provisional": 5,
     "booked": 55,
-    "nextCourse": "2026-11-19",
+    "nextCourse": "2026-11-23",
     "nextEnd": null,
-    "nextTitle": "System Supervisor 3 - Beyond the Default AM",
-    "nextTrainer": "Adelle Barry",
-    "nextBooked": 0,
-    "nextConfirmed": 0,
+    "nextTitle": "Document Templates 1 - Foundations and Fundamentals AM",
+    "nextTrainer": "Sam Alderson",
+    "nextBooked": 8,
+    "nextConfirmed": 8,
     "nextProvisional": 0
   }
 }
