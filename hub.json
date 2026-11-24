@@ -20,17 +20,17 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-11-23T22:15:06.007Z",
-    "courses": 79,
-    "confirmed": 47,
+    "bakedAt": "2026-11-24T07:05:15.477Z",
+    "courses": 77,
+    "confirmed": 32,
     "provisional": 5,
-    "booked": 56,
-    "nextCourse": "2026-11-23",
+    "booked": 40,
+    "nextCourse": "2026-11-24",
     "nextEnd": null,
-    "nextTitle": "Document Templates 1 - Foundations and Fundamentals AM",
+    "nextTitle": "Document Templates 3 - Merge, Create, Repeat AM",
     "nextTrainer": "Sam Alderson",
-    "nextBooked": 8,
-    "nextConfirmed": 8,
+    "nextBooked": 10,
+    "nextConfirmed": 9,
     "nextProvisional": 0
   }
 }
