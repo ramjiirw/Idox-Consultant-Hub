@@ -20,11 +20,11 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-11-24T09:27:21.513Z",
+    "bakedAt": "2026-11-24T10:15:19.907Z",
     "courses": 77,
     "confirmed": 32,
-    "provisional": 5,
-    "booked": 40,
+    "provisional": 7,
+    "booked": 42,
     "nextCourse": "2026-11-24",
     "nextEnd": null,
     "nextTitle": "Document Templates 3 - Merge, Create, Repeat AM",
