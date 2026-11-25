@@ -20,17 +20,17 @@
     "latestComments": 1
   },
   "schedule": {
-    "bakedAt": "2026-11-24T22:15:10.910Z",
-    "courses": 77,
-    "confirmed": 34,
+    "bakedAt": "2026-11-25T08:37:54.376Z",
+    "courses": 75,
+    "confirmed": 18,
     "provisional": 5,
-    "booked": 42,
-    "nextCourse": "2026-11-24",
+    "booked": 25,
+    "nextCourse": "2026-12-04",
     "nextEnd": null,
-    "nextTitle": "Document Templates 3 - Merge, Create, Repeat AM",
-    "nextTrainer": "Sam Alderson",
-    "nextBooked": 10,
-    "nextConfirmed": 9,
+    "nextTitle": "Enterprise Admin 3 - Automation & Intelligence",
+    "nextTrainer": "Ian Woodland",
+    "nextBooked": 0,
+    "nextConfirmed": 0,
     "nextProvisional": 0
   }
 }
