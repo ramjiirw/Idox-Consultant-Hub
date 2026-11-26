@@ -1,17 +1,17 @@
 {
   "evaluations": {
-    "bakedAt": "2026-11-25T08:48:32.661Z",
-    "evals": 2920,
+    "bakedAt": "2026-11-26T07:10:05.548Z",
+    "evals": 2921,
     "courses": 1541,
     "ratings": {
-      "Excellent": 1844,
+      "Excellent": 1845,
       "Good": 982,
       "Average": 68,
       "Poor": 10,
       "Not given": 16
     },
     "pct": 97,
-    "evals12": 361,
+    "evals12": 362,
     "pct12": 99,
     "latestEval": "2026-11-23",
     "latestAuthority": "Brentwood Borough Council",
