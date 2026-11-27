@@ -20,17 +20,17 @@
     "latestComments": 3
   },
   "schedule": {
-    "bakedAt": "2026-11-27T13:15:10.978Z",
+    "bakedAt": "2026-11-27T14:15:06.766Z",
     "courses": 71,
-    "confirmed": 25,
+    "confirmed": 27,
     "provisional": 5,
-    "booked": 32,
+    "booked": 34,
     "nextCourse": "2026-12-04",
     "nextEnd": null,
     "nextTitle": "Enterprise Admin 3 - Automation & Intelligence",
     "nextTrainer": "Ian Woodland",
-    "nextBooked": 0,
-    "nextConfirmed": 0,
+    "nextBooked": 2,
+    "nextConfirmed": 2,
     "nextProvisional": 0
   }
 }
